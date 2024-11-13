@@ -28,4 +28,38 @@ class UserAlgo
             exception($e);
         }
     }
+
+    public function update(Request $request){
+        try {
+            DB::transaction(function () use ($request) {
+                $this->user->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+
+                $this->user->update($request->validated());
+                
+                $this->user->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update User : ' . $this->user->id);
+            });
+
+            return success(UserParser::first($this->user));
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
+
+    public function destroy(){
+        try {
+            DB::transaction(function () {
+                $this->user->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+                
+                $this->user->delete();
+                
+                $this->user->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete User : ' . $this->user->id);
+            });
+
+            return success(UserParser::first($this->user));
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
 }

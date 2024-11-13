@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Web\v1\User;
 use App\Algorithms\v1\User\UserAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateUserRequest;
+use App\Http\Requests\v1\User\UpdateUserRequest;
 use App\Models\v1\User\User;
-use App\Parser\User\UserParser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     // constructor
-    public function __construct(public $algo = new UserAlgo()){}
+    public function __construct(public $algo = new UserAlgo()){
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,17 +34,20 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id, Request $request)
     {
-        //
+        $user = User::findOrFail($id);
+        return success($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->algo = new UserAlgo($user);
+        return $this->algo->update($request);
     }
 
     /**
@@ -51,6 +55,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->algo = new UserAlgo($user);
+        return $this->algo->destroy();
     }
 }

@@ -9,5 +9,8 @@ Route::prefix('users')
     ->group(function (){
         Route::get('/', 'UserController@index');
         Route::post('/', 'UserController@store');
+        Route::get('/{id}', 'UserController@show');
+        Route::put('/{id}', 'UserController@update');
+        Route::delete('/{id}', 'UserController@destroy');
     });
 
