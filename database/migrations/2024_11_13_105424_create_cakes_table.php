@@ -18,12 +18,13 @@ return new class extends Migration
         Schema::create('cakes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('profit_margin')->nullable();
+            $table->string('profitMargin')->nullable();
             $table->string('cogs');
-            $table->string('sell_price');
+            $table->string('sellPrice');
             $table->json('images')->nullable();
 
-            $table->foreignId('cake_variant_id')->constrained();
+            $table->foreignId('cakeVariantId');
+            $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');
             $this->getDefaultTimestamps($table);
         });
     }

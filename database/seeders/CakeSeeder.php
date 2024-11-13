@@ -47,10 +47,10 @@ class CakeSeeder extends Seeder
         return array(
             [
                 'name' => 'Polar Bear Cake',
-                'cake_variant_id' => CakeVariant::all()->random()->id,
-                'profit_margin' => '0.5',
+                'cakeVariantId' => CakeVariant::all()->random()->id,
+                'profitMargin' => '0.5',
                 'cogs' => '100000',
-                'sell_price' => '150000',
+                'sellPrice' => '150000',
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
@@ -58,10 +58,10 @@ class CakeSeeder extends Seeder
             ],
             [
                 'name' => 'Panda Cake',
-                'cake_variant_id' => CakeVariant::all()->random()->id,
-                'profit_margin' => null,
+                'cakeVariantId' => CakeVariant::all()->random()->id,
+                'profitMargin' => null,
                 'cogs' => '400000',
-                'sell_price' => '600000',
+                'sellPrice' => '600000',
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',

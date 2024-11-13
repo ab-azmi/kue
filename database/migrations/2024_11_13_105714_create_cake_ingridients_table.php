@@ -17,10 +17,12 @@ return new class extends Migration
     {
         Schema::create('cake_ingridients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cake_id')->constrained();
-            $table->foreignId('ingridient_id')->constrained();
             $table->integer('quantity');
             $table->string('unit');
+            $table->foreignId('cakeId');
+            $table->foreign('cakeId')->references('id')->on('cakes')->constrained()->onDelete('cascade');
+            $table->foreignId('ingridientId');
+            $table->foreign('ingridientId')->references('id')->on('ingridients')->constrained()->onDelete('cascade');
             $this->getDefaultTimestamps($table);
         });
     }
