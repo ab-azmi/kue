@@ -19,9 +19,9 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $data = $request->except('ingridients');
                 $this->cake = Cake::create($data);
-                $this->cake->ingridients()->sync($request->ingridients);
 
-                $this->syncIngridientStock($request->ingridients);
+                $this->attachIngridients($request->ingridients);
+                
                 $this->cake->load([
                     'variant',
                     'ingridients',
@@ -30,7 +30,7 @@ class CakeAlgo
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : ' . $this->cake->id);
             });
-            
+
             return success(CakeParser::first($this->cake));
 
         } catch (\Exception $e) {
@@ -38,15 +38,61 @@ class CakeAlgo
         }
     }
 
-    public function update(Request $request) {}
+    public function update(Request $request) {
+        try {
+            DB::transaction(function() use ($request){
+                //log old data
+                $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+                //detach old ingridients while incrementing the stock
+                $this->detachIngridients();
 
-    public function destroy() {}
+                //update cake data
+                $this->cake->update($request->except('ingridients'));
+                //attach new ingridients while decrementing the stock
+                $this->attachIngridients($request->ingridients);
+                //log new data
+                $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update Cake : ' . $this->cake->id);
+            });
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
+
+    public function destroy() {
+        try {
+            DB::transaction(function(){
+                $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+                
+                $this->cake->ingridients()->detach();
+
+                $this->cake->delete();
+
+                
+                $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete Cake : ' . $this->cake->id);
+            });
+
+            return success(CakeParser::first($this->cake));
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
 
     // -------------------- PRIVATE FUNCTION --------------------
 
-    private function syncIngridientStock($ingridients){
+    private function attachIngridients($ingridients){
+        $this->cake->ingridients()->attach($ingridients);
+
         foreach ($ingridients as $ingridient) {
             Ingridient::find($ingridient['ingridientId'])->decrement('quantity', $ingridient['quantity']);
         }
+    }
+
+    private function detachIngridients(){
+        $this->cake->ingridients()->each(function($ingridient){
+            $ingridient->increment('quantity', $ingridient->pivot->quantity);
+        });
+        $this->cake->ingridients()->detach();
     }
 }

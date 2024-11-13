@@ -34,7 +34,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id, Request $request)
+    public function show($id)
     {
         $user = User::findOrFail($id);
         return success($user);
@@ -46,7 +46,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, string $id)
     {
         $user = User::findOrFail($id);
-        $this->algo = new UserAlgo($user);
+        $this->algo->user = $user;
         return $this->algo->update($request);
     }
 
@@ -56,7 +56,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        $this->algo = new UserAlgo($user);
+        $this->algo->user = $user;
         return $this->algo->destroy();
     }
 }

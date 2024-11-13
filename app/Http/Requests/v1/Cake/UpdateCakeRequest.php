@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateCakeRequest extends FormRequest
+class UpdateCakeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

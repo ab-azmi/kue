@@ -54,7 +54,10 @@ class CakeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $cake = Cake::findOrFail($id);
+        $this->algo->cake = $cake;
+
+        return $this->algo->update($request);
     }
 
     /**
@@ -62,6 +65,9 @@ class CakeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cake = Cake::findOrFail($id);
+        $this->algo->cake = $cake;
+
+        return $this->algo->destroy();
     }
 }
