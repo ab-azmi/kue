@@ -17,15 +17,6 @@ class CakeVariantParser extends BaseParser
             return null;
         }
 
-        return parent::first($data);
-    }
-
-    public static function brief($data)
-    {
-        if (!$data) {
-            return null;
-        }
-
         return [
             'id' => $data->id,
             'name' => $data->name,

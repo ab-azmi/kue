@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('profitMargin')->nullable();
-            $table->string('cogs');
+            $table->string('cogs')->nullable();
             $table->string('sellPrice');
             $table->json('images')->nullable();
 

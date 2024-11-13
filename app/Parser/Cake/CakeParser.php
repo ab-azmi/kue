@@ -28,8 +28,8 @@ class CakeParser extends BaseParser
             'images' => $data->images,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
-            'ingridients' => IngridientParser::brief($data->ingridients),
-            'variant' => CakeVariantParser::brief($data->variant),
+            'ingridients' => IngridientParser::get($data->ingridients),
+            'variant' => CakeVariantParser::first($data->variant),
         ];
     }
 

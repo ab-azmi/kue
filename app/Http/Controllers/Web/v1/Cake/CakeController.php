@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Web\v1\Cake;
 
+use App\Algorithms\v1\Cake\CakeAlgo;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\Cake\CreateCakeRequest;
 use App\Models\v1\Cake\Cake;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller
 {
+    public function __construct(public $algo = new CakeAlgo())
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +21,8 @@ class CakeController extends Controller
         $cakes = Cake::with([
             'variant',
             'ingridients',
-        ])->orderBy('createdAt', 'desc')->getOrPaginate($request, true);
+        ])->orderBy('createdAt', 'desc')
+        ->getOrPaginate($request, true);
 
         return success($cakes);
     }
@@ -24,9 +30,9 @@ class CakeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCakeRequest $request)
     {
-        //
+        return $this->algo->store($request);
     }
 
     /**

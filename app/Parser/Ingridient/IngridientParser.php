@@ -2,6 +2,7 @@
 
 namespace App\Parser\Ingridient;
 
+use App\Parser\Cake\CakeParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class IngridientParser extends BaseParser
@@ -38,5 +39,7 @@ class IngridientParser extends BaseParser
             'updatedAt' => $data->updatedAt,
         ];
     }
+
+    
 
 }

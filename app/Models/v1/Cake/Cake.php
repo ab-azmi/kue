@@ -29,7 +29,7 @@ class Cake extends BaseModel
     {
         return $this->belongsToMany(Ingridient::class, 'cake_ingridients', 'cakeId', 'ingridientId')
             ->withPivot('quantity', 'unit')
-            ->as('details');
+            ->as('used');
     }
 
     public function variant(): BelongsTo
