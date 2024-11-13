@@ -6,7 +6,7 @@ use App\Models\BaseModel;
 
 class Ingridient extends BaseModel
 {
-    // protected $table = '';
+    protected $table = 'ingridients';
     protected $guarded = ['id'];
 
     protected $casts = [
