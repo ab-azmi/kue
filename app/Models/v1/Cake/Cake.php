@@ -3,11 +3,14 @@
 namespace App\Models\v1\Cake;
 
 use App\Models\BaseModel;
+use App\Models\v1\Cake\Traits\HasActivityCakeProperty;
 use App\Models\v1\Ingridient\Ingridient;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cake extends BaseModel
 {
+    use HasActivityCakeProperty;
+    
     // protected $table = '';
     protected $guarded = ['id'];
 
