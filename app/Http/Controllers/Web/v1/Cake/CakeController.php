@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\v1\Cake;
 
 use App\Http\Controllers\Controller;
+use App\Models\v1\Cake\Cake;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller
@@ -10,9 +11,14 @@ class CakeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cakes = Cake::with([
+            'variant',
+            'ingridients',
+        ])->orderBy('createdAt', 'desc')->getOrPaginate($request, true);
+
+        return success($cakes);
     }
 
     /**
@@ -28,7 +34,13 @@ class CakeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $cake = Cake::findOrFail($id);
+        $cake->load([
+            'variant',
+            'ingridients',
+        ]);
+
+        return success($cake);
     }
 
     /**
