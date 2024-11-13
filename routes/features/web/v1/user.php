@@ -8,5 +8,6 @@ Route::prefix('users')
     ->namespace('User')
     ->group(function (){
         Route::get('/', 'UserController@index');
+        Route::post('/', 'UserController@store');
     });
 
