@@ -19,7 +19,6 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $data = $request->except('ingridients');
                 $this->cake = Cake::create($data);
-
                 $this->attachIngridients($request->ingridients);
                 
                 $this->cake->load([
@@ -41,19 +40,17 @@ class CakeAlgo
     public function update(Request $request) {
         try {
             DB::transaction(function() use ($request){
-                //log old data
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
-                //detach old ingridients while incrementing the stock
+                
                 $this->detachIngridients();
-
-                //update cake data
                 $this->cake->update($request->except('ingridients'));
-                //attach new ingridients while decrementing the stock
                 $this->attachIngridients($request->ingridients);
-                //log new data
+
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : ' . $this->cake->id);
             });
+
+            return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
             exception($e);
         }
@@ -65,9 +62,7 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
                 
                 $this->cake->ingridients()->detach();
-
                 $this->cake->delete();
-
                 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Cake : ' . $this->cake->id);
@@ -91,7 +86,7 @@ class CakeAlgo
 
     private function detachIngridients(){
         $this->cake->ingridients()->each(function($ingridient){
-            $ingridient->increment('quantity', $ingridient->pivot->quantity);
+            $ingridient->increment('quantity', $ingridient->used->quantity);
         });
         $this->cake->ingridients()->detach();
     }
