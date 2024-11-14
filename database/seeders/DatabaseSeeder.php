@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             IngridientSeeder::class,
             CakeSeeder::class,
             FixedCostSeeder::class,
+            TransactionSeeder::class,
         ]);
     }
 }

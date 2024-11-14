@@ -21,7 +21,9 @@ class TransactionAlgo
                 $this->transaction->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Transaction : ' . $this->transaction->id);
                 
-                $this->createOrders($request);
+                if($request->has('orders')) {
+                    $this->createOrders($request);
+                }
             });
 
             return success($this->transaction);
@@ -41,7 +43,9 @@ class TransactionAlgo
                 $this->transaction->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Transaction : ' . $this->transaction->id);
 
-                $this->updateOrders($request);
+                if($request->has('orders')) {
+                    $this->updateOrders($request);
+                }
             });
 
             return success($this->transaction);

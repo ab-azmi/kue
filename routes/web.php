@@ -10,3 +10,4 @@ require($base . "cake.php");
 require($base . "ingridient.php");
 require($base . "fixedCost.php");
 require($base . "salary.php");
+require($base . "transaction.php");

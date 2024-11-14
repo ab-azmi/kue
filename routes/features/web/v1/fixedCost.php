@@ -1,5 +1,5 @@
 <?php
-namespace App\Features\Web\v1;
+namespace App\Routes\Features\Web\v1\FixedCost;
 
 use Illuminate\Support\Facades\Route;
 

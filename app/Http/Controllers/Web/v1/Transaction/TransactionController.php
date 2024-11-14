@@ -19,10 +19,8 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $transactions = Transaction::with([
-            'orders',
-            'orders.cake',
-            'cashier'
-        ])->getOrPaginate($request, true);
+            'orders'
+        ])->orderBy('createdAt')->getOrPaginate($request, true);
         
         return success($transactions);
     }
