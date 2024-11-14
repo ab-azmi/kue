@@ -75,11 +75,11 @@ class TransactionAlgo
 
     private function createOrders($request)
     {
-        $request->orders->each(function ($order) {
-            $orderModel = $this->transaction->orders()->create($order->except('cake'));
+        foreach($request->orders as $order) {
+            $orderModel = $this->transaction->orders()->create($order);
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
                 ->saveActivity('Create new Order : ' . $orderModel->id . ' in Transaction : ' . $this->transaction->id);
-        });
+        }
     }
 
     private function updateOrders($request)
