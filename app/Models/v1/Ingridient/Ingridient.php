@@ -4,10 +4,13 @@ namespace App\Models\v1\Ingridient;
 
 use App\Models\BaseModel;
 use App\Models\v1\Cake\Cake;
+use App\Models\v1\Ingridient\Traits\HasActivityIngridientProperty;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ingridient extends BaseModel
 {
+    use HasActivityIngridientProperty;
+    
     protected $table = 'ingridients';
     protected $guarded = ['id'];
 

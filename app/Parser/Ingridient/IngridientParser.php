@@ -18,7 +18,17 @@ class IngridientParser extends BaseParser
             return null;
         }
 
-        return parent::first($data);
+        return [
+            'id' => $data->id,
+            'name' => $data->name,
+            'unit' => $data->unit,
+            'pricePerUnit' => $data->pricePerUnit,
+            'expirationDate' => $data->expirationDate,
+            'quantity' => $data->quantity,
+            'supplier' => $data->supplier,
+            'createdAt' => $data->createdAt,
+            'updatedAt' => $data->updatedAt,
+        ];
     }
 
     public static function brief($data)
