@@ -22,7 +22,16 @@ class CreateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customerName' => 'nullable|string|max:255',
+            'quantity' => 'required|numeric',
+            'tax' => 'nullable|string',
+            'orderPrice' => 'nullable|numeric',
+            'totalPrice' => 'nullable|numeric',
+            'totalDiscount' => 'nullable|numeric',
+            'cashierId' => 'required|exists:users,id',
+            'orders' => 'required|array',
+            'orders.*.cakeId' => 'required|exists:cakes,id',
+            'orders.*.quantity' => 'required|integer',
         ];
     }
 }

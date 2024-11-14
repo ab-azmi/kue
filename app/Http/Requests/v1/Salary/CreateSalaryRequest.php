@@ -22,10 +22,10 @@ class CreateSalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'basic_salary' => ['required', 'string'],
+            'basic_salary' => ['required', 'numeric'],
             'tax' => ['nullable', 'string'],
-            'overtime' => ['nullable', 'string'],
-            'total_salary' => ['nullable', 'string'],
+            'overtime' => ['nullable', 'numeric'],
+            'total_salary' => ['nullable', 'numeric'],
             'user_id' => ['nullable', 'numeric'],
         ];
     }
