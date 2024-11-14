@@ -14,11 +14,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $data = $this->getData();
-        //truncate the table
-        User::truncate();
         //insert data
         foreach ($data as $item) {
-            User::create($item);
+            $u = User::create($item);
+            $u->salary()->create([
+                'basic_salary' => "1000000",
+                'tax' => "20000",
+                'overtime' => null,
+                'total_salary' => "980000",
+            ]);
         }
     }
 

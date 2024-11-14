@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateUserRequest;
 use App\Http\Requests\v1\User\UpdateUserRequest;
 use App\Models\v1\User\User;
+use App\Parser\User\UserParser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -37,7 +38,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return success($user);
+        return success(UserParser::first($user));
     }
 
     /**

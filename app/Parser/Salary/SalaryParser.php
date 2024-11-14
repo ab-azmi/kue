@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Parser\User;
+namespace App\Parser\Salary;
 
-use App\Parser\Salary\SalaryParser;
+use App\Parser\User\UserParser;
 use GlobalXtreme\Parser\BaseParser;
 
-class UserParser extends BaseParser
+class SalaryParser extends BaseParser
 {
     /**
      * @param $data
@@ -20,11 +20,13 @@ class UserParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'name' => $data->name,
-            'email' => $data->email,
+            'basic_salary' => $data->basic_salary,
+            'tax' => $data->tax,
+            'overtime' => $data->overtime,
+            'total_salary' => $data->total_salary,
             'created_at' => $data->created_at,
             'updated_at' => $data->updated_at,
-            'salary' => SalaryParser::brief($data->salary),
+            'user' => UserParser::brief($data->user),
         ];
     }
 
@@ -36,8 +38,10 @@ class UserParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'name' => $data->name,
-            'email' => $data->email,
+            'basic_salary' => $data->basic_salary,
+            'tax' => $data->tax,
+            'overtime' => $data->overtime,
+            'total_salary' => $data->total_salary,
             'created_at' => $data->created_at,
             'updated_at' => $data->updated_at,
         ];
