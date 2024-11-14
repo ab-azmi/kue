@@ -4,7 +4,9 @@ namespace App\Models\v1\User;
 
 use App\Models\BaseModel;
 use App\Models\v1\Salary\Salary;
+use App\Models\v1\Transaction\Transaction;
 use App\Models\v1\User\Traits\HasActivityUserProperty;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends BaseModel
@@ -27,4 +29,8 @@ class User extends BaseModel
         return $this->hasOne(Salary::class, 'userId');
     }
 
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'cashierId');
+    }
 }
