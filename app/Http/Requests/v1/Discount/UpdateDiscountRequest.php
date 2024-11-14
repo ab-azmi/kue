@@ -22,7 +22,16 @@ class UpdateDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customerName' => 'nullable|string|max:255',
+            'quantity' => 'required|default:1',
+            'tax' => 'nullable|string',
+            'orderPrice' => 'nullable|string',
+            'totalPrice' => 'nullable|string',
+            'totalDiscount' => 'nullable|string',
+            'cashierId' => 'required|exists:users,id',
+            'orders' => 'required|array',
+            'orders.*.cakeId' => 'required|exists:cakes,id',
+            'orders.*.quantity' => 'required|integer',
         ];
     }
 }
