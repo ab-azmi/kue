@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Models\v1\Cake;
+namespace App\Models\v1\Setting;
 
 use App\Models\BaseModel;
+use App\Models\v1\Setting\Traits\HasActivityFixedCostProperty;
 
-class CakeIngridient extends BaseModel
+class FixedCost extends BaseModel
 {
-    protected $table = 'cake_ingridients';
+    use HasActivityFixedCostProperty;
+
+    protected $table = 'fixed_costs';
     protected $guarded = ['id'];
 
     protected $casts = [
