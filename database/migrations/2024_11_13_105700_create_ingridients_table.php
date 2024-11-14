@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('unit');
-            $table->string('pricePerUnit');
+            $table->bigInteger('pricePerUnit');
             $table->string('expirationDate');
             $table->integer('quantity');
             $table->string('supplier')->nullable();

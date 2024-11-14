@@ -17,10 +17,10 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->string('basic_salary');
+            $table->bigInteger('basic_salary');
             $table->string('tax')->nullable();
-            $table->string('overtime')->nullable();
-            $table->string('total_salary');
+            $table->bigInteger('overtime')->nullable();
+            $table->bigInteger('total_salary');
 
             $table->foreignId('userId')->nullable();
             $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();

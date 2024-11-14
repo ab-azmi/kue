@@ -17,12 +17,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('quantity')->nullable();
+            $table->integer('quantity')->nullable();
             $table->string('customerName')->default('Anonymous');
             $table->string('tax')->nullable();
-            $table->string('orderPrice')->nullable();
-            $table->string('totalPrice')->nullable();
-            $table->string('totalDiscount')->nullable();
+            $table->bigInteger('orderPrice')->nullable();
+            $table->bigInteger('totalPrice')->nullable();
+            $table->bigInteger('totalDiscount')->nullable();
             
             $table->foreignId('cashierId');
             $table->foreign('cashierId')->references('id')->on('users')->cascadeOnDelete();

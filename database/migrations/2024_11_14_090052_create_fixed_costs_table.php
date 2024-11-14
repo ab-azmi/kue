@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('amount');
+            $table->bigInteger('amount');
             $table->string('frequency')->default('monthly');
             $this->getDefaultTimestamps($table);
         });

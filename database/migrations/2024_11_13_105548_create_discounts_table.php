@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->date('start_date')->default(now());
             $table->date('end_date')->default(now()->addDay());
-            $table->string('value');
+            $table->bigInteger('value');
 
             $table->foreignId('cakeId');
             $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();

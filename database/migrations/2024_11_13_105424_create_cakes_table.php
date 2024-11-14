@@ -19,9 +19,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('profitMargin')->nullable();
-            $table->string('cogs')->nullable();
-            $table->string('sellPrice');
+            $table->bigInteger('cogs')->nullable();
+            $table->bigInteger('sellPrice')->nullable();
             $table->json('images')->nullable();
+            $table->integer('stock')->default(0);
 
             $table->foreignId('cakeVariantId');
             $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');

@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('price')->nullable();
+            $table->bigInteger('price')->nullable();
             $table->integer('quantity')->default(1);
-            $table->string('discount')->nullable();
+            $table->bigInteger('discount')->nullable();
 
             $table->foreignId('transactionId');
             $table->foreign('transactionId')->references('id')->on('transactions')->cascadeOnDelete();
