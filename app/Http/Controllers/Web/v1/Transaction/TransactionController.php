@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\v1\Transaction;
 use App\Algorithms\v1\Transaction\TransactionAlgo;
 use App\Http\Controllers\Controller;
 use App\Models\v1\Transaction\Transaction;
+use App\Parser\Transaction\TransactionParser;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -22,7 +23,7 @@ class TransactionController extends Controller
             'orders'
         ])->orderBy('createdAt')->getOrPaginate($request, true);
         
-        return success($transactions);
+        return success(TransactionParser::get($transactions));
     }
 
     /**
@@ -44,7 +45,7 @@ class TransactionController extends Controller
             'cashier'
         ])->findOrFail($id);
         
-        return success($transaction);
+        return success(TransactionParser::first($transaction));
     }
 
     /**

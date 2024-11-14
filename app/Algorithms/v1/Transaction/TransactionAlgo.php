@@ -2,6 +2,7 @@
 namespace App\Algorithms\v1\Transaction;
 
 use App\Models\v1\Transaction\Transaction;
+use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class TransactionAlgo
                 }
             });
 
-            return success($this->transaction);
+            return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
         }
@@ -48,7 +49,7 @@ class TransactionAlgo
                 }
             });
 
-            return success($this->transaction);
+            return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
         }
@@ -64,7 +65,7 @@ class TransactionAlgo
                     ->saveActivity('Delete Transaction : ' . $this->transaction->id);
             });
 
-            return success($this->transaction);
+            return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
         }
