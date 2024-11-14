@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('overtime')->nullable();
             $table->string('total_salary');
 
-            $table->foreignId('userId');
+            $table->foreignId('userId')->nullable();
             $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
             $this->getDefaultTimestamps($table);
         });
