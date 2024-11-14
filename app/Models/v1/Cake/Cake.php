@@ -51,4 +51,9 @@ class Cake extends BaseModel
         return $this->hasManyThrough(Order::class, Transaction::class, 'cakeId', 'transactionId');
     }
 
+    public function discount(): HasOne
+    {
+        return $this->hasOne(Discount::class, 'cakeId');
+    }
+
 }
