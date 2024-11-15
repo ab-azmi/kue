@@ -4,8 +4,11 @@ namespace App\Models\v1\Cake;
 
 use App\Models\BaseModel;
 use App\Models\v1\Cake\Traits\HasActivityDiscountProperty;
+use App\Observers\Cake\DiscountObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy([DiscountObserver::class])]
 class Discount extends BaseModel
 {
     use HasActivityDiscountProperty;

@@ -18,8 +18,6 @@ class DiscountAlgo
         try {
             DB::transaction(function () use ($request) {
                 $this->discount = Discount::create($request->all());
-                $this->discount->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
@@ -32,10 +30,7 @@ class DiscountAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->discount->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
                 $this->discount->update($request->all());
-                $this->discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
@@ -48,10 +43,7 @@ class DiscountAlgo
     {
         try {
             DB::transaction(function () {
-                $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
                 $this->discount->delete();
-                $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
