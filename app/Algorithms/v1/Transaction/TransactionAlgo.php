@@ -15,19 +15,17 @@ class TransactionAlgo
 {
     public function __construct(public ?Transaction $transaction = null) {}
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
                 $this->transaction = Transaction::create($request->except('orders'));
 
-                $this->transaction->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Transaction : ' . $this->transaction->id);
-
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
                     $this->createOrders($orders);
                 }
+                
             });
             
             return success(TransactionParser::first($this->transaction));
@@ -40,12 +38,7 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->transaction->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
-
                 $this->transaction->update($request->except('orders'));
-
-                $this->transaction->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Transaction : ' . $this->transaction->id);
 
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
@@ -63,10 +56,7 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () {
-                $this->transaction->setOldActivityPropertyAttributes(ActivityAction::DELETE);
                 $this->transaction->delete();
-                $this->transaction->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Transaction : ' . $this->transaction->id);
             });
 
             return success(TransactionParser::first($this->transaction));

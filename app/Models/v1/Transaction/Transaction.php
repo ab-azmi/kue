@@ -5,7 +5,10 @@ namespace App\Models\v1\Transaction;
 use App\Models\BaseModel;
 use App\Models\v1\Transaction\Traits\HasActivityTransactionProperty;
 use App\Models\v1\User\User;
+use App\Observers\Transaction\TransactionObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([TransactionObserver::class])]
 class Transaction extends BaseModel
 {
     use HasActivityTransactionProperty;
