@@ -21,6 +21,7 @@ class CakeController extends Controller
         $cakes = Cake::with([
             'variant',
             'ingridients',
+            'discounts',
         ])->orderBy('createdAt', 'desc')
         ->getOrPaginate($request, true);
 
@@ -44,6 +45,7 @@ class CakeController extends Controller
         $cake->load([
             'variant',
             'ingridients',
+            'discounts'
         ]);
 
         return success($cake);

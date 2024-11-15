@@ -25,11 +25,13 @@ class CakeParser extends BaseParser
             'profitMargin' => $data->profitMargin,
             'cogs' => $data->cogs,
             'sellPrice' => $data->sellPrice,
+            'stock' => $data->stock,
             'images' => $data->images,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
             'ingridients' => IngridientParser::get($data->ingridients),
             'variant' => CakeVariantParser::first($data->variant),
+            'discounts' => DiscountParser::get($data->discount),
         ];
     }
 
@@ -45,6 +47,7 @@ class CakeParser extends BaseParser
             'profitMargin' => $data->profitMargin,
             'cogs' => $data->cogs,
             'sellPrice' => $data->sellPrice,
+            'stock' => $data->stock,
             'images' => $data->images,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
