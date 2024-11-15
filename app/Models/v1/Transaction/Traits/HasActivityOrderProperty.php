@@ -3,6 +3,7 @@
 namespace App\Models\v1\Transaction\Traits;
 
 use App\Models\v1\Activity\Traits\HasActivity;
+use App\Parser\Transaction\OrderParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivityOrderProperty
@@ -15,7 +16,7 @@ trait HasActivityOrderProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::GENERAL;
+        return ActivityType::ORDER;
     }
 
     /**
@@ -63,7 +64,7 @@ trait HasActivityOrderProperty
     {
         $this->refresh();
 
-        return [];
+        return OrderParser::first($this);
     }
 
 }

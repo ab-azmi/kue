@@ -3,6 +3,7 @@
 namespace App\Models\v1\Transaction\Traits;
 
 use App\Models\v1\Activity\Traits\HasActivity;
+use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivityTransactionProperty
@@ -15,7 +16,7 @@ trait HasActivityTransactionProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::GENERAL;
+        return ActivityType::TRANSACTION;
     }
 
     /**
@@ -63,7 +64,7 @@ trait HasActivityTransactionProperty
     {
         $this->refresh();
 
-        return [];
+        return TransactionParser::first($this);
     }
 
 }

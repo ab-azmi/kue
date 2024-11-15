@@ -29,7 +29,7 @@ class TransactionAlgo
                     $this->createOrders($orders);
                 }
             });
-
+            
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
@@ -79,6 +79,8 @@ class TransactionAlgo
 
     private function createOrders($orders)
     {
+        $this->syncCakeStock($orders);
+
         foreach ($orders as $order) {
             $orderModel = $this->transaction->orders()->create($order);
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
@@ -86,7 +88,7 @@ class TransactionAlgo
         }
 
         $this->setTotalPrices($orders);
-        $this->syncCakeStock($orders);
+        $this->transaction->refresh();
     }
 
     private function updateOrders($request)
@@ -106,43 +108,18 @@ class TransactionAlgo
         return $orders;
     }
 
-    private function calculateTotalPrice($orders)
-    {
-        $totalPrice = 0;
-
-        foreach ($orders as $order) {
-            $totalPrice += $order['price'] * $order['quantity'] - $order['discount'];
-        }
-
-        return $totalPrice;
-    }
-
-    private function calculateSumOrderPrice($orders)
-    {
-        $sumOrderPrice = 0;
-
-        foreach ($orders as $order) {
-            $sumOrderPrice += $order['price'] * $order['quantity'];
-        }
-
-        return $sumOrderPrice;
-    }
-
-    private function calculateTotalDiscount($orders)
-    {
-        $totalDiscount = 0;
-
-        foreach ($orders as $order) {
-            $totalDiscount += $order['discount'];
-        }
-
-        return $totalDiscount;
-    }
-
     private function syncCakeStock($orders)
     {
+        $cakesIds = array_unique(array_column($orders, 'cakeId'));
+        $cakes = Cake::whereIn('id', $cakesIds)->get()->keyBy('id');
+
         foreach ($orders as $order) {
-            $cake = Cake::find($order['cakeId']);
+            $cake = $cakes[$order['cakeId']];
+           
+            if ($cake->stock < $order['quantity']) {
+                throw new \Exception('Stock is not enough for cake : ' . $cake->name);
+            }
+
             $cake->stock -= $order['quantity'];
             $cake->save();
         }
@@ -150,14 +127,23 @@ class TransactionAlgo
 
     private function setTotalPrices($orders)
     {
-        $total = $this->calculateTotalPrice($orders);
-        $tax = $total * Tax::TAX_10;
-        $total += $tax;
+        $totalPrice = 0;
+        $sumOrderPrice = 0;
+        $totalDiscount = 0;
+
+        foreach ($orders as $order){
+            $sumOrderPrice += $order['price'] * $order['quantity'];
+            $totalDiscount += $order['discount'];
+        }
+
+        $totalPrice = $sumOrderPrice - $totalDiscount;
+        $tax = $totalPrice * Tax::TAX_10;
+        $totalPrice += $tax;
 
         $this->transaction->update([
-            'orderPrice' => $this->calculateSumOrderPrice($orders),
-            'totalPrice' => $total,
-            'totalDiscount' => $this->calculateTotalDiscount($orders),
+            'orderPrice' => $sumOrderPrice,
+            'totalPrice' => $totalPrice,
+            'totalDiscount' => $totalDiscount,
             'tax' => $tax
         ]);
     }

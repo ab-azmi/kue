@@ -31,7 +31,7 @@ class TransactionParser extends BaseParser
             'updatedAt' => $data->updatedAt,
             'deletedAt' => $data->deletedAt,
             'cashier' => UserParser::brief($data->cashier),
-            'orders' => OrderParser::get($data->orders)
+            'orders' => OrderParser::briefs($data->orders)
         ];
     }
 
