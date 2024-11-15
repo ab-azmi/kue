@@ -5,8 +5,11 @@ namespace App\Models\v1\Ingridient;
 use App\Models\BaseModel;
 use App\Models\v1\Cake\Cake;
 use App\Models\v1\Ingridient\Traits\HasActivityIngridientProperty;
+use App\Observers\Ingridient\IngridientObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[ObservedBy([IngridientObserver::class])]
 class Ingridient extends BaseModel
 {
     use HasActivityIngridientProperty;
