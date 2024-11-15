@@ -17,9 +17,6 @@ class UserAlgo
         try {
             DB::transaction(function () use ($request) {
                 $this->user = User::create($request->validated());
-                
-                $this->user->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new User : ' . $this->user->id);
             });
 
             return success(UserParser::first($this->user));
@@ -32,12 +29,7 @@ class UserAlgo
     public function update(Request $request){
         try {
             DB::transaction(function () use ($request) {
-                $this->user->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
-
                 $this->user->update($request->validated());
-                
-                $this->user->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update User : ' . $this->user->id);
             });
 
             return success(UserParser::first($this->user));
@@ -48,13 +40,8 @@ class UserAlgo
 
     public function destroy(){
         try {
-            DB::transaction(function () {
-                $this->user->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-                
+            DB::transaction(function () {                
                 $this->user->delete();
-                
-                $this->user->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete User : ' . $this->user->id);
             });
 
             return success(UserParser::first($this->user));

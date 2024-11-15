@@ -6,9 +6,12 @@ use App\Models\BaseModel;
 use App\Models\v1\Salary\Salary;
 use App\Models\v1\Transaction\Transaction;
 use App\Models\v1\User\Traits\HasActivityUserProperty;
+use App\Observers\User\UserObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+#[ObservedBy([UserObserver::class])]
 class User extends BaseModel
 {
     use HasActivityUserProperty;

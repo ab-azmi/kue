@@ -15,7 +15,7 @@ trait HasActivityUserProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::GENERAL;
+        return ActivityType::USER;
     }
 
     /**
