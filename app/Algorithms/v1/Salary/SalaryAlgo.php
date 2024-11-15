@@ -17,9 +17,6 @@ class SalaryAlgo
         try {
             DB::transaction(function() use ($request){
                 $this->salary = Salary::create($request->all());
-                
-                $this->salary->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Salary : ' . $this->salary->id);
             });
 
             return success($this->salary);
@@ -31,12 +28,7 @@ class SalaryAlgo
     public function update(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->salary->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
-
                 $this->salary->update($request->all());
-
-                $this->salary->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Salary : ' . $this->salary->id);
             });
 
             return success($this->salary);
@@ -48,12 +40,7 @@ class SalaryAlgo
     public function delete(){
         try {
             DB::transaction(function(){
-                $this->salary->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-
                 $this->salary->delete();
-
-                $this->salary->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Salary : ' . $this->salary->id);
             });
 
             return success($this->salary);

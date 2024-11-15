@@ -5,8 +5,11 @@ namespace App\Models\v1\Salary;
 use App\Models\BaseModel;
 use App\Models\v1\Salary\Traits\HasActivitySalaryProperty;
 use App\Models\v1\User\User;
+use App\Observers\Salary\SalaryObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy([SalaryObserver::class])]
 class Salary extends BaseModel
 {
     use HasActivitySalaryProperty;
