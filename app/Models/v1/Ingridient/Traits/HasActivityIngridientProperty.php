@@ -3,6 +3,7 @@
 namespace App\Models\v1\Ingridient\Traits;
 
 use App\Models\v1\Activity\Traits\HasActivity;
+use App\Parser\Ingridient\IngridientParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivityIngridientProperty
@@ -15,7 +16,7 @@ trait HasActivityIngridientProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::GENERAL;
+        return ActivityType::INGRIDIENT;
     }
 
     /**
@@ -63,7 +64,7 @@ trait HasActivityIngridientProperty
     {
         $this->refresh();
 
-        return [];
+        return IngridientParser::first($this);
     }
 
 }
