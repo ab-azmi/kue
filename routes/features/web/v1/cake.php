@@ -25,3 +25,9 @@ Route::prefix('cakevariants')
     ->namespace('Setting')
     ->controller('CakeVariantController')
     ->group(fn() => CRUD());
+
+
+Route::prefix('discounts')
+    ->namespace('Cake')
+    ->controller('DiscountController')
+    ->group(fn() => CRUD());

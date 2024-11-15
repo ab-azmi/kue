@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\v1\Cake\Cake;
 use App\Models\v1\Cake\CakeIngridient;
+use App\Models\v1\Cake\Discount;
 use App\Models\v1\Ingridient\Ingridient;
 use App\Models\v1\Setting\CakeVariant;
 use Illuminate\Database\Seeder;
@@ -39,6 +40,25 @@ class CakeSeeder extends Seeder
                 ]);
             }
         }
+
+        DB::table('discounts')->insert([
+            [
+                'name' => 'Discount 1',
+                'description' => 'Discount 1 Description',
+                'start_date' => '2021-01-01',
+                'end_date' => '2021-12-31',
+                'value' => '10000',
+                'cakeId' => Cake::all()->random()->id,
+            ],
+            [
+                'name' => 'Discount 2',
+                'description' => 'Discount 2 Description',
+                'start_date' => '2021-01-01',
+                'end_date' => '2021-12-31',
+                'value' => '20000',
+                'cakeId' => Cake::all()->random()->id,
+            ],
+        ]);
     }
 
 

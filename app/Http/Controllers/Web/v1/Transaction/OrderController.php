@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\v1\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Order extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
