@@ -25,9 +25,6 @@ class CakeAlgo
                     'variant',
                     'ingridients',
                 ]);
-                
-                $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -39,15 +36,10 @@ class CakeAlgo
 
     public function update(Request $request) {
         try {
-            DB::transaction(function() use ($request){
-                $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
-                
+            DB::transaction(function() use ($request){                
                 $this->detachIngridients();
                 $this->cake->update($request->except('ingridients'));
                 $this->attachIngridients($request->ingridients);
-
-                $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -58,14 +50,9 @@ class CakeAlgo
 
     public function destroy() {
         try {
-            DB::transaction(function(){
-                $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-                
+            DB::transaction(function(){             
                 $this->cake->ingridients()->detach();
                 $this->cake->delete();
-                
-                $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));

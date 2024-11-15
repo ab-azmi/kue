@@ -8,11 +8,14 @@ use App\Models\v1\Ingridient\Ingridient;
 use App\Models\v1\Setting\CakeVariant;
 use App\Models\v1\Transaction\Order;
 use App\Models\v1\Transaction\Transaction;
+use App\Observers\Cake\CakeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+#[ObservedBy([CakeObserver::class])]
 class Cake extends BaseModel
 {
     use HasActivityCakeProperty;
