@@ -17,7 +17,13 @@ class FixedCostParser extends BaseParser
             return null;
         }
 
-        return parent::first($data);
+        return [
+            'id' => $data->id,
+            'name' => $data->name,
+            'description' => $data->description,
+            'amount' => $data->amount,
+            'frequency' => $data->frequency,
+        ];
     }
 
 }

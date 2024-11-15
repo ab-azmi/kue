@@ -18,7 +18,7 @@ Route::prefix('cakes')
     ->controller('CakeController')
     ->group(fn() => CRUD())
     ->group(function () {
-        Route::get('test', fn() => 'test');
+        Route::post('/cogs', 'cogs');
     });
 
 Route::prefix('cakevariants')

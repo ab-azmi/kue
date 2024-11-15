@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\v1\Setting;
 use App\Algorithms\v1\Setting\FixedCostAlgo;
 use App\Http\Controllers\Controller;
 use App\Models\v1\Setting\FixedCost;
+use App\Parser\Setting\FixedCostParser;
 use Illuminate\Http\Request;
 
 class FixedCostController extends Controller
@@ -36,7 +37,7 @@ class FixedCostController extends Controller
     public function show(string $id)
     {
         $fixedcost = FixedCost::findOrFail($id);
-        return success($fixedcost);
+        return success(FixedCostParser::first($fixedcost));
     }
 
     /**
