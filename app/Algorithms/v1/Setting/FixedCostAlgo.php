@@ -17,8 +17,6 @@ class FixedCostAlgo
         try {
             DB::transaction(function() use ($request){
                 $this->fixedCost = FixedCost::create($request->all());
-                $this->fixedCost->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Fixed Cost : ' . $this->fixedCost->id);
             });
 
             return success($this->fixedCost);
@@ -30,10 +28,7 @@ class FixedCostAlgo
     public function update(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
                 $this->fixedCost->update($request->all());
-                $this->fixedCost->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Fixed Cost : ' . $this->fixedCost->id);
             });
 
             return success($this->fixedCost);
@@ -45,10 +40,7 @@ class FixedCostAlgo
     public function delete(){
         try {
             DB::transaction(function(){
-                $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
                 $this->fixedCost->delete();
-                $this->fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Fixed Cost : ' . $this->fixedCost->id);
             });
 
             return success($this->fixedCost);
