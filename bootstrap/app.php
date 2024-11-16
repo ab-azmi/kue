@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         Route::match(['get', 'post'], 'testing', "$namespace\\Controller@testing");
 
         Route::prefix(config('base.conf.prefix.web') . "/$version/$service")
-            ->middleware(['web'])
+            ->middleware(['web', AuthMiddleware::class])
             ->namespace("$namespace\\" . config('base.conf.namespace.web') . "\\$version")
             ->group(base_path('routes/web.php'));
 

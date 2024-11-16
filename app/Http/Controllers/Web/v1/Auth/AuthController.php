@@ -17,4 +17,9 @@ class AuthController extends Controller
     {
         return $this->algo->login($request);
     }
+
+    public function logout(Request $request)
+    {
+        return $this->algo->logout($request);
+    }
 }

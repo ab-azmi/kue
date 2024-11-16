@@ -22,10 +22,11 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $transactions = Transaction::with([
-            'orders'
+            'orders',
+            'cashier'
         ])->orderBy('createdAt')->getOrPaginate($request, true);
         
-        return success(TransactionParser::get($transactions));
+        return success($transactions);
     }
 
     /**
