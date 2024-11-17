@@ -25,7 +25,7 @@ class TransactionAlgo
                 $this->transaction->refresh();
             });
 
-            return response()->json($this->transaction);
+            return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
         }
@@ -121,9 +121,8 @@ class TransactionAlgo
             if ($cake->stock < $order['quantity']) {
                 throw new \Exception('Stock is not enough for cake : ' . $cake->name);
             }
-
-            $cake->stock -= $order['quantity'];
-            $cake->save();
+            // DONE : BUG ga berkurang
+            Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);
         }
     }
 
@@ -139,7 +138,7 @@ class TransactionAlgo
         }
 
         $totalPrice = $sumOrderPrice - $totalDiscount;
-        $tax = $totalPrice * Tax::TAX_10;
+        $tax = $totalPrice * Tax::TAX_5;
         $totalPrice += $tax;
 
         return [

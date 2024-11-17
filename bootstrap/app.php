@@ -16,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         Route::match(['get', 'post'], 'testing', "$namespace\\Controller@testing");
 
         Route::prefix(config('base.conf.prefix.web') . "/$version/$service")
-            ->middleware(['web', AuthMiddleware::class])
+            // ->middleware(['web', AuthMiddleware::class])
+            ->middleware(['web'])
             ->namespace("$namespace\\" . config('base.conf.namespace.web') . "\\$version")
             ->group(base_path('routes/web.php'));
 
