@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('role')->nullable();
-            $table->string('token')->nullable();
             $table->rememberToken();
             $this->getDefaultTimestamps($table);
         });

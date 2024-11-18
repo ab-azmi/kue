@@ -22,4 +22,8 @@ class AuthController extends Controller
     {
         return $this->algo->logout($request);
     }
+
+    public function refresh(){
+        return $this->algo->refresh();
+    }
 }

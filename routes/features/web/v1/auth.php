@@ -8,6 +8,7 @@ Route::prefix('auth')
     ->namespace('Auth')
     ->controller('AuthController')
     ->group(function () {
-        Route::post('/login', 'login')->withoutMiddleware([AuthMiddleware::class]);
+        Route::post('/login', 'login')->withoutMiddleware('auth:api');
         Route::post('/logout', 'logout');
+        Route::post('/refresh', 'refresh');
     });

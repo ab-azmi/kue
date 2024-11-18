@@ -13,18 +13,17 @@ class AuthAlgo
     public function login(Request $request)
     {
         try {
-            $credentials = $request->validate([
-                'email' => ['required', 'email'],
+            $request->validate([
+                'email' => ['required', 'email', 'exists:users,email', 'max:255'],
                 'password' => ['required'],
             ]);
-     
-            if (Auth::attempt($credentials)) {
-                $user = User::where('email', $credentials['email'])->first();
-                $token = Str::random(60);
-                
-                DB::table('users')
-                    ->where('id', $user->id)
-                    ->update(['token' => hash('sha256', $token)]);
+
+            $credentials = $request->only('email', 'password');
+
+            $token = Auth::attempt($credentials);
+
+            if ($token) {
+                $user = Auth::user();
                 
                 $request->session()->regenerate();
      
@@ -34,6 +33,7 @@ class AuthAlgo
                     'user' => $user->only(['id', 'name', 'email', 'role']),
                 ]);
             }
+
             return response()->json([
                 'message' => 'Unauthorized',
             ], 401);
@@ -45,22 +45,25 @@ class AuthAlgo
 
     public function register(Request $request) {}
 
-    public function revalidate(Request $request) {}
-
     public function logout(Request $request) {
         try {
-            $token = $request->header('Authorization');
-            $token = explode(' ', $token)[1];
-
-            $user = User::where('token', hash('sha256', $token))->first();
-            DB::table('users')
-                ->where('id', $user->id)
-                ->update(['token' => null]);
-
-            $request->session()->invalidate();
+            Auth::logout();
 
             return response()->json([
                 'message' => 'Logged out',
+            ]);
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
+
+    public function refresh() {
+        try {
+            $token = Auth::refresh();
+
+            return response()->json([
+                'token' => $token,
+                'auth_type' => 'Bearer',
             ]);
         } catch (\Exception $e) {
             exception($e);
