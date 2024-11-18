@@ -17,13 +17,14 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('userId')->nullable();
+            $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
+
+
             $table->bigInteger('basic_salary');
             $table->string('tax')->nullable();
             $table->bigInteger('overtime')->nullable();
             $table->bigInteger('total_salary');
-
-            $table->foreignId('userId')->nullable();
-            $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
             $this->getDefaultTimestamps($table);
         });
     }

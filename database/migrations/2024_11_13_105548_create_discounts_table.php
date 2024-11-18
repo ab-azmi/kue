@@ -17,14 +17,15 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cakeId');
+            $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
+            
             $table->string('name');
             $table->string('description')->nullable();
             $table->date('start_date')->default(now());
             $table->date('end_date')->default(now()->addDay());
             $table->bigInteger('value');
 
-            $table->foreignId('cakeId');
-            $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
             $this->getDefaultTimestamps($table);
         });
     }

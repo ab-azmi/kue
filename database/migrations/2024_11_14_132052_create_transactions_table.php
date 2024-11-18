@@ -17,15 +17,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cashierId');
+            $table->foreign('cashierId')->references('id')->on('users')->cascadeOnDelete();
+
             $table->integer('quantity')->nullable();
             $table->string('customerName')->default('Anonymous');
             $table->string('tax')->nullable();
             $table->bigInteger('orderPrice')->nullable();
             $table->bigInteger('totalPrice')->nullable();
             $table->bigInteger('totalDiscount')->nullable();
-            
-            $table->foreignId('cashierId');
-            $table->foreign('cashierId')->references('id')->on('users')->cascadeOnDelete();
             $this->getDefaultTimestamps($table);
         });
     }
