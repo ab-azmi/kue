@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1\Salary;
+namespace App\Http\Requests\Salary;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Algorithms\Cake;
 
-use App\Models\v1\Cake\Discount;
+use App\Models\Cake\Discount;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

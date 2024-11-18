@@ -2,8 +2,7 @@
 
 namespace App\Algorithms\Setting;
 
-use App\Models\v1\Setting\FixedCost;
-use App\Services\Constant\Activity\ActivityAction;
+use App\Models\Setting\FixedCost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Ingridient;
 use App\Algorithms\Ingridient\IngridientAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ingridient\IngridientRequest;
-use App\Models\v1\Ingridient\Ingridient;
+use App\Models\Ingridient\Ingridient;
 use Illuminate\Http\Request;
 
 class IngridientController extends Controller

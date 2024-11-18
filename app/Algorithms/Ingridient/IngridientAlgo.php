@@ -1,8 +1,7 @@
 <?php
 namespace App\Algorithms\Ingridient;
 
-use App\Models\v1\Ingridient\Ingridient;
-use App\Services\Constant\Activity\ActivityAction;
+use App\Models\Ingridient\Ingridient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

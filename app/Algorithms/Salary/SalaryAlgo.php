@@ -1,8 +1,7 @@
 <?php
 namespace App\Algorithms\Salary;
 
-use App\Models\v1\Salary\Salary;
-use App\Services\Constant\Activity\ActivityAction;
+use App\Models\Salary\Salary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Cake;
 use App\Algorithms\Cake\DiscountAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Discount\DiscountRequest;
-use App\Models\v1\Cake\Discount;
+use App\Models\Cake\Discount;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller

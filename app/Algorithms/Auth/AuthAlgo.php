@@ -2,11 +2,8 @@
 
 namespace App\Algorithms\Auth;
 
-use App\Models\v1\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class AuthAlgo
 {

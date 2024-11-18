@@ -6,7 +6,7 @@ use App\Algorithms\Cake\CakeAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cake\CakeRequest;
 use App\Http\Requests\Cake\COGSRequest as CakeCOGSRequest;
-use App\Models\v1\Cake\Cake;
+use App\Models\Cake\Cake;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller

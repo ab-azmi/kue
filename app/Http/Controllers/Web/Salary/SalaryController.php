@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Web\Salary;
 
 use App\Algorithms\Salary\SalaryAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Salary\SalaryRequest;
-use App\Models\v1\Salary\Salary;
+use App\Http\Requests\Salary\SalaryRequest;
+use App\Models\Salary\Salary;
 use App\Parser\Salary\SalaryParser;
 use Illuminate\Http\Request;
 

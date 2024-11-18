@@ -6,7 +6,7 @@ use App\Algorithms\User\UserAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\v1\User\User;
+use App\Models\User\User;
 use App\Parser\User\UserParser;
 use Illuminate\Http\Request;
 

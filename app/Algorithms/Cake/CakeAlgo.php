@@ -2,10 +2,10 @@
 
 namespace App\Algorithms\Cake;
 
-use App\Models\v1\Cake\Cake;
-use App\Models\v1\Ingridient\Ingridient;
-use App\Models\v1\Salary\Salary;
-use App\Models\v1\Setting\FixedCost;
+use App\Models\Cake\Cake;
+use App\Models\Ingridient\Ingridient;
+use App\Models\Salary\Salary;
+use App\Models\Setting\FixedCost;
 use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;

@@ -2,9 +2,8 @@
 
 namespace App\Algorithms\Transaction;
 
-use App\Models\v1\Cake\Cake;
-use App\Models\v1\Transaction\Order;
-use App\Models\v1\Transaction\Transaction;
+use App\Models\Cake\Cake;
+use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
 use App\Services\Constant\Cake\Tax;

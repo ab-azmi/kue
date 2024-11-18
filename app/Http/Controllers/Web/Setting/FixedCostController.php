@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Setting;
 
 use App\Algorithms\Setting\FixedCostAlgo;
 use App\Http\Controllers\Controller;
-use App\Models\v1\Setting\FixedCost;
+use App\Models\Setting\FixedCost;
 use App\Parser\Setting\FixedCostParser;
 use Illuminate\Http\Request;
 

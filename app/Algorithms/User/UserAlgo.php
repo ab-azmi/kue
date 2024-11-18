@@ -2,9 +2,8 @@
 
 namespace App\Algorithms\User;
 
-use App\Models\v1\User\User;
+use App\Models\User\User;
 use App\Parser\User\UserParser;
-use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

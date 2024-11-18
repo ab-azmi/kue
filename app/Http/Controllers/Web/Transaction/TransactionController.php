@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Web\Transaction;
 
 use App\Algorithms\Transaction\TransactionAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Transaction\TransactionRequest;
-use App\Models\v1\Transaction\Transaction;
+use App\Http\Requests\Transaction\TransactionRequest;
+use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use Illuminate\Http\Request;
 
