@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Web\Cake;
 
 use App\Algorithms\Cake\DiscountAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Discount\CreateDiscountRequest;
-use App\Http\Requests\v1\Discount\UpdateDiscountRequest;
+use App\Http\Requests\Discount\DiscountRequest;
 use App\Models\v1\Cake\Discount;
 use Illuminate\Http\Request;
 
@@ -27,7 +26,7 @@ class DiscountController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateDiscountRequest $request)
+    public function store(DiscountRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -44,7 +43,7 @@ class DiscountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDiscountRequest $request, string $id)
+    public function update(DiscountRequest $request, string $id)
     {
         $this->algo->discount = Discount::findOrFail($id);
         return $this->algo->update($request);

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Salary;
+namespace App\Http\Requests\Component;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateSalaryRequest extends FormRequest
+class ComponentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,7 @@ class CreateSalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'basic_salary' => ['required', 'numeric'],
-            'tax' => ['nullable', 'string'],
-            'overtime' => ['nullable', 'numeric'],
-            'total_salary' => ['nullable', 'numeric'],
-            'user_id' => ['nullable', 'numeric'],
+            'name' => 'required|string'
         ];
     }
 }

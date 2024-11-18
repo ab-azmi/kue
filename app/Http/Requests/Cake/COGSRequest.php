@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Ingridient;
+namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateIngridientRequest extends FormRequest
+class COGSRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class CreateIngridientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'unit' => 'required|string|max:255',
-            'pricePerUnit' => 'required|numeric',
-            'expirationDate' => 'required|string',
-            'quantity' => 'required|integer',
-            'supplier' => 'nullable|string|max:255',
+            'volume' => 'required|numeric',
+            'margin' => 'nullable|string',
+            'ingridients' => 'required|array',
+            'ingridients.*.id' => 'required|exists:ingridients,id',
+            'ingridients.*.quantity' => 'required|numeric',
         ];
     }
 }

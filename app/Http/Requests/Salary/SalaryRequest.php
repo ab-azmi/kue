@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Discount;
+namespace App\Http\Requests\v1\Salary;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class UpdateDiscountRequest extends FormRequest
+class SalaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class UpdateDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'start_date' => 'required|string',
-            'end_date' => 'required|string',
-            'value' => 'required|integer',
-            'cakeId' => 'required|integer|exists:cakes,id',
+            'basic_salary' => ['required', 'numeric'],
+            'tax' => ['nullable', 'string'],
+            'overtime' => ['nullable', 'numeric'],
+            'total_salary' => ['nullable', 'numeric'],
+            'user_id' => ['nullable', 'numeric'],
         ];
     }
 }

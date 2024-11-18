@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Cake;
+namespace App\Http\Requests\User;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class COGSRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,10 @@ class COGSRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'volume' => 'required|numeric',
-            'margin' => 'nullable|string',
-            'ingridients' => 'required|array',
-            'ingridients.*.id' => 'required|exists:ingridients,id',
-            'ingridients.*.quantity' => 'required|numeric',
+            'name' => 'required|string|max:255|min:2',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:5',
+            'role' => 'string|max:10'
         ];
     }
 }

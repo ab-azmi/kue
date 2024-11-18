@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Salary;
 
 use App\Algorithms\Salary\SalaryAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Salary\CreateSalaryRequest;
+use App\Http\Requests\v1\Salary\SalaryRequest;
 use App\Models\v1\Salary\Salary;
 use App\Parser\Salary\SalaryParser;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class SalaryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateSalaryRequest $request)
+    public function store(SalaryRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -44,7 +44,7 @@ class SalaryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SalaryRequest $request, string $id)
     {
         $this->algo->salary = Salary::findOrFail($id);
         return $this->algo->update($request);

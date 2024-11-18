@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1\Transaction;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateTransactionRequest extends FormRequest
+class TransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

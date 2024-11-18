@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Component;
+namespace App\Http\Requests\Ingridient;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class ComponentRequest extends FormRequest
+class IngridientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,12 @@ class ComponentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string'
+            'name' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+            'pricePerUnit' => 'required|numeric',
+            'expirationDate' => 'required|date',
+            'quantity' => 'required|integer',
+            'supplier' => 'nullable|string|max:255',
         ];
     }
 }

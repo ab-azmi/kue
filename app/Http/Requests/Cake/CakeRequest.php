@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\Cake;
+namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateCakeRequest extends FormRequest
+class CakeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

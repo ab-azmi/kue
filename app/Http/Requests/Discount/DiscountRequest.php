@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1\User;
+namespace App\Http\Requests\Discount;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class DiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,12 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|min:2',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:5',
-            'role' => 'string|max:10'
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+            'value' => 'required|integer',
+            'cakeId' => 'required|integer|exists:cakes,id',
         ];
     }
 }

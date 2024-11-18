@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Web\Cake;
 
 use App\Algorithms\Cake\CakeAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Cake\COGSRequest;
-use App\Http\Requests\v1\Cake\CreateCakeRequest;
+use App\Http\Requests\Cake\CakeRequest;
+use App\Http\Requests\Cake\COGSRequest as CakeCOGSRequest;
 use App\Models\v1\Cake\Cake;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,7 @@ class CakeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateCakeRequest $request)
+    public function store(CakeRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -55,7 +55,7 @@ class CakeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CakeRequest $request, string $id)
     {
         $cake = Cake::findOrFail($id);
         $this->algo->cake = $cake;
@@ -74,7 +74,7 @@ class CakeController extends Controller
         return $this->algo->destroy();
     }
 
-    public function cogs(COGSRequest $request)
+    public function cogs(CakeCOGSRequest $request)
     {
         return $this->algo->COGS($request);
     }

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Web\Ingridient;
 
 use App\Algorithms\Ingridient\IngridientAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Ingridient\CreateIngridientRequest;
-use App\Http\Requests\v1\Ingridient\UpdateIngridientRequest;
+use App\Http\Requests\Ingridient\IngridientRequest;
 use App\Models\v1\Ingridient\Ingridient;
 use Illuminate\Http\Request;
 
@@ -28,7 +27,7 @@ class IngridientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateIngridientRequest $request)
+    public function store(IngridientRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -45,7 +44,7 @@ class IngridientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIngridientRequest $request, string $id)
+    public function update(IngridientRequest $request, string $id)
     {
         $this->algo->ingridient = Ingridient::findOrFail($id);
         return $this->algo->update($request);
