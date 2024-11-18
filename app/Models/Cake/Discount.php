@@ -22,7 +22,7 @@ class Discount extends BaseModel
         self::DELETED_AT => 'datetime'
     ];
     
-    //----------------------------------- RELATIONSHIP -----------------------------------//
+    /** --- RELATIONSHIP --- */
 
     public function cake(): BelongsTo
     {

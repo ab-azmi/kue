@@ -29,7 +29,7 @@ class Cake extends BaseModel
         self::DELETED_AT => 'datetime'
     ];
 
-    // -------------------- RELATIONSHIP --------------------
+    /** --- RELATIONSHIP --- */
 
     public function ingridients(): BelongsToMany
     {

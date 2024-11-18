@@ -22,7 +22,7 @@ class Transaction extends BaseModel
         self::DELETED_AT => 'datetime'
     ];
 
-    // ------------------------------ RELATIONSHIP ------------------------------
+    /** --- RELATIONSHIP --- */
 
     public function orders()
     {

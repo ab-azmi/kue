@@ -61,7 +61,7 @@ class TransactionAlgo
         }
     }
 
-    // ------------------------------------ Private Function ------------------------------------
+    /** --- PRIVATE FUNCTIONS --- */
 
     private function processOrders(Request $request): array
     {

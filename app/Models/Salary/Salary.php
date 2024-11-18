@@ -23,7 +23,7 @@ class Salary extends BaseModel
         self::DELETED_AT => 'datetime'
     ];
 
-    // ------------------------------ RELATIONSHIP ------------------------------
+    /** --- RELATIONSHIP --- */
 
     public function user(): BelongsTo
     {

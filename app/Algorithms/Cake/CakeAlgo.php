@@ -88,7 +88,7 @@ class CakeAlgo
         }
     }
 
-    // -------------------- PRIVATE FUNCTION --------------------
+    /** --- PRIVATE FUNCTIONS --- */
 
     private function attachIngridients($ingridients)
     {
