@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         Route::prefix(config('base.conf.prefix.web') . "/$version/$service")
             // ->middleware(['web', AuthMiddleware::class])
-            ->middleware(['web'])
+            ->middleware(['web', 'auth:api'])
             ->namespace("$namespace\\" . config('base.conf.namespace.web') . "\\$version")
             ->group(base_path('routes/web.php'));
 
