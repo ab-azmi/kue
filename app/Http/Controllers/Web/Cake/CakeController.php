@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Cake;
+namespace App\Http\Controllers\Web\Cake;
 
-use App\Algorithms\v1\Cake\CakeAlgo;
+use App\Algorithms\Cake\CakeAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Cake\COGSRequest;
 use App\Http\Requests\v1\Cake\CreateCakeRequest;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Ingridient;
+namespace App\Http\Controllers\Web\Ingridient;
 
-use App\Algorithms\v1\Ingridient\IngridientAlgo;
+use App\Algorithms\Ingridient\IngridientAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Ingridient\CreateIngridientRequest;
 use App\Http\Requests\v1\Ingridient\UpdateIngridientRequest;

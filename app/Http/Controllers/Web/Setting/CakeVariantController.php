@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Transaction;
+namespace App\Http\Controllers\Web\Setting;
 
 use App\Http\Controllers\Controller;
+use App\Models\v1\Setting\CakeVariant;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class CakeVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $variants = CakeVariant::getOrPaginate($request, true);
+        return success($variants);
     }
 
     /**

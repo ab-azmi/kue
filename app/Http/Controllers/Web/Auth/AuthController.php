@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Auth;
+namespace App\Http\Controllers\Web\Auth;
 
-use App\Algorithms\v1\Auth\AuthAlgo;
+use App\Algorithms\Auth\AuthAlgo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

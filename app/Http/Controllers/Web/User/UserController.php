@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\User;
+namespace App\Http\Controllers\Web\User;
 
-use App\Algorithms\v1\User\UserAlgo;
+use App\Algorithms\User\UserAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\CreateUserRequest;
 use App\Http\Requests\v1\User\UpdateUserRequest;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Setting;
+namespace App\Http\Controllers\Web\Setting;
 
-use App\Algorithms\v1\Setting\FixedCostAlgo;
+use App\Algorithms\Setting\FixedCostAlgo;
 use App\Http\Controllers\Controller;
 use App\Models\v1\Setting\FixedCost;
 use App\Parser\Setting\FixedCostParser;

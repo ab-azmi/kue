@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Salary;
+namespace App\Http\Controllers\Web\Salary;
 
-use App\Algorithms\v1\Salary\SalaryAlgo;
+use App\Algorithms\Salary\SalaryAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Salary\CreateSalaryRequest;
 use App\Models\v1\Salary\Salary;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Cake;
+namespace App\Http\Controllers\Web\Cake;
 
-use App\Algorithms\v1\Cake\DiscountAlgo;
+use App\Algorithms\Cake\DiscountAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Discount\CreateDiscountRequest;
 use App\Http\Requests\v1\Discount\UpdateDiscountRequest;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web\v1\Transaction;
+namespace App\Http\Controllers\Web\Transaction;
 
-use App\Algorithms\v1\Transaction\TransactionAlgo;
+use App\Algorithms\Transaction\TransactionAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Transaction\CreateTransactionRequest;
 use App\Http\Requests\v1\Transaction\UpdateTransactionRequest;
