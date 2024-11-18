@@ -1,25 +1,23 @@
 <?php
-namespace App\Algorithms\v1\Salary;
+namespace App\Algorithms\Ingridient;
 
-use App\Models\v1\Salary\Salary;
+use App\Models\v1\Ingridient\Ingridient;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SalaryAlgo
+class IngridientAlgo
 {
-    public function __construct(public ?Salary $salary = null)
+    public function __construct(public ?Ingridient $ingridient = null)
     {
-        
     }
 
-    public function create(Request $request){
+    public function store(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->salary = Salary::create($request->all());
+                $this->ingridient = Ingridient::create($request->validated());
             });
-
-            return success($this->salary);
+            return success($this->ingridient);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -28,22 +26,21 @@ class SalaryAlgo
     public function update(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->salary->update($request->all());
+                $this->ingridient->update($request->validated());
             });
-
-            return success($this->salary);
+            return success($this->ingridient);
         } catch (\Exception $e) {
             exception($e);
         }
     }
     
-    public function delete(){
+    public function destroy(){
         try {
             DB::transaction(function(){
-                $this->salary->delete();
+                $this->ingridient->cakes()->detach();
+                $this->ingridient->delete();
             });
-
-            return success($this->salary);
+            return success($this->ingridient);
         } catch (\Exception $e) {
             exception($e);
         }

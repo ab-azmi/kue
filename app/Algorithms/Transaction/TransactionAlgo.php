@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Algorithms\v1\Transaction;
+namespace App\Algorithms\Transaction;
 
 use App\Models\v1\Cake\Cake;
 use App\Models\v1\Transaction\Order;

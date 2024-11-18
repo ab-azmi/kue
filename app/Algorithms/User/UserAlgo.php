@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Algorithms\v1\User;
+namespace App\Algorithms\User;
 
 use App\Models\v1\User\User;
 use App\Parser\User\UserParser;

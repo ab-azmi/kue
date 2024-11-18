@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Algorithms\v1\Cake;
+namespace App\Algorithms\Cake;
 
 use App\Models\v1\Cake\Cake;
 use App\Models\v1\Ingridient\Ingridient;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Algorithms\v1\Component;
+namespace App\Algorithms\Component;
 
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Database\Eloquent\Model;

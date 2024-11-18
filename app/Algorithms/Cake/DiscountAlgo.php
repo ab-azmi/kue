@@ -1,5 +1,5 @@
 <?php
-namespace App\Algorithms\v1\Cake;
+namespace App\Algorithms\Cake;
 
 use App\Models\v1\Cake\Discount;
 use App\Services\Constant\Activity\ActivityAction;

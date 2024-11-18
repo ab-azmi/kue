@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Algorithms\v1\Auth;
+namespace App\Algorithms\Auth;
 
 use App\Models\v1\User\User;
 use Illuminate\Http\Request;
