@@ -1,11 +1,11 @@
 <?php
 namespace App\Routes\Features\Web;
 
+use App\Http\Controllers\Web\Ingridient\IngridientController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('ingridients')
-    ->namespace('Ingridient')
-    ->controller('IngridientController')
+    ->controller(IngridientController::class)
     ->group(function(){
         Route::get('/', 'index');
         Route::post('/', 'store');

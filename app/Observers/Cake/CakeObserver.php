@@ -2,7 +2,7 @@
 
 namespace App\Observers\Cake;
 
-use App\Models\v1\Cake\Cake;
+use App\Models\Cake\Cake;
 use App\Services\Constant\Activity\ActivityAction;
 
 class CakeObserver

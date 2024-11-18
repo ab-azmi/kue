@@ -2,7 +2,6 @@
 
 namespace App\Models\User;
 
-use App\Models\BaseModel;
 use App\Models\Salary\Salary;
 use App\Models\Transaction\Transaction;
 use App\Models\User\Traits\HasActivityUserProperty;
@@ -24,8 +23,10 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-    
     ];
+
+    const CREATED_AT = 'createdAt';
+    const UPDATED_AT = 'updatedAt';
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

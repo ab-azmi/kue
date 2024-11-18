@@ -2,7 +2,7 @@
 
 namespace App\Observers\Salary;
 
-use App\Models\v1\Salary\Salary;
+use App\Models\Salary\Salary;
 use App\Services\Constant\Activity\ActivityAction;
 
 class SalaryObserver

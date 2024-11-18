@@ -2,7 +2,7 @@
 
 namespace App\Services\Misc;
 
-use App\Models\v1\Activity\Activity;
+use App\Models\Activity\Activity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

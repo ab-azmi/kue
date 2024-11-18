@@ -2,11 +2,11 @@
 
 namespace App\Routes\Features\Web;
 
+use App\Http\Controllers\Web\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('users')
-    ->namespace('User')
-    ->controller('UserController')
+    ->controller(UserController::class)
     ->group(function (){
         Route::get('/', 'index');
         Route::post('/', 'store');

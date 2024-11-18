@@ -2,7 +2,7 @@
 
 namespace App\Observers\Transaction;
 
-use App\Models\v1\Transaction\Transaction;
+use App\Models\Transaction\Transaction;
 use App\Services\Constant\Activity\ActivityAction;
 
 class TransactionObserver

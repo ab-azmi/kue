@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\v1\Cake\Cake;
-use App\Models\v1\Cake\CakeIngridient;
-use App\Models\v1\Cake\Discount;
-use App\Models\v1\Ingridient\Ingridient;
-use App\Models\v1\Setting\CakeVariant;
+use App\Models\Cake\Cake;
+use App\Models\Cake\CakeIngridient;
+use App\Models\Cake\Discount;
+use App\Models\Ingridient\Ingridient;
+use App\Models\Setting\CakeVariant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

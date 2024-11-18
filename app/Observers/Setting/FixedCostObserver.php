@@ -2,7 +2,7 @@
 
 namespace App\Observers\Setting;
 
-use App\Models\v1\Setting\FixedCost;
+use App\Models\Setting\FixedCost;
 use App\Services\Constant\Activity\ActivityAction;
 
 class FixedCostObserver

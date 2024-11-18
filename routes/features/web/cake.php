@@ -2,32 +2,39 @@
 
 namespace App\Routes\Features\Web;
 
+use App\Http\Controllers\Web\Cake\CakeController;
+use App\Http\Controllers\Web\Cake\DiscountController;
+use App\Http\Controllers\Web\Setting\CakeVariantController;
 use Illuminate\Support\Facades\Route;
 
-function CRUD()
-{
-    Route::get('/', 'index');
-    Route::post('/', 'store');
-    Route::get('/{id}', 'show');
-    Route::put('/{id}', 'update');
-    Route::delete('/{id}', 'destroy');
-}
-
 Route::prefix('cakes')
-    ->namespace('Cake')
-    ->controller('CakeController')
-    ->group(fn() => CRUD())
+    ->controller(CakeController::class)
     ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{id}', 'show');
+        Route::put('/{id}', 'update');
+        Route::delete('/{id}', 'destroy');
         Route::post('/cogs', 'cogs');
     });
 
 Route::prefix('cakevariants')
-    ->namespace('Setting')
-    ->controller('CakeVariantController')
-    ->group(fn() => CRUD());
+    ->controller(CakeVariantController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{id}', 'show');
+        Route::put('/{id}', 'update');
+        Route::delete('/{id}', 'destroy');
+    });
 
 
 Route::prefix('discounts')
-    ->namespace('Cake')
-    ->controller('DiscountController')
-    ->group(fn() => CRUD());
+    ->controller(DiscountController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{id}', 'show');
+        Route::put('/{id}', 'update');
+        Route::delete('/{id}', 'destroy');
+    });
