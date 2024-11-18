@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Routes\Features\Web\v1\Transaction;
+namespace App\Routes\Features\Web;
 
 use Illuminate\Support\Facades\Route;
 

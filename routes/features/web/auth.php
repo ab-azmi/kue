@@ -1,5 +1,5 @@
 <?php
-namespace App\Routes\Web\v1\Auth;
+namespace App\Routes\Features\Web;
 
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;

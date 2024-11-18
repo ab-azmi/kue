@@ -1,5 +1,5 @@
 <?php
-namespace App\Features\Web\v1;
+namespace App\Features\Web;
 
 use Illuminate\Support\Facades\Route;
 
