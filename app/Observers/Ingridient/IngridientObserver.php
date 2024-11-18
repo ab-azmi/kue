@@ -2,7 +2,7 @@
 
 namespace App\Observers\Ingridient;
 
-use App\Models\v1\Ingridient\Ingridient;
+use App\Models\Ingridient\Ingridient;
 use App\Services\Constant\Activity\ActivityAction;
 
 class IngridientObserver

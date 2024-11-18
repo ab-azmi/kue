@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\v1\Setting\FixedCost;
+use App\Models\Setting\FixedCost;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

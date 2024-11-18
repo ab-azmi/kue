@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\v1\Activity\Activity;
+use App\Models\Activity\Activity;
 use App\Services\Misc\SaveActivity;
 
 if (!function_exists("activity")) {

@@ -2,7 +2,7 @@
 
 namespace App\Observers\Cake;
 
-use App\Models\v1\Cake\Discount;
+use App\Models\Cake\Discount;
 use App\Services\Constant\Activity\ActivityAction;
 
 class DiscountObserver

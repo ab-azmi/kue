@@ -2,7 +2,7 @@
 
 namespace App\Observers\User;
 
-use App\Models\v1\User\User;
+use App\Models\User\User;
 use App\Services\Constant\Activity\ActivityAction;
 
 class UserObserver
