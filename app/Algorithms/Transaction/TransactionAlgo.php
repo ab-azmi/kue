@@ -19,7 +19,15 @@ class TransactionAlgo
         try {
             DB::transaction(function () use ($request) {
                 $orders = $this->processOrders($request);
-                $this->transaction = Transaction::create($request->except('orders'));
+                $this->transaction = Transaction::create($request->only([
+                    'customerName',
+                    'quantity',
+                    'orderPrice',
+                    'totalPrice',
+                    'totalDiscount',
+                    'tax',
+                    'cashierId',
+                ]));
                 $this->createOrders($orders);
                 $this->transaction->refresh();
             });
@@ -34,7 +42,15 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->transaction->update($request->except('orders'));
+                $this->transaction->update($request->only([
+                    'customerName',
+                    'quantity',
+                    'orderPrice',
+                    'totalPrice',
+                    'totalDiscount',
+                    'tax',
+                    'cashierId',
+                ]));
 
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
@@ -61,7 +77,7 @@ class TransactionAlgo
         }
     }
 
-    // ------------------------------------ Private Function ------------------------------------
+    /** --- PRIVATE FUNCTIONS --- */
 
     private function processOrders(Request $request): array
     {

@@ -17,6 +17,9 @@ return new class extends Migration
     {
         Schema::create('cakes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cakeVariantId');
+            $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');
+            
             $table->string('name');
             $table->string('profitMargin')->nullable();
             $table->bigInteger('cogs')->nullable();
@@ -24,8 +27,6 @@ return new class extends Migration
             $table->json('images')->nullable();
             $table->integer('stock')->default(0);
 
-            $table->foreignId('cakeVariantId');
-            $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');
             $this->getDefaultTimestamps($table);
         });
     }

@@ -11,7 +11,7 @@ class CakeVariantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $variants = CakeVariant::getOrPaginate($request, true);
         return success($variants);
@@ -20,7 +20,7 @@ class CakeVariantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         //
     }
@@ -28,7 +28,7 @@ class CakeVariantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         //
     }
@@ -44,7 +44,7 @@ class CakeVariantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         //
     }

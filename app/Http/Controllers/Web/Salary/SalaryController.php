@@ -18,16 +18,16 @@ class SalaryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $salaries = Salary::with('user')->getOrPaginate($request, true);
-        return success(SalaryParser::get($salaries));
+        return success(SalaryParser::briefs($salaries));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SalaryRequest $request)
+    public function create(SalaryRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -35,7 +35,7 @@ class SalaryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         $salary = Salary::with('user')->findOrFail($id);
         return success(SalaryParser::first($salary));
@@ -53,7 +53,7 @@ class SalaryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $this->algo->salary = Salary::findOrFail($id);
         return $this->algo->delete();

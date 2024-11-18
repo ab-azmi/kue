@@ -18,10 +18,7 @@ class UserSeeder extends Seeder
         foreach ($data as $item) {
             $u = User::create($item);
             $u->salary()->create([
-                'basic_salary' => "1000000",
-                'tax' => "20000",
-                'overtime' => null,
-                'total_salary' => "980000",
+                'totalSalary' => "980000",
             ]);
         }
     }

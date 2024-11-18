@@ -17,15 +17,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('price')->nullable();
-            $table->integer('quantity')->default(1);
-            $table->bigInteger('discount')->nullable();
-
             $table->foreignId('transactionId');
             $table->foreign('transactionId')->references('id')->on('transactions')->cascadeOnDelete();
 
             $table->foreignId('cakeId');
             $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
+            
+            $table->bigInteger('price')->nullable();
+            $table->integer('quantity')->default(1);
+            $table->bigInteger('discount')->nullable();
+
             $this->getDefaultTimestamps($table);
         });
     }

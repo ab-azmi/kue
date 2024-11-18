@@ -18,7 +18,7 @@ class CakeVariant extends BaseModel
     ];
 
 
-    // -------------------- RELATIONSHIP --------------------
+    /** --- RELATIONSHIP --- */
 
     public function cakes(): HasMany
     {
