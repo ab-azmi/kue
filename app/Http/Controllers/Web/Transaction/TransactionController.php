@@ -18,7 +18,7 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $transactions = Transaction::with([
             'orders',
@@ -31,7 +31,7 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransactionRequest $request)
+    public function create(TransactionRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -39,7 +39,7 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         $transaction = Transaction::with([
             'orders',
@@ -62,7 +62,7 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $this->algo->transaction = Transaction::findOrFail($id);
         return $this->algo->delete();

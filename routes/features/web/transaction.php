@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('transactions')
     ->controller(TransactionController::class)
     ->group(function () {
-        Route::get('', 'index');
-        Route::post('', 'store');
-        Route::get('{id}', 'show');
+        Route::get('', 'get');
+        Route::post('', 'create');
+        Route::get('{id}', 'detail');
         Route::put('{id}', 'update');
-        Route::delete('{id}', 'destroy');
+        Route::delete('{id}', 'delete');
     });
 
 Route::prefix('orders')
     ->controller(OrderController::class)
     ->group(function () {
-        Route::get('', 'index');
-        Route::post('', 'store');
-        Route::get('{id}', 'show');
+        Route::get('', 'get');
+        Route::post('', 'create');
+        Route::get('{id}', 'detail');
         Route::put('{id}', 'update');
-        Route::delete('{id}', 'destroy');
+        Route::delete('{id}', 'delete');
     });

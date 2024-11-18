@@ -17,7 +17,7 @@ class FixedCostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $fixedcosts = FixedCost::orderBy('createdAt')->getOrPaginate($request, true);
         return success($fixedcosts);
@@ -26,7 +26,7 @@ class FixedCostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         return $this->algo->create($request);
     }
@@ -34,7 +34,7 @@ class FixedCostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         $fixedcost = FixedCost::findOrFail($id);
         return success(FixedCostParser::first($fixedcost));
@@ -52,7 +52,7 @@ class FixedCostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $this->algo->fixedCost = FixedCost::findOrFail($id);
         return $this->algo->delete();

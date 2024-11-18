@@ -18,7 +18,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $users = User::orderBy('id', 'DESC')->getOrPaginate($request, true);
         return success($users);
@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateUserRequest $request)
+    public function create(CreateUserRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -35,7 +35,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function detail($id)
     {
         $user = User::findOrFail($id);
         return success(UserParser::first($user));
@@ -54,7 +54,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $user = User::findOrFail($id);
         $this->algo->user = $user;

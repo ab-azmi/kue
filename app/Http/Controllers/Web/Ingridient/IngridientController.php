@@ -16,7 +16,7 @@ class IngridientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $ingridients = Ingridient::orderBy('createdAt', 'desc')
             ->getOrPaginate($request, true);
@@ -27,7 +27,7 @@ class IngridientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(IngridientRequest $request)
+    public function create(IngridientRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -35,7 +35,7 @@ class IngridientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         $ingridient = Ingridient::findOrFail($id);
         return success($ingridient);
@@ -53,7 +53,7 @@ class IngridientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $this->algo->ingridient = Ingridient::findOrFail($id);
         return $this->algo->destroy();

@@ -17,7 +17,7 @@ class DiscountController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function get(Request $request)
     {
         $discounts= Discount::with('cake')->getOrPaginate($request, true);
         return success($discounts);
@@ -26,7 +26,7 @@ class DiscountController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DiscountRequest $request)
+    public function create(DiscountRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -34,7 +34,7 @@ class DiscountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
         $discount = Discount::with('cake')->findOrFail($id);
         return success($discount);
@@ -52,7 +52,7 @@ class DiscountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $this->algo->discount = Discount::findOrFail($id);
         return $this->algo->delete();
