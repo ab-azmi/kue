@@ -20,7 +20,14 @@ class CakeAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $data = $request->except('ingridients');
+                $data = $request->only([
+                    'name',
+                    'cakeVariantId',
+                    'profitMargin',
+                    'cogs',
+                    'sellPrice',
+                    'images',
+                ]);
                 $this->cake = Cake::create($data);
                 $this->attachIngridients($request->ingridients);
 
@@ -41,7 +48,14 @@ class CakeAlgo
         try {
             DB::transaction(function () use ($request) {
                 $this->detachIngridients();
-                $this->cake->update($request->except('ingridients'));
+                $this->cake->update($request->only([
+                    'name',
+                    'cakeVariantId',
+                    'profitMargin',
+                    'cogs',
+                    'sellPrice',
+                    'images',
+                ]));
                 $this->attachIngridients($request->ingridients);
             });
 
