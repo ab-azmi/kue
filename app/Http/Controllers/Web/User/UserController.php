@@ -21,7 +21,7 @@ class UserController extends Controller
     public function get(Request $request)
     {
         $users = User::orderBy('id', 'DESC')->getOrPaginate($request, true);
-        return success($users);
+        return success(UserParser::briefs($users));
     }
 
     /**

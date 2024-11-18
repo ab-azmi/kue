@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cake\CakeRequest;
 use App\Http\Requests\Cake\COGSRequest as CakeCOGSRequest;
 use App\Models\Cake\Cake;
+use App\Parser\Cake\CakeParser;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller
@@ -19,14 +20,10 @@ class CakeController extends Controller
      */
     public function get(Request $request)
     {
-        $cakes = Cake::with([
-            'variant',
-            'ingridients',
-            'discounts',
-        ])->orderBy('createdAt', 'desc')
+        $cakes = Cake::orderBy('createdAt', 'desc')
         ->getOrPaginate($request, true);
 
-        return success($cakes);
+        return success(CakeParser::briefs($cakes));
     }
 
     /**

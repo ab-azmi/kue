@@ -25,7 +25,7 @@ class TransactionController extends Controller
             'cashier'
         ])->orderBy('createdAt')->getOrPaginate($request, true);
         
-        return success($transactions);
+        return success(TransactionParser::briefs($transactions));
     }
 
     /**

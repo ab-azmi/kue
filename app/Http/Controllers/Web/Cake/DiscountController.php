@@ -6,6 +6,7 @@ use App\Algorithms\Cake\DiscountAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Discount\DiscountRequest;
 use App\Models\Cake\Discount;
+use App\Parser\Cake\DiscountParser;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -20,7 +21,7 @@ class DiscountController extends Controller
     public function get(Request $request)
     {
         $discounts= Discount::with('cake')->getOrPaginate($request, true);
-        return success($discounts);
+        return success(DiscountParser::briefs($discounts));
     }
 
     /**

@@ -21,7 +21,7 @@ class SalaryController extends Controller
     public function get(Request $request)
     {
         $salaries = Salary::with('user')->getOrPaginate($request, true);
-        return success(SalaryParser::get($salaries));
+        return success(SalaryParser::briefs($salaries));
     }
 
     /**

@@ -31,4 +31,23 @@ class DiscountParser extends BaseParser
         ];
     }
 
+    public static function brief($data)
+    {
+        if (!$data) {
+            return null;
+        }
+
+        return [
+            'id' => $data->id,
+            'name' => $data->name,
+            'description' => $data->description,
+            'start_date' => $data->start_date,
+            'end_date' => $data->end_date,
+            'value' => $data->value,
+            'cakeId' => $data->cake_id,
+            'createdAt' => $data->created_at?->format('d/m/Y H:i'),
+            'updatedAt' => $data->updated_at?->format('d/m/Y H:i'),
+        ];
+    }
+
 }
