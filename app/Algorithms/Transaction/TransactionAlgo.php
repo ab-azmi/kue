@@ -3,10 +3,10 @@
 namespace App\Algorithms\Transaction;
 
 use App\Models\Cake\Cake;
+use App\Models\Setting\Setting;
 use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
-use App\Services\Constant\Cake\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -143,6 +143,7 @@ class TransactionAlgo
 
     private function setTotalPrices($orders) : array
     {
+        $tax = Setting::where('key', 'tax')->first()->value;
         $totalPrice = 0;
         $sumOrderPrice = 0;
         $totalDiscount = 0;
@@ -153,7 +154,7 @@ class TransactionAlgo
         }
 
         $totalPrice = $sumOrderPrice - $totalDiscount;
-        $tax = $totalPrice * Tax::TAX_5;
+        $tax = $totalPrice * (int)$tax;
         $totalPrice += $tax;
 
         return [

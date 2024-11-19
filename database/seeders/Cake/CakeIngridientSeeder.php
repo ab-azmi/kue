@@ -3,9 +3,10 @@
 namespace Database\Seeders\Cake;
 
 use App\Models\Cake\CakeComponentIngridient;
+use App\Services\Constant\Cake\CakeIngridientUnit;
 use Illuminate\Database\Seeder;
 
-class IngridientSeeder extends Seeder
+class CakeIngridientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +28,7 @@ class IngridientSeeder extends Seeder
         return array(
             [
                 'name' => 'Flour',
-                'unit' => 'kg',
+                'unit' => CakeIngridientUnit::KILOGRAM_ID,
                 'pricePerUnit' => '10000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '100',
@@ -35,7 +36,7 @@ class IngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Sugar',
-                'unit' => 'kg',
+                'unit' => CakeIngridientUnit::KILOGRAM_ID,
                 'pricePerUnit' => '15000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '70',
@@ -43,7 +44,7 @@ class IngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Egg',
-                'unit' => 'pcs',
+                'unit' => CakeIngridientUnit::PIECE_ID,
                 'pricePerUnit' => '2000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '50',
@@ -51,7 +52,7 @@ class IngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Milk',
-                'unit' => 'L',
+                'unit' => CakeIngridientUnit::LITER_ID,
                 'pricePerUnit' => '20000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '30',
