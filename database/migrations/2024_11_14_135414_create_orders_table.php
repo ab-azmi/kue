@@ -23,8 +23,9 @@ return new class extends Migration
             $table->foreignId('cakeId');
             $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
             
-            $table->float('price')->nullable();
             $table->integer('quantity')->default(1);
+            $table->float('price')->nullable();
+            $table->float('totalPrice')->nullable();
             $table->float('discount')->nullable();
 
             $this->getDefaultTimestamps($table);

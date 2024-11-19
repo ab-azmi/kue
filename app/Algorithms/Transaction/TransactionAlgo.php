@@ -120,6 +120,7 @@ class TransactionAlgo
             $cake = Cake::find($order['cakeId']);
             $orders[$key]['price'] = $cake->sellingPrice;
             $orders[$key]['discount'] = $cake->discounts->sum('value');
+            $orders[$key]['totalPrice'] = ($cake->sellingPrice * $order['quantity']) - $orders[$key]['discount'];
         }
 
         return $orders;

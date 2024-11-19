@@ -20,6 +20,7 @@ class OrderParser extends BaseParser
 
         return [
             'price' => $data->price,
+            'totalPrice' => $data->totalPrice,
             'quantity' => $data->quantity,
             'discount' => $data->discount,
             'transactionId' => $data->transactionId,
@@ -40,6 +41,7 @@ class OrderParser extends BaseParser
 
         return [
             'price' => $data->price,
+            'totalPrice' => $data->totalPrice,
             'quantity' => $data->quantity,
             'discount' => $data->discount,
             'transactionId' => $data->transactionId,
