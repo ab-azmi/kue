@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::create('cake_component_ingridients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('unit');
-            $table->float('pricePerUnit');
+            $table->integer('unit');
+            $table->float('price');
             $table->date('expirationDate');
             $table->integer('quantity');
             $table->string('supplier')->nullable();

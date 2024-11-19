@@ -157,7 +157,7 @@ class CakeAlgo
         $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
 
         foreach ($_ingridients as $ingridient) {
-            $pricePerUnit = $ingridients[$ingridient['id']]->pricePerUnit;
+            $pricePerUnit = $ingridients[$ingridient['id']]->price;
             $quantity = $ingridient['quantity'];
             $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
         }
