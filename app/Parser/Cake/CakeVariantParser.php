@@ -20,6 +20,7 @@ class CakeVariantParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
+            'price' => $data->price,
             'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
         ];

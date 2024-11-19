@@ -17,12 +17,10 @@ class CakeSeeder extends Seeder
     public function run(): void
     {
         DB::table('cake_variants')->insert([
-            ['name' => 'Vanilla'],
-            ['name' => 'Mango'],
-            ['name' => 'Durian'],
-            ['name' => 'Chocolate'],
-            ['name' => 'Strawberry'],
-            ['name' => 'Blueberry'],
+            ['name' => 'Vanilla', 'price' => '100000'],
+            ['name' => 'Chocolate', 'price' => '150000'],
+            ['name' => 'Strawberry', 'price' => '200000'],
+            ['name' => 'Blueberry', 'price' => '250000'],
         ]);
 
 

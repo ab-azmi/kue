@@ -83,7 +83,9 @@ class TransactionAlgo
     {
         if ($request->has('orders')) {
             $orders = $this->implementCakesDiscountToOrders($request->orders);
+
             $this->syncCakeStock($orders);
+
             extract($this->setTotalPrices($orders));
 
             $request->merge([
@@ -117,10 +119,13 @@ class TransactionAlgo
     private function implementCakesDiscountToOrders($orders) : array
     {
         foreach ($orders as $key => $order) {
-            $cake = Cake::find($order['cakeId']);
-            $orders[$key]['price'] = $cake->sellingPrice;
+            $cake = Cake::with('variant')->find($order['cakeId']);
+
+            $sellingPrice = $cake->sellingPrice + $cake->variant->price;
+
+            $orders[$key]['price'] = $sellingPrice;
             $orders[$key]['discount'] = $cake->discounts->sum('value');
-            $orders[$key]['totalPrice'] = ($cake->sellingPrice * $order['quantity']) - $orders[$key]['discount'];
+            $orders[$key]['totalPrice'] = ($sellingPrice * $order['quantity']) - $orders[$key]['discount'];
         }
 
         return $orders;
@@ -137,7 +142,7 @@ class TransactionAlgo
             if ($cake->stock < $order['quantity']) {
                 throw new \Exception('Stock is not enough for cake : ' . $cake->name);
             }
-            // DONE : BUG ga berkurang
+    
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);
         }
     }
