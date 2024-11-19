@@ -39,7 +39,7 @@ class CakeSeeder extends Seeder
             }
         }
 
-        DB::table('discounts')->insert([
+        DB::table('cake_discounts')->insert([
             [
                 'name' => 'Discount 1',
                 'description' => 'Discount 1 Description',
