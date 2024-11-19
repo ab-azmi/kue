@@ -2,7 +2,7 @@
 
 namespace App\Parser\Employee;
 
-use App\Parser\Salary\SalaryParser;
+use App\Parser\Salary\EmployeeSalaryParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class EmployeeUserParser extends BaseParser
@@ -24,7 +24,7 @@ class EmployeeUserParser extends BaseParser
             'email' => $data->email,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
-            'salary' => SalaryParser::brief($data->salary),
+            'salary' => EmployeeSalaryParser::brief($data->salary),
         ];
     }
 
