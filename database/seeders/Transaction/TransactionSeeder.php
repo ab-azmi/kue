@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Transaction;
 
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
