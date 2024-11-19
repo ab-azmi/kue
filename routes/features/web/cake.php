@@ -3,7 +3,7 @@
 namespace App\Routes\Features\Web;
 
 use App\Http\Controllers\Web\Cake\CakeController;
-use App\Http\Controllers\Web\Cake\DiscountController;
+use App\Http\Controllers\Web\Cake\CakeDiscountController;
 use App\Http\Controllers\Web\Setting\CakeVariantController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +30,7 @@ Route::prefix('cakevariants')
 
 
 Route::prefix('discounts')
-    ->controller(DiscountController::class)
+    ->controller(CakeDiscountController::class)
     ->group(function () {
         Route::get('', 'get');
         Route::post('', 'create');

@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[ObservedBy([DiscountObserver::class])]
-class Discount extends BaseModel
+class CakeDiscount extends BaseModel
 {
-    use HasActivityDiscountProperty;
 
-    protected $table = 'discounts';
+    protected $table = 'cake_discounts';
     protected $guarded = ['id'];
 
     protected $casts = [

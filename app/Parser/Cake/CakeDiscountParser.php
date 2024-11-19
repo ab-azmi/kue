@@ -4,7 +4,7 @@ namespace App\Parser\Cake;
 
 use GlobalXtreme\Parser\BaseParser;
 
-class DiscountParser extends BaseParser
+class CakeDiscountParser extends BaseParser
 {
     /**
      * @param $data

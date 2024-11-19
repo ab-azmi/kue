@@ -31,7 +31,7 @@ class CakeParser extends BaseParser
             'updatedAt' => $data->updatedAt,
             'ingridients' => IngridientParser::get($data->ingridients),
             'variant' => CakeVariantParser::first($data->variant),
-            'discounts' => DiscountParser::get($data->discount),
+            'discounts' => CakeDiscountParser::get($data->discount),
         ];
     }
 

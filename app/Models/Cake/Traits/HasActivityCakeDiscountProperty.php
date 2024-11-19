@@ -3,10 +3,10 @@
 namespace App\Models\Cake\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Cake\DiscountParser;
+use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityDiscountProperty
+trait HasActivityCakeDiscountProperty
 {
     use HasActivity;
 
@@ -64,7 +64,7 @@ trait HasActivityDiscountProperty
     {
         $this->refresh();
 
-        return DiscountParser::first($this);
+        return CakeDiscountParser::brief($this);
     }
 
 }

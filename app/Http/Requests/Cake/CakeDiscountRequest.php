@@ -4,7 +4,7 @@ namespace App\Http\Requests\Discount;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class DiscountRequest extends FormRequest
+class CakeDiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

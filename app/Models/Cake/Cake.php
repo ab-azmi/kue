@@ -55,7 +55,7 @@ class Cake extends BaseModel
 
     public function discounts(): HasMany
     {
-        return $this->hasMany(Discount::class, 'cakeId');
+        return $this->hasMany(CakeDiscount::class, 'cakeId');
     }
 
 }

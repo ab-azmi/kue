@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Cake\Cake;
-use App\Models\Cake\CakeIngridient;
-use App\Models\Cake\Discount;
 use App\Models\Ingridient\Ingridient;
 use App\Models\Setting\CakeVariant;
 use Illuminate\Database\Seeder;
