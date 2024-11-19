@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Models\Salary;
+namespace App\Models\Employee;
 
 use App\Models\BaseModel;
 use App\Models\Employee\EmployeeUser;
-use App\Models\Salary\Traits\HasActivitySalaryProperty;
+use App\Models\Employee\Traits\HasActivityEmployeeSalaryProperty;
 use App\Observers\Salary\SalaryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[ObservedBy([SalaryObserver::class])]
-class Salary extends BaseModel
+class EmployeeSalary extends BaseModel
 {
-    use HasActivitySalaryProperty;
+    use HasActivityEmployeeSalaryProperty;
     
-    protected $table = 'salaries';
+    protected $table = 'employee_salaries';
     protected $guarded = ['id'];
 
     protected $casts = [

@@ -5,7 +5,6 @@ namespace App\Models\Employee;
 use App\Models\Employee\Employee;
 use App\Models\Employee\Traits\HasActivityEmployeeUserProperty;
 use App\Models\GetOrPaginate;
-use App\Models\Salary\Salary;
 use App\Models\Transaction\Transaction;
 use App\Observers\User\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -50,7 +49,7 @@ class EmployeeUser extends Authenticatable implements JWTSubject
 
     public function salary(): HasOne
     {
-        return $this->hasOne(Salary::class, 'userId');
+        return $this->hasOne(EmployeeSalary::class, 'userId');
     }
 
     public function transactions(): HasMany

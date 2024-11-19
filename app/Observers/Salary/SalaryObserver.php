@@ -2,60 +2,60 @@
 
 namespace App\Observers\Salary;
 
-use App\Models\Salary\Salary;
+use App\Models\Employee\EmployeeSalary;
 use App\Services\Constant\Activity\ActivityAction;
 
 class SalaryObserver
 {
     /**
-     * Handle the Salary "created" event.
+     * Handle the EmployeeSalary "created" event.
      */
-    public function created(Salary $salary): void
+    public function created(EmployeeSalary $salary): void
     {
         $salary->setActivityPropertyAttributes(ActivityAction::CREATE)
-            ->saveActivity('Create new Salary : ' . $salary->id);
+            ->saveActivity('Create new EmployeeSalary : ' . $salary->id);
     }
 
-    public function updating(Salary $salary): void
+    public function updating(EmployeeSalary $salary): void
     {
         $salary->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
     }
 
     /**
-     * Handle the Salary "updated" event.
+     * Handle the EmployeeSalary "updated" event.
      */
-    public function updated(Salary $salary): void
+    public function updated(EmployeeSalary $salary): void
     {
         $salary->setActivityPropertyAttributes(ActivityAction::UPDATE)
-            ->saveActivity('Update Salary : ' . $salary->id);
+            ->saveActivity('Update EmployeeSalary : ' . $salary->id);
     }
 
-    public function deleting(Salary $salary): void
+    public function deleting(EmployeeSalary $salary): void
     {
         $salary->setOldActivityPropertyAttributes(ActivityAction::DELETE);
     }
 
     /**
-     * Handle the Salary "deleted" event.
+     * Handle the EmployeeSalary "deleted" event.
      */
-    public function deleted(Salary $salary): void
+    public function deleted(EmployeeSalary $salary): void
     {
         $salary->setActivityPropertyAttributes(ActivityAction::DELETE)
-            ->saveActivity('Delete Salary : ' . $salary->id);
+            ->saveActivity('Delete EmployeeSalary : ' . $salary->id);
     }
 
     /**
-     * Handle the Salary "restored" event.
+     * Handle the EmployeeSalary "restored" event.
      */
-    public function restored(Salary $salary): void
+    public function restored(EmployeeSalary $salary): void
     {
         //
     }
 
     /**
-     * Handle the Salary "force deleted" event.
+     * Handle the EmployeeSalary "force deleted" event.
      */
-    public function forceDeleted(Salary $salary): void
+    public function forceDeleted(EmployeeSalary $salary): void
     {
         //
     }
