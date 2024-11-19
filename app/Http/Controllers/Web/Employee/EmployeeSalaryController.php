@@ -6,7 +6,7 @@ use App\Algorithms\Employee\EmployeeSalaryAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\EmployeeSalaryRequest;
 use App\Models\Employee\EmployeeSalary;
-use App\Parser\Salary\SalaryParser;
+use App\Parser\Salary\EmployeeSalaryParser;
 use Illuminate\Http\Request;
 
 class EmployeeSalaryController extends Controller
@@ -20,7 +20,7 @@ class EmployeeSalaryController extends Controller
     public function get(Request $request)
     {
         $salaries = EmployeeSalary::with('user')->getOrPaginate($request, true);
-        return success(SalaryParser::briefs($salaries));
+        return success(EmployeeSalaryParser::briefs($salaries));
     }
 
     /**
@@ -37,7 +37,7 @@ class EmployeeSalaryController extends Controller
     public function detail(string $id)
     {
         $salary = EmployeeSalary::with('user')->findOrFail($id);
-        return success(SalaryParser::first($salary));
+        return success(EmployeeSalaryParser::first($salary));
     }
 
     /**
