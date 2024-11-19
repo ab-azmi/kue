@@ -6,7 +6,7 @@ use App\Models\Activity\Traits\HasActivity;
 use App\Parser\Setting\FixedCostParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityFixedCostProperty
+trait HasActivitySettingFixedCostProperty
 {
     use HasActivity;
 
@@ -64,7 +64,7 @@ trait HasActivityFixedCostProperty
     {
         $this->refresh();
 
-        return FixedCostParser::first($this);
+        return FixedCostParser::brief($this);
     }
 
 }

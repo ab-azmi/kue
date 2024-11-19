@@ -2,7 +2,7 @@
 
 namespace App\Observers\Setting;
 
-use App\Models\Setting\FixedCost;
+use App\Models\Setting\SettingFixedCost;
 use App\Services\Constant\Activity\ActivityAction;
 
 class FixedCostObserver
@@ -10,55 +10,55 @@ class FixedCostObserver
     /**
      * Handle the FixedCost "created" event.
      */
-    public function created(FixedCost $fixedCost): void
+    public function created(SettingFixedCost $fixedCost): void
     {
         $fixedCost->setActivityPropertyAttributes(ActivityAction::CREATE)
             ->saveActivity('Create new Fixed Cost : ' . $fixedCost->id);
     }
 
     /**
-     * Handle the FixedCost "updated" event.
+     * Handle the SettingFixedCost "updated" event.
      */
-    public function updating(FixedCost $fixedCost): void
+    public function updating(SettingFixedCost $fixedCost): void
     {
         $fixedCost->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
     }
 
     /**
-     * Handle the FixedCost "updated" event.
+     * Handle the SettingFixedCost "updated" event.
      */
-    public function updated(FixedCost $fixedCost): void
+    public function updated(SettingFixedCost $fixedCost): void
     {
         $fixedCost->setActivityPropertyAttributes(ActivityAction::UPDATE)
             ->saveActivity('Update Fixed Cost : ' . $fixedCost->id);
     }
 
-    public function deleting(FixedCost $fixedCost): void
+    public function deleting(SettingFixedCost $fixedCost): void
     {
         $fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
     }
 
     /**
-     * Handle the FixedCost "deleted" event.
+     * Handle the SettingFixedCost "deleted" event.
      */
-    public function deleted(FixedCost $fixedCost): void
+    public function deleted(SettingFixedCost $fixedCost): void
     {
         $fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
             ->saveActivity('Delete Fixed Cost : ' . $fixedCost->id);
     }
 
     /**
-     * Handle the FixedCost "restored" event.
+     * Handle the SettingFixedCost "restored" event.
      */
-    public function restored(FixedCost $fixedCost): void
+    public function restored(SettingFixedCost $fixedCost): void
     {
         //
     }
 
     /**
-     * Handle the FixedCost "force deleted" event.
+     * Handle the SettingFixedCost "force deleted" event.
      */
-    public function forceDeleted(FixedCost $fixedCost): void
+    public function forceDeleted(SettingFixedCost $fixedCost): void
     {
         //
     }

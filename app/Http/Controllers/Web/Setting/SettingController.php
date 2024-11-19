@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\Web\Setting;
 
-use App\Algorithms\Setting\FixedCostAlgo;
+use App\Algorithms\Setting\SettingAlgo;
 use App\Http\Controllers\Controller;
-use App\Models\Setting\FixedCost;
-use App\Parser\Setting\FixedCostParser;
+use App\Models\Setting\Setting;
 use Illuminate\Http\Request;
 
-class FixedCostController extends Controller
+class SettingController extends Controller
 {
-    public function __construct(public $algo = new FixedCostAlgo())
+    public function __construct(public $algo = new SettingAlgo())
     {
-        
     }
+
     /**
      * Display a listing of the resource.
      */
     public function get(Request $request)
     {
-        $fixedcosts = FixedCost::orderBy('createdAt')->getOrPaginate($request, true);
-        return success($fixedcosts);
+        $algos = Setting::getOrPaginate($request, true);
+        return success($algos);
     }
 
     /**
@@ -36,8 +35,8 @@ class FixedCostController extends Controller
      */
     public function detail(string $id)
     {
-        $fixedcost = FixedCost::findOrFail($id);
-        return success(FixedCostParser::first($fixedcost));
+        $setting = Setting::find($id);
+        return success($setting);
     }
 
     /**
@@ -45,8 +44,7 @@ class FixedCostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->algo->fixedCost = FixedCost::findOrFail($id);
-        return $this->algo->update($request);
+        return $this->algo->update($request, $id);
     }
 
     /**
@@ -54,7 +52,7 @@ class FixedCostController extends Controller
      */
     public function delete(string $id)
     {
-        $this->algo->fixedCost = FixedCost::findOrFail($id);
+        $this->algo->setting = Setting::find($id);
         return $this->algo->delete();
     }
 }

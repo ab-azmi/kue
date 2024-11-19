@@ -15,12 +15,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('setting_fixed_costs', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->bigInteger('amount');
-            $table->string('frequency')->default('monthly');
+            $table->string('key')->unique();
+            $table->text('description')->nullable();
+            $table->string('value');
             $this->getDefaultTimestamps($table);
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setting_fixed_costs');
+        Schema::dropIfExists('settings');
     }
 };

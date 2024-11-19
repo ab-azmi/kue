@@ -3,16 +3,16 @@
 namespace App\Models\Setting;
 
 use App\Models\BaseModel;
-use App\Models\Setting\Traits\HasActivityFixedCostProperty;
+use App\Models\Setting\Traits\HasActivitySettingFixedCostProperty;
 use App\Observers\Setting\FixedCostObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
 #[ObservedBy([FixedCostObserver::class])]
-class FixedCost extends BaseModel
+class SettingFixedCost extends BaseModel
 {
-    use HasActivityFixedCostProperty;
+    use HasActivitySettingFixedCostProperty;
 
-    protected $table = 'fixed_costs';
+    protected $table = 'setting_fixed_costs';
     protected $guarded = ['id'];
 
     protected $casts = [
