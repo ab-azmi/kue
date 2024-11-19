@@ -3,7 +3,7 @@
 namespace App\Parser\Cake;
 
 use App\Parser\Cake\CakeComponentIngridientParser;
-use App\Parser\Setting\CakeVariantParser;
+use App\Parser\Cake\CakeVariantParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class CakeParser extends BaseParser

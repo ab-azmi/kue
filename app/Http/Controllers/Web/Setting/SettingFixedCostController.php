@@ -6,7 +6,7 @@ use App\Algorithms\Setting\SettingFixedCostAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingFixedCostRequest;
 use App\Models\Setting\SettingFixedCost;
-use App\Parser\Setting\FixedCostParser;
+use App\Parser\Setting\SettingFixedCostParser;
 use Illuminate\Http\Request;
 
 class SettingFixedCostController extends Controller
@@ -38,7 +38,7 @@ class SettingFixedCostController extends Controller
     public function detail(string $id)
     {
         $fixedcost = SettingFixedCost::findOrFail($id);
-        return success(FixedCostParser::first($fixedcost));
+        return success(SettingFixedCostParser::first($fixedcost));
     }
 
     /**

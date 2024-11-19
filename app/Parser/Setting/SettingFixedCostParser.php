@@ -4,7 +4,7 @@ namespace App\Parser\Setting;
 
 use GlobalXtreme\Parser\BaseParser;
 
-class CakeVariantParser extends BaseParser
+class SettingFixedCostParser extends BaseParser
 {
     /**
      * @param $data
@@ -20,6 +20,9 @@ class CakeVariantParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
+            'description' => $data->description,
+            'amount' => $data->amount,
+            'frequency' => $data->frequency,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
