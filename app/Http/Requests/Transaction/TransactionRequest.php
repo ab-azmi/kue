@@ -28,7 +28,7 @@ class TransactionRequest extends FormRequest
             'orderPrice' => 'nullable|numeric',
             'totalPrice' => 'nullable|numeric',
             'totalDiscount' => 'nullable|numeric',
-            'cashierId' => 'required|exists:employee_users,id',
+            'employeeId' => 'required|exists:employees,id',
             'orders' => 'required|array',
             'orders.*.cakeId' => 'required|exists:cakes,id',
             'orders.*.quantity' => 'required|integer',

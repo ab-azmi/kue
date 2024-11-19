@@ -3,7 +3,7 @@
 namespace App\Models\Transaction;
 
 use App\Models\BaseModel;
-use App\Models\Employee\EmployeeUser;
+use App\Models\Employee\Employee;
 use App\Models\Transaction\Traits\HasActivityTransactionProperty;
 use App\Observers\Transaction\TransactionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -29,8 +29,8 @@ class Transaction extends BaseModel
         return $this->hasMany(TransactionOrder::class, 'transactionId');
     }
 
-    public function cashier()
+    public function employee()
     {
-        return $this->belongsTo(EmployeeUser::class, 'cashierId');
+        return $this->belongsTo(Employee::class, 'employeeId');
     }
 }

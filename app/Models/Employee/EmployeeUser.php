@@ -5,10 +5,8 @@ namespace App\Models\Employee;
 use App\Models\Employee\Employee;
 use App\Models\Employee\Traits\HasActivityEmployeeUserProperty;
 use App\Models\GetOrPaginate;
-use App\Models\Transaction\Transaction;
 use App\Observers\User\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
@@ -50,11 +48,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     public function salary(): HasOne
     {
         return $this->hasOne(EmployeeSalary::class, 'userId');
-    }
-
-    public function transactions(): HasMany
-    {
-        return $this->hasMany(Transaction::class, 'cashierId');
     }
 
     public function employee(): HasOne
