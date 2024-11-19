@@ -26,7 +26,7 @@ class Transaction extends BaseModel
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'transactionId');
+        return $this->hasMany(TransactionOrder::class, 'transactionId');
     }
 
     public function cashier()

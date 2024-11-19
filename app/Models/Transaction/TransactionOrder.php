@@ -6,11 +6,11 @@ use App\Models\BaseModel;
 use App\Models\Cake\Cake;
 use App\Models\Transaction\Traits\HasActivityOrderProperty;
 
-class Order extends BaseModel
+class TransactionOrder extends BaseModel
 {
     use HasActivityOrderProperty;
 
-    protected $table = 'orders';
+    protected $table = 'transaction_orders';
     protected $guarded = ['id'];
 
     protected $casts = [

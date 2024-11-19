@@ -6,8 +6,8 @@ use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
 use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Cake\CakeVariant;
-use App\Models\Transaction\Order;
 use App\Models\Transaction\Transaction;
+use App\Models\Transaction\TransactionOrder;
 use App\Observers\Cake\CakeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,12 +45,12 @@ class Cake extends BaseModel
 
     public function order(): HasMany
     {
-        return $this->hasMany(Order::class, 'cakeId');
+        return $this->hasMany(TransactionOrder::class, 'cakeId');
     }
 
     public function transactions(): HasManyThrough
     {
-        return $this->hasManyThrough(Order::class, Transaction::class, 'cakeId', 'transactionId');
+        return $this->hasManyThrough(TransactionOrder::class, Transaction::class, 'cakeId', 'transactionId');
     }
 
     public function discounts(): HasMany
