@@ -26,7 +26,7 @@ class TransactionAlgo
                     'totalPrice',
                     'totalDiscount',
                     'tax',
-                    'cashierId',
+                    'employeeId',
                 ]));
                 $this->createOrders($orders);
                 $this->transaction->refresh();
@@ -49,7 +49,7 @@ class TransactionAlgo
                     'totalPrice',
                     'totalDiscount',
                     'tax',
-                    'cashierId',
+                    'employeeId',
                 ]));
 
                 if ($request->has('orders')) {

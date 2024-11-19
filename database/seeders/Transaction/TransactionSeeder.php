@@ -43,7 +43,7 @@ class TransactionSeeder extends Seeder
                 'orderPrice' => '14000',
                 'totalPrice' => '17000',
                 'totalDiscount' => null,
-                'cashierId' => 1,
+                'employeeId' => 1,
             ]
         );
     }

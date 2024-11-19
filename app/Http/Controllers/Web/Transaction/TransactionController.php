@@ -22,7 +22,7 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::with([
             'orders',
-            'cashier'
+            'employee'
         ])->orderBy('createdAt')->getOrPaginate($request, true);
         
         return success(TransactionParser::briefs($transactions));
@@ -44,7 +44,7 @@ class TransactionController extends Controller
         $transaction = Transaction::with([
             'orders',
             'orders.cake',
-            'cashier'
+            'employee'
         ])->findOrFail($id);
         
         return success(TransactionParser::first($transaction));

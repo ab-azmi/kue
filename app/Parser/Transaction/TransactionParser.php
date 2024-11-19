@@ -26,11 +26,11 @@ class TransactionParser extends BaseParser
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
             'totalDiscount' => $data->totalDiscount,
-            'cashierId' => $data->cashierId,
+            'employeeId' => $data->employeeId,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
             'deletedAt' => $data->deletedAt,
-            'cashier' => EmployeeUserParser::brief($data->cashier),
+            'employee' => EmployeeUserParser::brief($data->employee),
             'orders' => OrderParser::briefs($data->orders)
         ];
     }
@@ -48,7 +48,7 @@ class TransactionParser extends BaseParser
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
             'totalDiscount' => $data->totalDiscount,
-            'cashierId' => $data->cashierId,
+            'employeeId' => $data->employeeId,
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
             'deletedAt' => $data->deletedAt,
