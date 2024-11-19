@@ -69,9 +69,9 @@ class CakeSeeder extends Seeder
                 'name' => 'Polar Bear Cake',
                 'cakeVariantId' => CakeVariant::all()->random()->id,
                 'profitMargin' => '0.5',
-                'cogs' => '100000',
+                'COGS' => '100000',
                 'stock' => '10',
-                'sellPrice' => '150000',
+                'sellingPrice' => '150000',
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
@@ -81,9 +81,9 @@ class CakeSeeder extends Seeder
                 'name' => 'Panda Cake',
                 'cakeVariantId' => CakeVariant::all()->random()->id,
                 'profitMargin' => null,
-                'cogs' => '400000',
+                'COGS' => '400000',
                 'stock' => '15',
-                'sellPrice' => '600000',
+                'sellingPrice' => '600000',
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
