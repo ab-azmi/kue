@@ -3,7 +3,7 @@
 namespace App\Algorithms\Employee;
 
 use App\Models\Employee\EmployeeUser;
-use App\Parser\User\UserParser;
+use App\Parser\Employee\EmployeeUserParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +18,7 @@ class EmployeeUserAlgo
                 $this->user = EmployeeUser::create($request->validated());
             });
 
-            return success(UserParser::first($this->user));
+            return success(EmployeeUserParser::first($this->user));
             
         } catch (\Exception $e) {
             exception($e);
@@ -31,7 +31,7 @@ class EmployeeUserAlgo
                 $this->user->update($request->validated());
             });
 
-            return success(UserParser::first($this->user));
+            return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
             exception($e);
         }
@@ -43,7 +43,7 @@ class EmployeeUserAlgo
                 $this->user->delete();
             });
 
-            return success(UserParser::first($this->user));
+            return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
             exception($e);
         }

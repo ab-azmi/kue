@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Parser\User;
+namespace App\Parser\Employee;
 
 use App\Parser\Salary\SalaryParser;
 use GlobalXtreme\Parser\BaseParser;
 
-class UserParser extends BaseParser
+class EmployeeUserParser extends BaseParser
 {
     /**
      * @param $data

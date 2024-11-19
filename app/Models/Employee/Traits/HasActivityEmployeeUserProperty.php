@@ -3,7 +3,7 @@
 namespace App\Models\Employee\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\User\UserParser;
+use App\Parser\Employee\EmployeeUserParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivityEmployeeUserProperty
@@ -64,7 +64,7 @@ trait HasActivityEmployeeUserProperty
     {
         $this->refresh();
 
-        return UserParser::first($this);
+        return EmployeeUserParser::first($this);
     }
 
 }

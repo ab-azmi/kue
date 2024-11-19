@@ -2,7 +2,7 @@
 
 namespace App\Parser\Transaction;
 
-use App\Parser\User\UserParser;
+use App\Parser\Employee\EmployeeUserParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class TransactionParser extends BaseParser
@@ -30,7 +30,7 @@ class TransactionParser extends BaseParser
             'createdAt' => $data->createdAt,
             'updatedAt' => $data->updatedAt,
             'deletedAt' => $data->deletedAt,
-            'cashier' => UserParser::brief($data->cashier),
+            'cashier' => EmployeeUserParser::brief($data->cashier),
             'orders' => OrderParser::briefs($data->orders)
         ];
     }

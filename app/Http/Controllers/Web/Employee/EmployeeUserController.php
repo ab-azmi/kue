@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\EmployeeUser\CreateEmployeeUserRequest;
 use App\Http\Requests\Employee\EmployeeUser\UpdateEmployeeUserRequest;
 use App\Models\Employee\EmployeeUser;
-use App\Parser\User\UserParser;
+use App\Parser\Employee\EmployeeUserParser;
 use Illuminate\Http\Request;
 
 class EmployeeUserController extends Controller
@@ -21,7 +21,7 @@ class EmployeeUserController extends Controller
     public function get(Request $request)
     {
         $users = EmployeeUser::orderBy('id', 'DESC')->getOrPaginate($request, true);
-        return success(UserParser::briefs($users));
+        return success(EmployeeUserParser::briefs($users));
     }
 
     /**
@@ -38,7 +38,7 @@ class EmployeeUserController extends Controller
     public function detail($id)
     {
         $user = EmployeeUser::findOrFail($id);
-        return success(UserParser::first($user));
+        return success(EmployeeUserParser::first($user));
     }
 
     /**
