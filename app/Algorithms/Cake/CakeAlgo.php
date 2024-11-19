@@ -22,8 +22,8 @@ class CakeAlgo
                     'name',
                     'cakeVariantId',
                     'profitMargin',
-                    'cogs',
-                    'sellPrice',
+                    'COGS',
+                    'sellingPrice',
                     'images',
                 ]);
                 $this->cake = Cake::create($data);
@@ -50,8 +50,8 @@ class CakeAlgo
                     'name',
                     'cakeVariantId',
                     'profitMargin',
-                    'cogs',
-                    'sellPrice',
+                    'COGS',
+                    'sellingPrice',
                     'images',
                 ]));
                 $this->attachIngridients($request->ingridients);
@@ -91,7 +91,7 @@ class CakeAlgo
             $cogs = $sums / $request->volume;
 
             return success([
-                'cogs' => $cogs,
+                'COGS' => $cogs,
                 'sellingPrice' => $sellingPrice,
                 'profitPerItem' => $sellingPrice - $cogs
             ]);

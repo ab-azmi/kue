@@ -22,8 +22,8 @@ return new class extends Migration
             
             $table->string('name');
             $table->string('description')->nullable();
-            $table->date('start_date')->default(now());
-            $table->date('end_date')->default(now()->addDay());
+            $table->date('fromDate');
+            $table->date('toDate');
             $table->bigInteger('value');
 
             $this->getDefaultTimestamps($table);

@@ -22,8 +22,8 @@ return new class extends Migration
             
             $table->string('name');
             $table->string('profitMargin')->nullable();
-            $table->bigInteger('cogs')->nullable();
-            $table->bigInteger('sellPrice')->nullable();
+            $table->float('COGS')->nullable();
+            $table->float('sellingPrice')->nullable();
             $table->json('images')->nullable();
             $table->integer('stock')->default(0);
 

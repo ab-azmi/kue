@@ -118,7 +118,7 @@ class TransactionAlgo
     {
         foreach ($orders as $key => $order) {
             $cake = Cake::find($order['cakeId']);
-            $orders[$key]['price'] = $cake->sellPrice;
+            $orders[$key]['price'] = $cake->sellingPrice;
             $orders[$key]['discount'] = $cake->discounts->sum('value');
         }
 
