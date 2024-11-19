@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Ingridient;
+namespace Database\Seeders\Cake;
 
 use App\Models\Cake\CakeComponentIngridient;
 use Illuminate\Database\Seeder;
