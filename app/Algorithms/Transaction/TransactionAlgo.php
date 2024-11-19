@@ -20,7 +20,6 @@ class TransactionAlgo
             DB::transaction(function () use ($request) {
                 $orders = $this->processOrders($request);
                 $this->transaction = Transaction::create($request->only([
-                    'customerName',
                     'quantity',
                     'orderPrice',
                     'totalPrice',
@@ -43,7 +42,6 @@ class TransactionAlgo
         try {
             DB::transaction(function () use ($request) {
                 $this->transaction->update($request->only([
-                    'customerName',
                     'quantity',
                     'orderPrice',
                     'totalPrice',

@@ -22,7 +22,6 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customerName' => 'nullable|string|max:255',
             'quantity' => 'required|numeric',
             'tax' => 'nullable|string',
             'orderPrice' => 'nullable|numeric',

@@ -21,7 +21,7 @@ class TransactionParser extends BaseParser
         return [
             'id' => $data->id,
             'quantity' => $data->quantity,
-            'customerName' => $data->customerName,
+            'code' => $data->code,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
@@ -43,7 +43,7 @@ class TransactionParser extends BaseParser
         return [
             'id' => $data->id,
             'quantity' => $data->quantity,
-            'customerName' => $data->customerName,
+            'code' => $data->code,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
