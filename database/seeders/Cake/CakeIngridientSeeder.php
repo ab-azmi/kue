@@ -29,7 +29,7 @@ class CakeIngridientSeeder extends Seeder
             [
                 'name' => 'Flour',
                 'unit' => CakeIngridientUnit::KILOGRAM_ID,
-                'pricePerUnit' => '10000',
+                'price' => '10000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '100',
                 'supplier' => 'PT. Tepung',
@@ -37,7 +37,7 @@ class CakeIngridientSeeder extends Seeder
             [
                 'name' => 'Sugar',
                 'unit' => CakeIngridientUnit::KILOGRAM_ID,
-                'pricePerUnit' => '15000',
+                'price' => '15000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '70',
                 'supplier' => 'PT. Gula',
@@ -45,7 +45,7 @@ class CakeIngridientSeeder extends Seeder
             [
                 'name' => 'Egg',
                 'unit' => CakeIngridientUnit::PIECE_ID,
-                'pricePerUnit' => '2000',
+                'price' => '2000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '50',
                 'supplier' => 'PT. Telur',
@@ -53,7 +53,7 @@ class CakeIngridientSeeder extends Seeder
             [
                 'name' => 'Milk',
                 'unit' => CakeIngridientUnit::LITER_ID,
-                'pricePerUnit' => '20000',
+                'price' => '20000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '30',
                 'supplier' => 'PT. Susu',

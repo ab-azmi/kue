@@ -24,7 +24,7 @@ class CakeComponentIngridientRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'unit' => 'required|number|max:255',
-            'pricePerUnit' => 'required|numeric',
+            'price' => 'required|numeric',
             'expirationDate' => 'required|date',
             'quantity' => 'required|integer',
             'supplier' => 'nullable|string|max:255',

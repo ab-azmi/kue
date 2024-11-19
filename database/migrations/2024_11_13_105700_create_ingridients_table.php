@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('unit');
-            $table->float('pricePerUnit');
+            $table->float('price');
             $table->date('expirationDate');
             $table->integer('quantity');
             $table->string('supplier')->nullable();
