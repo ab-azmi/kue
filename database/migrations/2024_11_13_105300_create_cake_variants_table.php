@@ -18,6 +18,8 @@ return new class extends Migration
         Schema::create('cake_variants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable();
+            $table->float('price');
             $this->getDefaultTimestamps($table);
         });
     }
