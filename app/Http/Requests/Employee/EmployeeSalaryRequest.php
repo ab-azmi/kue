@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Employee;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class EmployeeSalaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|min:2',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:5',
-            'role' => 'string|max:10'
+            'totalSalary' => ['nullable', 'numeric'],
+            'userId' => ['nullable', 'numeric', 'exists:employee_users,id'],
         ];
     }
 }

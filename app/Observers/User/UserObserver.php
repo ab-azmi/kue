@@ -2,7 +2,7 @@
 
 namespace App\Observers\User;
 
-use App\Models\User\User;
+use App\Models\Employee\EmployeeUser;
 use App\Services\Constant\Activity\ActivityAction;
 
 class UserObserver
@@ -10,13 +10,13 @@ class UserObserver
     /**
      * Handle the User "created" event.
      */
-    public function created(User $user): void
+    public function created(EmployeeUser $user): void
     {
         $user->setActivityPropertyAttributes(ActivityAction::CREATE)
             ->saveActivity('Create new User : ' . $user->id);
     }
 
-    public function updating(User $user): void
+    public function updating(EmployeeUser $user): void
     {
         $user->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
     }
@@ -24,13 +24,13 @@ class UserObserver
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user): void
+    public function updated(EmployeeUser $user): void
     {
         $user->setActivityPropertyAttributes(ActivityAction::UPDATE)
             ->saveActivity('Update User : ' . $user->id);
     }
 
-    public function deleting(User $user): void
+    public function deleting(EmployeeUser $user): void
     {
         $user->setOldActivityPropertyAttributes(ActivityAction::DELETE);
     }
@@ -38,7 +38,7 @@ class UserObserver
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user): void
+    public function deleted(EmployeeUser $user): void
     {
         $user->setActivityPropertyAttributes(ActivityAction::DELETE)
             ->saveActivity('Delete User : ' . $user->id);
@@ -47,7 +47,7 @@ class UserObserver
     /**
      * Handle the User "restored" event.
      */
-    public function restored(User $user): void
+    public function restored(EmployeeUser $user): void
     {
         //
     }
@@ -55,7 +55,7 @@ class UserObserver
     /**
      * Handle the User "force deleted" event.
      */
-    public function forceDeleted(User $user): void
+    public function forceDeleted(EmployeeUser $user): void
     {
         //
     }

@@ -1,13 +1,13 @@
 <?php
-namespace App\Algorithms\Salary;
+namespace App\Algorithms\Employee;
 
-use App\Models\Salary\Salary;
+use App\Models\Employee\EmployeeSalary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SalaryAlgo
+class EmployeeSalaryAlgo
 {
-    public function __construct(public ?Salary $salary = null)
+    public function __construct(public ?EmployeeSalary $salary = null)
     {
         
     }
@@ -15,7 +15,7 @@ class SalaryAlgo
     public function create(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->salary = Salary::create($request->all());
+                $this->salary = EmployeeSalary::create($request->all());
             });
 
             return success($this->salary);
@@ -24,10 +24,11 @@ class SalaryAlgo
         }
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
         try {
-            DB::transaction(function() use ($request){
-                $this->salary->update($request->all());
+            DB::transaction(function() use ($request, $id){
+                EmployeeSalary::where('id', $id)->update($request->all());
+                $this->salary = EmployeeSalary::findOrFail($id);
             });
 
             return success($this->salary);

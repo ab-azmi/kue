@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Salary\Traits;
+namespace App\Models\Employee\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Salary\SalaryParser;
+use App\Parser\User\UserParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivitySalaryProperty
+trait HasActivityEmployeeUserProperty
 {
     use HasActivity;
 
@@ -16,7 +16,7 @@ trait HasActivitySalaryProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::SALARY;
+        return ActivityType::USER;
     }
 
     /**
@@ -64,7 +64,7 @@ trait HasActivitySalaryProperty
     {
         $this->refresh();
 
-        return SalaryParser::first($this);
+        return UserParser::first($this);
     }
 
 }

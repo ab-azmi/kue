@@ -1,21 +1,21 @@
 <?php 
 
-namespace App\Algorithms\User;
+namespace App\Algorithms\Employee;
 
-use App\Models\User\User;
+use App\Models\Employee\EmployeeUser;
 use App\Parser\User\UserParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UserAlgo
+class EmployeeUserAlgo
 {
-    public function __construct(public ?User $user = null){}
+    public function __construct(public ?EmployeeUser $user = null){}
 
     
     public function store(Request $request){
         try {
             DB::transaction(function () use ($request) {
-                $this->user = User::create($request->validated());
+                $this->user = EmployeeUser::create($request->validated());
             });
 
             return success(UserParser::first($this->user));

@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models\Employee;
+
+use App\Models\BaseModel;
+use App\Models\Employee\Traits\HasActivityEmployeeProperty;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Employee extends BaseModel
+{
+    use HasActivityEmployeeProperty;
+
+    protected $table = 'employees';
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        self::CREATED_AT => 'datetime',
+        self::UPDATED_AT => 'datetime',
+        self::DELETED_AT => 'datetime'
+    ];
+
+    /** RELATIONSHIP **/
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(EmployeeUser::class);
+    }
+
+}

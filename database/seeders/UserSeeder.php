@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Employee\EmployeeUser;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -13,12 +12,25 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $employees = [
+            [
+                'address' => 'Jl Busung lapar 3',
+                'phone' => '08123456789',
+                'bankNumber' => '1234567890',
+            ],
+            [
+                'address' => 'Jl Raja no 12',
+                'phone' => '08123456789',
+                'bankNumber' => '1234567890',
+            ]
+        ];
         $data = $this->getData();
         //insert data
-        foreach ($data as $item) {
-            $u = User::create($item);
+        foreach ($data as $index => $item) {
+            $u = EmployeeUser::create($item);
+            $u->employee()->create($employees[$index]);
             $u->salary()->create([
-                'totalSalary' => "980000",
+            'totalSalary' => "980000",
             ]);
         }
     }
@@ -41,5 +53,4 @@ class UserSeeder extends Seeder
             ],
         );
     }
-
 }

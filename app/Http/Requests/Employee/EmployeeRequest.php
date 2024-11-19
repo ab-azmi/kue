@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Employee;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class EmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,10 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|min:2',
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->id],
+            'phone' => ['required', 'string', 'max:15'], 
+            'address' => ['nullable', 'string', 'max:255'],
+            'bankNumber' => ['nullable', 'string', 'max:255'],
+            'userId' => ['nullable', 'exists:users,id']
         ];
     }
 }

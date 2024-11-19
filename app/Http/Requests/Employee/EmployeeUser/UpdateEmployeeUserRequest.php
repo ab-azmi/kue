@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Salary;
+namespace App\Http\Requests\Employee\EmployeeUser;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class SalaryRequest extends FormRequest
+class UpdateEmployeeUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class SalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'basic_salary' => ['required', 'numeric'],
-            'tax' => ['nullable', 'string'],
-            'overtime' => ['nullable', 'numeric'],
-            'total_salary' => ['nullable', 'numeric'],
-            'user_id' => ['nullable', 'numeric'],
+            'name' => 'required|string|max:255|min:2',
+            'email' => ['required', 'email', 'max:255', 'unique:employee_users,email,' . $this->id],
         ];
     }
 }

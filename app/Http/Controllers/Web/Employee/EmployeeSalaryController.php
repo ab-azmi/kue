@@ -1,33 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Web\Salary;
+namespace App\Http\Controllers\Web\Employee;
 
-use App\Algorithms\Salary\SalaryAlgo;
+use App\Algorithms\Employee\EmployeeSalaryAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Salary\SalaryRequest;
-use App\Models\Salary\Salary;
+use App\Http\Requests\Employee\EmployeeSalaryRequest;
+use App\Models\Employee\EmployeeSalary;
 use App\Parser\Salary\SalaryParser;
 use Illuminate\Http\Request;
 
-class SalaryController extends Controller
+class EmployeeSalaryController extends Controller
 {
-    public function __construct(public $algo = new SalaryAlgo())
+    public function __construct(public $algo = new EmployeeSalaryAlgo())
     {
-        //
     }
     /**
      * Display a listing of the resource.
      */
     public function get(Request $request)
     {
-        $salaries = Salary::with('user')->getOrPaginate($request, true);
+        $salaries = EmployeeSalary::with('user')->getOrPaginate($request, true);
         return success(SalaryParser::briefs($salaries));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function create(SalaryRequest $request)
+    public function create(EmployeeSalaryRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -37,17 +36,16 @@ class SalaryController extends Controller
      */
     public function detail(string $id)
     {
-        $salary = Salary::with('user')->findOrFail($id);
+        $salary = EmployeeSalary::with('user')->findOrFail($id);
         return success(SalaryParser::first($salary));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SalaryRequest $request, string $id)
+    public function update(EmployeeSalaryRequest $request, string $id)
     {
-        $this->algo->salary = Salary::findOrFail($id);
-        return $this->algo->update($request);
+        return $this->algo->update($request, $id);
     }
 
     /**
@@ -55,7 +53,7 @@ class SalaryController extends Controller
      */
     public function delete(string $id)
     {
-        $this->algo->salary = Salary::findOrFail($id);
+        $this->algo->salary = EmployeeSalary::findOrFail($id);
         return $this->algo->delete();
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\User\Traits;
+namespace App\Models\Employee\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityUserProperty
+trait HasActivityEmployeeProperty
 {
     use HasActivity;
 
@@ -15,7 +15,7 @@ trait HasActivityUserProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::USER;
+        return ActivityType::GENERAL;
     }
 
     /**
