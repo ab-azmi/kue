@@ -45,11 +45,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
 
     /** Relationship **/
 
-    public function salary(): HasOne
-    {
-        return $this->hasOne(EmployeeSalary::class, 'userId');
-    }
-
     public function employee(): HasOne
     {
         return $this->hasOne(Employee::class, 'userId');

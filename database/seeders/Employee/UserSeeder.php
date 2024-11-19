@@ -28,10 +28,7 @@ class UserSeeder extends Seeder
         //insert data
         foreach ($data as $index => $item) {
             $u = EmployeeUser::create($item);
-            $u->employee()->create($employees[$index]);
-            $u->salary()->create([
-            'totalSalary' => "980000",
-            ]);
+            $u->employee()->create($employees[$index])->salary()->create(['totalSalary' => 9800000]);
         }
     }
 

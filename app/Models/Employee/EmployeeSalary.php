@@ -3,7 +3,6 @@
 namespace App\Models\Employee;
 
 use App\Models\BaseModel;
-use App\Models\Employee\EmployeeUser;
 use App\Models\Employee\Traits\HasActivityEmployeeSalaryProperty;
 use App\Observers\Salary\SalaryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -25,9 +24,9 @@ class EmployeeSalary extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(EmployeeUser::class, 'userId');
+        return $this->belongsTo(Employee::class, 'employeeId');
     }
 
 }

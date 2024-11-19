@@ -23,7 +23,7 @@ class EmployeeSalaryRequest extends FormRequest
     {
         return [
             'totalSalary' => ['nullable', 'numeric'],
-            'userId' => ['nullable', 'numeric', 'exists:employee_users,id'],
+            'employeeId' => ['nullable', 'numeric', 'exists:employees,id'],
         ];
     }
 }
