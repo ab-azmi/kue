@@ -18,7 +18,7 @@ class EmployeeAlgo
             DB::transaction(function () use ($request) {
                 $this->employee = Employee::create($request->all());
 
-                $this->employee->satActivityEmployeeProperty(ActivityAction::CREATE)
+                $this->employee->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Employee : ' . $this->employee->id);
             });
 

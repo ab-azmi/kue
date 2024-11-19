@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Employee;
 
 use App\Algorithms\Employee\EmployeeAlgo;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Employee\EmployeeRequest;
 use App\Models\Employee\Employee;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function create(Request $request)
+    public function create(EmployeeRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -41,7 +42,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeRequest $request, string $id)
     {
         $this->algo->employee = Employee::find($id);
         return $this->algo->update($request);
