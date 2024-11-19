@@ -4,6 +4,8 @@ namespace App\Models\Employee;
 
 use App\Models\BaseModel;
 use App\Models\Employee\Traits\HasActivityEmployeeProperty;
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Employee extends BaseModel
 {
@@ -17,5 +19,12 @@ class Employee extends BaseModel
         self::UPDATED_AT => 'datetime',
         self::DELETED_AT => 'datetime'
     ];
+
+    /** RELATIONSHIP **/
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
