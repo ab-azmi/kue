@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Cake\CakeSeeder;
 use Database\Seeders\Employee\UserSeeder;
-use Database\Seeders\Ingridient\IngridientSeeder;
+use Database\Seeders\Cake\IngridientSeeder;
 use Database\Seeders\Setting\FixedCostSeeder;
 use Database\Seeders\Setting\SettingSeeder;
 use Database\Seeders\Transaction\TransactionSeeder;
