@@ -3,7 +3,7 @@
 namespace Database\Seeders\Setting;
 
 use App\Models\Setting\SettingFixedCost;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Services\Constant\Setting\FrequencyConstant;
 use Illuminate\Database\Seeder;
 
 class FixedCostSeeder extends Seeder
@@ -29,19 +29,19 @@ class FixedCostSeeder extends Seeder
                 'name' => 'Rent',
                 'description' => 'Monthly rent',
                 'amount' => '5000000',
-                'frequency' => 'monthly',
+                'frequency' => FrequencyConstant::MONTHLY_ID,
             ],
             [
                 'name' => 'Electricity',
                 'description' => 'Monthly electricity bill',
                 'amount' => '300000',
-                'frequency' => 'monthly',
+                'frequency' => FrequencyConstant::MONTHLY_ID,
             ],
             [
                 'name' => 'Water',
                 'description' => 'Monthly water bill',
                 'amount' => '100000',
-                'frequency' => 'monthly',
+                'frequency' => FrequencyConstant::MONTHLY_ID,
             ]
         );
     }
