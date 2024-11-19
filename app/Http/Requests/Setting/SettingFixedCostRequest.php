@@ -25,7 +25,7 @@ class SettingFixedCostRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'amount' => 'required|numeric',
-            'frequency' => 'required|string|in:monthly,yearly',
+            'frequency' => 'required|number',
         ];
     }
 }
