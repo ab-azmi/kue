@@ -27,8 +27,8 @@ class CakeParser extends BaseParser
             'sellingPrice' => $data->sellingPrice,
             'stock' => $data->stock,
             'images' => $data->images,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'ingridients' => CakeComponentIngridientParser::get($data->ingridients),
             'variant' => CakeVariantParser::first($data->variant),
             'discounts' => CakeDiscountParser::get($data->discount),
@@ -49,8 +49,8 @@ class CakeParser extends BaseParser
             'sellingPrice' => $data->sellingPrice,
             'stock' => $data->stock,
             'images' => $data->images,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
 

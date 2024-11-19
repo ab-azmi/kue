@@ -24,8 +24,8 @@ class CakeComponentIngridientParser extends BaseParser
             'expirationDate' => $data->expirationDate,
             'quantity' => $data->quantity,
             'supplier' => $data->supplier,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
 
@@ -43,8 +43,8 @@ class CakeComponentIngridientParser extends BaseParser
             'expirationDate' => $data->expirationDate,
             'quantity' => $data->quantity,
             'supplier' => $data->supplier,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
 
