@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Algorithms\Cake;
 
 use App\Models\Cake\CakeDiscount;
@@ -7,16 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class CakeDiscountAlgo
 {
-    public function __construct(public ?CakeDiscount $discount = null)
-    {
-        
-    }
+    public function __construct(public ?CakeDiscount $discount = null) {}
 
     public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->discount = CakeDiscount::create($request->all());
+                $fromData = date('Y-m-d H:i:s', strtotime($request->fromDate));
+                $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
+
+                $data = array_merge($request->all(), ['fromDate' => $fromData, 'toDate' => $toDate]);
+
+                $this->discount = CakeDiscount::create($data);
             });
 
             return success($this->discount);

@@ -24,8 +24,8 @@ class CakeDiscountRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'start_date' => 'required|string',
-            'end_date' => 'required|string',
+            'fromDate' => 'required|string',
+            'toDate' => 'required|string',
             'value' => 'required|integer',
             'cakeId' => 'required|integer|exists:cakes,id',
         ];
