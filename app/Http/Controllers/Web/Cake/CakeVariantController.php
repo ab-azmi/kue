@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Setting;
+namespace App\Http\Controllers\Web\Cake;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cake\CakeVariant;

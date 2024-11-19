@@ -2,20 +2,20 @@
 
 namespace App\Algorithms\Setting;
 
-use App\Models\Setting\FixedCost;
+use App\Models\Setting\SettingFixedCost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class FixedCostAlgo
+class SettingFixedCostAlgo
 {
-    public function __construct(public ?FixedCost $fixedCost = null)
+    public function __construct(public ?SettingFixedCost $fixedCost = null)
     {
     }
 
     public function create(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->fixedCost = FixedCost::create($request->all());
+                $this->fixedCost = SettingFixedCost::create($request->all());
             });
 
             return success($this->fixedCost);

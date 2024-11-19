@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fixed_costs', function (Blueprint $table) {
+        Schema::create('setting_fixed_costs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fixed_costs');
+        Schema::dropIfExists('setting_fixed_costs');
     }
 };

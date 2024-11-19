@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Setting\FixedCost;
+use App\Models\Setting\SettingFixedCost;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +15,7 @@ class FixedCostSeeder extends Seeder
     {
         $data = $this->getData();
         foreach ($data as $item) {
-            FixedCost::create($item);
+            SettingFixedCost::create($item);
         }
     }
 

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Web\Setting;
 
-use App\Algorithms\Setting\FixedCostAlgo;
+use App\Algorithms\Setting\SettingFixedCostAlgo;
 use App\Http\Controllers\Controller;
-use App\Models\Setting\FixedCost;
+use App\Http\Requests\Setting\SettingFixedCostRequest;
+use App\Models\Setting\SettingFixedCost;
 use App\Parser\Setting\FixedCostParser;
 use Illuminate\Http\Request;
 
-class FixedCostController extends Controller
+class SettingFixedCostController extends Controller
 {
-    public function __construct(public $algo = new FixedCostAlgo())
+    public function __construct(public $algo = new SettingFixedCostAlgo())
     {
         
     }
@@ -19,14 +20,14 @@ class FixedCostController extends Controller
      */
     public function get(Request $request)
     {
-        $fixedcosts = FixedCost::orderBy('createdAt')->getOrPaginate($request, true);
+        $fixedcosts = SettingFixedCost::orderBy('createdAt')->getOrPaginate($request, true);
         return success($fixedcosts);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function create(Request $request)
+    public function create(SettingFixedCostRequest $request)
     {
         return $this->algo->create($request);
     }
@@ -36,16 +37,16 @@ class FixedCostController extends Controller
      */
     public function detail(string $id)
     {
-        $fixedcost = FixedCost::findOrFail($id);
+        $fixedcost = SettingFixedCost::findOrFail($id);
         return success(FixedCostParser::first($fixedcost));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SettingFixedCostRequest $request, string $id)
     {
-        $this->algo->fixedCost = FixedCost::findOrFail($id);
+        $this->algo->fixedCost = SettingFixedCost::findOrFail($id);
         return $this->algo->update($request);
     }
 
@@ -54,7 +55,7 @@ class FixedCostController extends Controller
      */
     public function delete(string $id)
     {
-        $this->algo->fixedCost = FixedCost::findOrFail($id);
+        $this->algo->fixedCost = SettingFixedCost::findOrFail($id);
         return $this->algo->delete();
     }
 }
