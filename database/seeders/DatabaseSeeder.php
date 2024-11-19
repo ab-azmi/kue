@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Database\Seeders\Setting\SettingSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CakeSeeder::class,
             FixedCostSeeder::class,
             TransactionSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

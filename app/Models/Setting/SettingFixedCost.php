@@ -12,7 +12,7 @@ class SettingFixedCost extends BaseModel
 {
     use HasActivitySettingFixedCostProperty;
 
-    protected $table = 'fixed_costs';
+    protected $table = 'setting_fixed_costs';
     protected $guarded = ['id'];
 
     protected $casts = [
