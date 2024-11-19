@@ -19,8 +19,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('unit');
-            $table->bigInteger('pricePerUnit');
-            $table->string('expirationDate');
+            $table->float('pricePerUnit');
+            $table->date('expirationDate');
             $table->integer('quantity');
             $table->string('supplier')->nullable();
             $this->getDefaultTimestamps($table);
