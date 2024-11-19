@@ -6,7 +6,7 @@ use App\Algorithms\Employee\EmployeeSalaryAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\EmployeeSalaryRequest;
 use App\Models\Employee\EmployeeSalary;
-use App\Parser\Salary\EmployeeSalaryParser;
+use App\Parser\Employee\EmployeeSalaryParser;
 use Illuminate\Http\Request;
 
 class EmployeeSalaryController extends Controller

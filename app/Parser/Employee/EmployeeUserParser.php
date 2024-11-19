@@ -2,7 +2,7 @@
 
 namespace App\Parser\Employee;
 
-use App\Parser\Salary\EmployeeSalaryParser;
+use App\Parser\Employee\EmployeeSalaryParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class EmployeeUserParser extends BaseParser

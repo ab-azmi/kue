@@ -40,9 +40,9 @@ Route::prefix('cakes')
             ->group(function () {
                 Route::get('', 'get');
                 Route::post('', 'create');
+                Route::post('cogs', 'COGS');
                 Route::get('{id}', 'detail');
                 Route::put('{id}', 'update');
                 Route::delete('{id}', 'delete');
-                Route::post('cogs', 'cogs');
             });
     });

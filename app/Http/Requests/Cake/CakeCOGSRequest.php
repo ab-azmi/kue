@@ -4,7 +4,7 @@ namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class COGSRequest extends FormRequest
+class CakeCOGSRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class COGSRequest extends FormRequest
             'volume' => 'required|numeric',
             'margin' => 'nullable|string',
             'ingridients' => 'required|array',
-            'ingridients.*.id' => 'required|exists:ingridients,id',
+            'ingridients.*.id' => 'required|exists:cake_component_ingridients,id',
             'ingridients.*.quantity' => 'required|numeric',
         ];
     }
