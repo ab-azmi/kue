@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Observers\Ingridient;
+namespace App\Observers\Cake;
 
-use App\Models\Ingridient\Ingridient;
+use App\Models\Cake\CakeComponentIngridient;
 use App\Services\Constant\Activity\ActivityAction;
 
 class IngridientObserver
@@ -10,13 +10,13 @@ class IngridientObserver
     /**
      * Handle the Ingridient "created" event.
      */
-    public function created(Ingridient $ingridient): void
+    public function created(CakeComponentIngridient $ingridient): void
     {
         $ingridient->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Ingridient : ' . $ingridient->id);
     }
 
-    public function updating(Ingridient $ingridient): void
+    public function updating(CakeComponentIngridient $ingridient): void
     {
         $ingridient->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
     }
@@ -24,13 +24,13 @@ class IngridientObserver
     /**
      * Handle the Ingridient "updated" event.
      */
-    public function updated(Ingridient $ingridient): void
+    public function updated(CakeComponentIngridient $ingridient): void
     {
         $ingridient->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Ingridient : ' . $ingridient->id);
     }
 
-    public function deleting(Ingridient $ingridient): void
+    public function deleting(CakeComponentIngridient $ingridient): void
     {
         $ingridient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
     }
@@ -38,7 +38,7 @@ class IngridientObserver
     /**
      * Handle the Ingridient "deleted" event.
      */
-    public function deleted(Ingridient $ingridient): void
+    public function deleted(CakeComponentIngridient $ingridient): void
     {
         $ingridient->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Ingridient : ' . $ingridient->id);
@@ -47,7 +47,7 @@ class IngridientObserver
     /**
      * Handle the Ingridient "restored" event.
      */
-    public function restored(Ingridient $ingridient): void
+    public function restored(CakeComponentIngridient $ingridient): void
     {
         //
     }
@@ -55,7 +55,7 @@ class IngridientObserver
     /**
      * Handle the Ingridient "force deleted" event.
      */
-    public function forceDeleted(Ingridient $ingridient): void
+    public function forceDeleted(CakeComponentIngridient $ingridient): void
     {
         //
     }

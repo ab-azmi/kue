@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Ingridient\Traits;
+namespace App\Models\Cake\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Ingridient\IngridientParser;
+use App\Parser\Cake\CakeComponentIngridientParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityIngridientProperty
+trait HasActivityCakeComponentIngridientProperty
 {
     use HasActivity;
 
@@ -64,7 +64,7 @@ trait HasActivityIngridientProperty
     {
         $this->refresh();
 
-        return IngridientParser::first($this);
+        return CakeComponentIngridientParser::first($this);
     }
 
 }

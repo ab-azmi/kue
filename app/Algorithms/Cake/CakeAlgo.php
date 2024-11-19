@@ -3,14 +3,12 @@
 namespace App\Algorithms\Cake;
 
 use App\Models\Cake\Cake;
-use App\Models\Ingridient\Ingridient;
+use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Salary\Salary;
 use App\Models\Setting\FixedCost;
 use App\Parser\Cake\CakeParser;
-use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Decimal;
 
 class CakeAlgo
 {
@@ -109,7 +107,7 @@ class CakeAlgo
         $this->cake->ingridients()->attach($ingridients);
 
         foreach ($ingridients as $ingridient) {
-            Ingridient::find($ingridient['ingridientId'])->decrement('quantity', $ingridient['quantity']);
+            CakeComponentIngridient::find($ingridient['ingridientId'])->decrement('quantity', $ingridient['quantity']);
         }
     }
 
@@ -156,7 +154,7 @@ class CakeAlgo
     {
         $totalIngridientCost = 0;
         $ingridientIds = array_unique(array_column($_ingridients, 'id'));
-        $ingridients = Ingridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
+        $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
 
         foreach ($_ingridients as $ingridient) {
             $pricePerUnit = $ingridients[$ingridient['id']]->pricePerUnit;

@@ -1,11 +1,11 @@
 <?php
 namespace App\Routes\Features\Web;
 
-use App\Http\Controllers\Web\Ingridient\IngridientController;
+use App\Http\Controllers\Web\Cake\CakeComponentIngridientController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('ingridients')
-    ->controller(IngridientController::class)
+    ->controller(CakeComponentIngridientController::class)
     ->group(function(){
         Route::get('', 'get');
         Route::post('', 'create');

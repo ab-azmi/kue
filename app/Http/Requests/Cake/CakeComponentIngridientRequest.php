@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Ingridient;
+namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class IngridientRequest extends FormRequest
+class CakeComponentIngridientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
