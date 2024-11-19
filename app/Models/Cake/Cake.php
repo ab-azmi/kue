@@ -5,7 +5,7 @@ namespace App\Models\Cake;
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
 use App\Models\Cake\CakeComponentIngridient;
-use App\Models\Setting\CakeVariant;
+use App\Models\Cake\CakeVariant;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Transaction;
 use App\Observers\Cake\CakeObserver;

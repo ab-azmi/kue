@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngridient;
-use App\Models\Setting\CakeVariant;
+use App\Models\Cake\CakeVariant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
