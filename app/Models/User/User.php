@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Employee\Employee;
 use App\Models\Salary\Salary;
 use App\Models\Transaction\Transaction;
 use App\Models\User\Traits\HasActivityUserProperty;
@@ -54,5 +55,10 @@ class User extends Authenticatable implements JWTSubject
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class, 'cashierId');
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class, 'userId');
     }
 }
