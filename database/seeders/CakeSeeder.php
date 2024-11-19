@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Cake\Cake;
-use App\Models\Cake\CakeIngridient;
-use App\Models\Cake\Discount;
-use App\Models\Ingridient\Ingridient;
-use App\Models\Setting\CakeVariant;
+use App\Models\Cake\CakeComponentIngridient;
+use App\Models\Cake\CakeVariant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +31,7 @@ class CakeSeeder extends Seeder
         foreach ($data as $item) {
             $cake = Cake::create($item);
             // Attach random ingridients
-            foreach (Ingridient::all()->random(3) as $ingridient) {
+            foreach (CakeComponentIngridient::all()->random(3) as $ingridient) {
                 $cake->ingridients()->attach($ingridient->id, [
                     'quantity' => rand(1, 5),
                     'unit' => $ingridient->unit,
@@ -41,7 +39,7 @@ class CakeSeeder extends Seeder
             }
         }
 
-        DB::table('discounts')->insert([
+        DB::table('cake_discounts')->insert([
             [
                 'name' => 'Discount 1',
                 'description' => 'Discount 1 Description',

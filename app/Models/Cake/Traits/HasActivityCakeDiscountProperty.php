@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Ingridient\Traits;
+namespace App\Models\Cake\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Ingridient\IngridientParser;
+use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityIngridientProperty
+trait HasActivityCakeDiscountProperty
 {
     use HasActivity;
 
@@ -16,7 +16,7 @@ trait HasActivityIngridientProperty
      */
     public function getActivityType(): string
     {
-        return ActivityType::INGRIDIENT;
+        return ActivityType::DISCOUNT;
     }
 
     /**
@@ -64,7 +64,7 @@ trait HasActivityIngridientProperty
     {
         $this->refresh();
 
-        return IngridientParser::first($this);
+        return CakeDiscountParser::brief($this);
     }
 
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('userId')->nullable();
             $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
             
-            $table->bigInteger('totaSalary');
+            $table->bigInteger('totalSalary');
             $this->getDefaultTimestamps($table);
         });
     }

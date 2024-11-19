@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Ingridient;
+namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class IngridientRequest extends FormRequest
+class CakeDiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class IngridientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'unit' => 'required|string|max:255',
-            'pricePerUnit' => 'required|numeric',
-            'expirationDate' => 'required|date',
-            'quantity' => 'required|integer',
-            'supplier' => 'nullable|string|max:255',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+            'value' => 'required|integer',
+            'cakeId' => 'required|integer|exists:cakes,id',
         ];
     }
 }

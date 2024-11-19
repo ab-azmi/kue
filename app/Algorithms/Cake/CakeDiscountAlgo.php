@@ -1,14 +1,13 @@
 <?php
 namespace App\Algorithms\Cake;
 
-use App\Models\Cake\Discount;
-use App\Services\Constant\Activity\ActivityAction;
+use App\Models\Cake\CakeDiscount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DiscountAlgo
+class CakeDiscountAlgo
 {
-    public function __construct(public ?Discount $discount = null)
+    public function __construct(public ?CakeDiscount $discount = null)
     {
         
     }
@@ -17,7 +16,7 @@ class DiscountAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->discount = Discount::create($request->all());
+                $this->discount = CakeDiscount::create($request->all());
             });
 
             return success($this->discount);

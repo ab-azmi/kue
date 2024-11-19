@@ -1,20 +1,20 @@
 <?php
-namespace App\Algorithms\Ingridient;
+namespace App\Algorithms\Cake;
 
-use App\Models\Ingridient\Ingridient;
+use App\Models\Cake\CakeComponentIngridient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class IngridientAlgo
+class CakeComponentIngridientAlgo
 {
-    public function __construct(public ?Ingridient $ingridient = null)
+    public function __construct(public ?CakeComponentIngridient $ingridient = null)
     {
     }
 
     public function store(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->ingridient = Ingridient::create($request->validated());
+                $this->ingridient = CakeComponentIngridient::create($request->validated());
             });
             return success($this->ingridient);
         } catch (\Exception $e) {

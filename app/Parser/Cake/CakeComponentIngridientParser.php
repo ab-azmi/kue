@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Parser\Ingridient;
-
-use App\Parser\Cake\CakeParser;
+namespace App\Parser\Cake;
 use GlobalXtreme\Parser\BaseParser;
 
-class IngridientParser extends BaseParser
+class CakeComponentIngridientParser extends BaseParser
 {
     /**
      * @param $data

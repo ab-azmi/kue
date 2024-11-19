@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('cakeId');
             $table->foreign('cakeId')->references('id')->on('cakes')->constrained()->onDelete('cascade');
             $table->foreignId('ingridientId');
-            $table->foreign('ingridientId')->references('id')->on('ingridients')->constrained()->onDelete('cascade');
+            $table->foreign('ingridientId')->references('id')->on('cake_component_ingridients')->constrained()->onDelete('cascade');
             
             $table->integer('quantity');
             $table->string('unit');

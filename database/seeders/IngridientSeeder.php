@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ingridient\Ingridient;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cake\CakeComponentIngridient;
 use Illuminate\Database\Seeder;
 
 class IngridientSeeder extends Seeder
@@ -16,7 +15,7 @@ class IngridientSeeder extends Seeder
         $data = $this->getData();
 
         foreach ($data as $item) {
-            Ingridient::create($item);
+            CakeComponentIngridient::create($item);
         }
     }
 

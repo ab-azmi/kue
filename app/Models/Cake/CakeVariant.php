@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Setting;
+namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Cake;

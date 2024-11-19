@@ -2,7 +2,7 @@
 
 namespace App\Observers\Cake;
 
-use App\Models\Cake\Discount;
+use App\Models\Cake\CakeDiscount;
 use App\Services\Constant\Activity\ActivityAction;
 
 class DiscountObserver
@@ -10,13 +10,13 @@ class DiscountObserver
     /**
      * Handle the Discount "created" event.
      */
-    public function created(Discount $discount): void
+    public function created(CakeDiscount $discount): void
     {
         $discount->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Discount : ' . $discount->id);
     }
 
-    public function updating(Discount $discount): void
+    public function updating(CakeDiscount $discount): void
     {
         $discount->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
     }
@@ -24,13 +24,13 @@ class DiscountObserver
     /**
      * Handle the Discount "updated" event.
      */
-    public function updated(Discount $discount): void
+    public function updated(CakeDiscount $discount): void
     {
         $discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Discount : ' . $discount->id);
     }
 
-    public function deleting(Discount $discount): void
+    public function deleting(CakeDiscount $discount): void
     {
         $discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
     }
@@ -38,7 +38,7 @@ class DiscountObserver
     /**
      * Handle the Discount "deleted" event.
      */
-    public function deleted(Discount $discount): void
+    public function deleted(CakeDiscount $discount): void
     {
         $discount->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Discount : ' . $discount->id);
@@ -47,7 +47,7 @@ class DiscountObserver
     /**
      * Handle the Discount "restored" event.
      */
-    public function restored(Discount $discount): void
+    public function restored(CakeDiscount $discount): void
     {
         //
     }
@@ -55,7 +55,7 @@ class DiscountObserver
     /**
      * Handle the Discount "force deleted" event.
      */
-    public function forceDeleted(Discount $discount): void
+    public function forceDeleted(CakeDiscount $discount): void
     {
         //
     }

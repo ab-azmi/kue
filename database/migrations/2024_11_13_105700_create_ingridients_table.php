@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ingridients', function (Blueprint $table) {
+        Schema::create('cake_component_ingridients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('unit');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingridients');
+        Schema::dropIfExists('cake_component_ingridients');
     }
 };

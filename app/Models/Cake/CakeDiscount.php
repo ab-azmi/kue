@@ -3,17 +3,18 @@
 namespace App\Models\Cake;
 
 use App\Models\BaseModel;
+use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
 use App\Models\Cake\Traits\HasActivityDiscountProperty;
 use App\Observers\Cake\DiscountObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[ObservedBy([DiscountObserver::class])]
-class Discount extends BaseModel
+class CakeDiscount extends BaseModel
 {
-    use HasActivityDiscountProperty;
+    use HasActivityCakeDiscountProperty;
 
-    protected $table = 'discounts';
+    protected $table = 'cake_discounts';
     protected $guarded = ['id'];
 
     protected $casts = [

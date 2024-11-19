@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Web\Ingridient;
+namespace App\Http\Controllers\Web\Cake;
 
-use App\Algorithms\Ingridient\IngridientAlgo;
+use App\Algorithms\Cake\CakeComponentIngridientAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Ingridient\IngridientRequest;
-use App\Models\Ingridient\Ingridient;
+use App\Http\Requests\Cake\CakeComponentIngridientRequest;
+use App\Models\Cake\CakeComponentIngridient;
 use Illuminate\Http\Request;
 
-class IngridientController extends Controller
+class CakeComponentIngridientController extends Controller
 {
-    public function __construct(public $algo = new IngridientAlgo())
+    public function __construct(public $algo = new CakeComponentIngridientAlgo())
     {
     }
     /**
@@ -18,7 +18,7 @@ class IngridientController extends Controller
      */
     public function get(Request $request)
     {
-        $ingridients = Ingridient::orderBy('createdAt', 'desc')
+        $ingridients = CakeComponentIngridient::orderBy('createdAt', 'desc')
             ->getOrPaginate($request, true);
         
         return success($ingridients);
@@ -27,7 +27,7 @@ class IngridientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function create(IngridientRequest $request)
+    public function create(CakeComponentIngridientRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -37,16 +37,16 @@ class IngridientController extends Controller
      */
     public function detail(string $id)
     {
-        $ingridient = Ingridient::findOrFail($id);
+        $ingridient = CakeComponentIngridient::findOrFail($id);
         return success($ingridient);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(IngridientRequest $request, string $id)
+    public function update(CakeComponentIngridientRequest $request, string $id)
     {
-        $this->algo->ingridient = Ingridient::findOrFail($id);
+        $this->algo->ingridient = CakeComponentIngridient::findOrFail($id);
         return $this->algo->update($request);
     }
 
@@ -55,7 +55,7 @@ class IngridientController extends Controller
      */
     public function delete(string $id)
     {
-        $this->algo->ingridient = Ingridient::findOrFail($id);
+        $this->algo->ingridient = CakeComponentIngridient::findOrFail($id);
         return $this->algo->destroy();
     }
 }

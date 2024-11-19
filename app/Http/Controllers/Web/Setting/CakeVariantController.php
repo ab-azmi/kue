@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Setting;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting\CakeVariant;
+use App\Models\Cake\CakeVariant;
 use Illuminate\Http\Request;
 
 class CakeVariantController extends Controller
