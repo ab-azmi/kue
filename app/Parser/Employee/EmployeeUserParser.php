@@ -22,8 +22,8 @@ class EmployeeUserParser extends BaseParser
             'id' => $data->id,
             'name' => $data->name,
             'email' => $data->email,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'salary' => EmployeeSalaryParser::brief($data->salary),
         ];
     }
@@ -38,8 +38,8 @@ class EmployeeUserParser extends BaseParser
             'id' => $data->id,
             'name' => $data->name,
             'email' => $data->email,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
 

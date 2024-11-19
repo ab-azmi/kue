@@ -3,7 +3,7 @@
 namespace App\Models\Setting\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Setting\FixedCostParser;
+use App\Parser\Setting\SettingFixedCostParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivitySettingFixedCostProperty
@@ -64,7 +64,7 @@ trait HasActivitySettingFixedCostProperty
     {
         $this->refresh();
 
-        return FixedCostParser::brief($this);
+        return SettingFixedCostParser::brief($this);
     }
 
 }
