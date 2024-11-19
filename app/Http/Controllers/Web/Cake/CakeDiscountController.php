@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Web\Cake;
 
-use App\Algorithms\Cake\DiscountAlgo;
+use App\Algorithms\Cake\CakeDiscountAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Discount\CakeDiscountRequest;
+use App\Http\Requests\Cake\CakeDiscountRequest;
 use App\Models\Cake\CakeDiscount;
 use App\Parser\Cake\CakeDiscountParser;
 use Illuminate\Http\Request;
 
 class CakeDiscountController extends Controller
 {
-    public function __construct(public $algo = new DiscountAlgo())
+    public function __construct(public $algo = new CakeDiscountAlgo())
     {
         
     }

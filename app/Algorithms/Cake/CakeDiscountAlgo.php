@@ -5,7 +5,7 @@ use App\Models\Cake\CakeDiscount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DiscountAlgo
+class CakeDiscountAlgo
 {
     public function __construct(public ?CakeDiscount $discount = null)
     {

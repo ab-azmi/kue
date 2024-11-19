@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Discount;
+namespace App\Http\Requests\Cake;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
