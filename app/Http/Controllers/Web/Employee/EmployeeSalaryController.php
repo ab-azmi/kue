@@ -19,7 +19,7 @@ class EmployeeSalaryController extends Controller
      */
     public function get(Request $request)
     {
-        $salaries = EmployeeSalary::with('user')->getOrPaginate($request, true);
+        $salaries = EmployeeSalary::with('employee')->getOrPaginate($request, true);
         return success(EmployeeSalaryParser::briefs($salaries));
     }
 
@@ -36,7 +36,7 @@ class EmployeeSalaryController extends Controller
      */
     public function detail(string $id)
     {
-        $salary = EmployeeSalary::with('user')->findOrFail($id);
+        $salary = EmployeeSalary::with('employee')->findOrFail($id);
         return success(EmployeeSalaryParser::first($salary));
     }
 

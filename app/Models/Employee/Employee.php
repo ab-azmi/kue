@@ -6,6 +6,7 @@ use App\Models\BaseModel;
 use App\Models\Employee\Traits\HasActivityEmployeeProperty;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Employee extends BaseModel
 {
@@ -30,5 +31,10 @@ class Employee extends BaseModel
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'employeeId');
+    }
+
+    public function salary(): HasOne
+    {
+        return $this->hasOne(EmployeeSalary::class, 'employeeId');
     }
 }
