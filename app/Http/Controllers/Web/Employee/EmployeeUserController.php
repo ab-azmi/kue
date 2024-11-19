@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Web\User;
+namespace App\Http\Controllers\Web\Employee;
 
-use App\Algorithms\User\UserAlgo;
+use App\Algorithms\Employee\EmployeeUserAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\CreateUserRequest;
-use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\User\User;
+use App\Http\Requests\Employee\EmployeeUser\CreateEmployeeUserRequest;
+use App\Http\Requests\Employee\EmployeeUser\UpdateEmployeeUserRequest;
+use App\Models\Employee\EmployeeUser;
 use App\Parser\User\UserParser;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class EmployeeUserController extends Controller
 {
     // constructor
-    public function __construct(public $algo = new UserAlgo()){
+    public function __construct(public $algo = new EmployeeUserAlgo()){
     }
     /**
      * Display a listing of the resource.
      */
     public function get(Request $request)
     {
-        $users = User::orderBy('id', 'DESC')->getOrPaginate($request, true);
+        $users = EmployeeUser::orderBy('id', 'DESC')->getOrPaginate($request, true);
         return success(UserParser::briefs($users));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function create(CreateUserRequest $request)
+    public function create(CreateEmployeeUserRequest $request)
     {
         return $this->algo->store($request);
     }
@@ -37,16 +37,16 @@ class UserController extends Controller
      */
     public function detail($id)
     {
-        $user = User::findOrFail($id);
+        $user = EmployeeUser::findOrFail($id);
         return success(UserParser::first($user));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateEmployeeUserRequest $request, string $id)
     {
-        $user = User::findOrFail($id);
+        $user = EmployeeUser::findOrFail($id);
         $this->algo->user = $user;
         return $this->algo->update($request);
     }
@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function delete(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = EmployeeUser::findOrFail($id);
         $this->algo->user = $user;
         return $this->algo->destroy();
     }

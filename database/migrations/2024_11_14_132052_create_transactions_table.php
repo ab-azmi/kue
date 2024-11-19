@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cashierId');
-            $table->foreign('cashierId')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('cashierId')->references('id')->on('employee_users')->cascadeOnDelete();
 
             $table->integer('quantity')->nullable();
             $table->string('customerName')->default('Anonymous');

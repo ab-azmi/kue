@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('userId');
-            $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('userId')->references('id')->on('employee_users')->cascadeOnDelete();
 
             $table->string('address');
             $table->string('phone');

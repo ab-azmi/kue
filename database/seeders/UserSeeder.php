@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Employee\EmployeeUser;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -28,7 +27,7 @@ class UserSeeder extends Seeder
         $data = $this->getData();
         //insert data
         foreach ($data as $index => $item) {
-            $u = User::create($item);
+            $u = EmployeeUser::create($item);
             $u->employee()->create($employees[$index]);
             $u->salary()->create([
             'totalSalary' => "980000",

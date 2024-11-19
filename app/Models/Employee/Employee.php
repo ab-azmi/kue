@@ -4,7 +4,6 @@ namespace App\Models\Employee;
 
 use App\Models\BaseModel;
 use App\Models\Employee\Traits\HasActivityEmployeeProperty;
-use App\Models\User\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Employee extends BaseModel
@@ -24,7 +23,7 @@ class Employee extends BaseModel
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(EmployeeUser::class);
     }
 
 }

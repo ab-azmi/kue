@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Employee\EmployeeUser;
 
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class UpdateEmployeeUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,7 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:2',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:5',
-            'role' => 'string|max:10'
+            'email' => ['required', 'email', 'max:255', 'unique:employee_users,email,' . $this->id],
         ];
     }
 }

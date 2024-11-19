@@ -11,7 +11,7 @@ class AuthAlgo
     {
         try {
             $request->validate([
-                'email' => ['required', 'email', 'exists:users,email', 'max:255'],
+                'email' => ['required', 'email', 'exists:employee_users,email', 'max:255'],
                 'password' => ['required'],
             ]);
 

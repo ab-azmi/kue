@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\User\Traits;
+namespace App\Models\Employee\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
+use App\Parser\User\UserParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityUserProperty
+trait HasActivityEmployeeUserProperty
 {
     use HasActivity;
 
@@ -63,7 +64,7 @@ trait HasActivityUserProperty
     {
         $this->refresh();
 
-        return [];
+        return UserParser::first($this);
     }
 
 }

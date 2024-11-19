@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\User;
+namespace App\Models\Employee;
 
 use App\Models\Employee\Employee;
+use App\Models\Employee\Traits\HasActivityEmployeeUserProperty;
+use App\Models\GetOrPaginate;
 use App\Models\Salary\Salary;
 use App\Models\Transaction\Transaction;
-use App\Models\User\Traits\HasActivityUserProperty;
 use App\Observers\User\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,11 +15,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 #[ObservedBy([UserObserver::class])]
-class User extends Authenticatable implements JWTSubject
+class EmployeeUser extends Authenticatable implements JWTSubject
 {
-    use HasActivityUserProperty;
+    use HasActivityEmployeeUserProperty, GetOrPaginate;
     
-    protected $table = 'users';
+    protected $table = 'employee_users';
     protected $guarded = ['id'];
 
     protected $casts = [

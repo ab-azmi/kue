@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('userId')->nullable();
-            $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('userId')->references('id')->on('employee_users')->cascadeOnDelete();
             
             $table->bigInteger('totalSalary');
             $this->getDefaultTimestamps($table);
