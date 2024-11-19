@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->date('fromDate');
             $table->date('toDate');
-            $table->bigInteger('value');
+            $table->float('value');
 
             $this->getDefaultTimestamps($table);
         });

@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Cake\CakeSeeder;
 use Database\Seeders\Employee\UserSeeder;
-use Database\Seeders\Cake\IngridientSeeder;
+use Database\Seeders\Cake\CakeIngridientSeeder;
 use Database\Seeders\Setting\FixedCostSeeder;
 use Database\Seeders\Setting\SettingSeeder;
 use Database\Seeders\Transaction\TransactionSeeder;
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            IngridientSeeder::class,
+            CakeIngridientSeeder::class,
             CakeSeeder::class,
             FixedCostSeeder::class,
             TransactionSeeder::class,

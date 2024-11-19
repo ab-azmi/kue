@@ -22,10 +22,10 @@ return new class extends Migration
 
             $table->integer('quantity')->nullable();
             $table->string('customerName')->default('Anonymous');
-            $table->string('tax')->nullable();
-            $table->bigInteger('orderPrice')->nullable();
-            $table->bigInteger('totalPrice')->nullable();
-            $table->bigInteger('totalDiscount')->nullable();
+            $table->float('tax')->nullable();
+            $table->float('orderPrice')->nullable();
+            $table->float('totalPrice')->nullable();
+            $table->float('totalDiscount')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }
