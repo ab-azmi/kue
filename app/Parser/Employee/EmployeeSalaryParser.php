@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Salary;
+namespace App\Parser\Employee;
 
 use App\Parser\Employee\EmployeeUserParser;
 use GlobalXtreme\Parser\BaseParser;

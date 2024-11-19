@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Web\Cake;
 
 use App\Algorithms\Cake\CakeAlgo;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cake\CakeCOGSRequest;
 use App\Http\Requests\Cake\CakeRequest;
-use App\Http\Requests\Cake\COGSRequest as CakeCOGSRequest;
 use App\Models\Cake\Cake;
 use App\Parser\Cake\CakeParser;
 use Illuminate\Http\Request;
@@ -71,7 +71,7 @@ class CakeController extends Controller
         return $this->algo->destroy();
     }
 
-    public function cogs(CakeCOGSRequest $request)
+    public function COGS(CakeCOGSRequest $request)
     {
         return $this->algo->COGS($request);
     }

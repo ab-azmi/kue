@@ -5,7 +5,7 @@ namespace App\Algorithms\Cake;
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Employee\EmployeeSalary;
-use App\Models\Setting\FixedCost;
+use App\Models\Setting\SettingFixedCost;
 use App\Parser\Cake\CakeParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -137,12 +137,12 @@ class CakeAlgo
 
     private function getSalarySum() : int
     {
-        return EmployeeSalary::sum('total_salary');
+        return EmployeeSalary::sum('totalSalary');
     }
 
     private function getFixedCostMonthly() : int
     {
-        return FixedCost::where('frequency', 'monthly')->sum('amount');
+        return SettingFixedCost::where('frequency', 'monthly')->sum('amount');
     }
 
     private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngridientCost) : int
