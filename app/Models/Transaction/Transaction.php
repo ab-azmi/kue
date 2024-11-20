@@ -8,7 +8,6 @@ use App\Models\Transaction\Traits\HasActivityTransactionProperty;
 use App\Observers\Transaction\TransactionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
-#[ObservedBy([TransactionObserver::class])]
 class Transaction extends BaseModel
 {
     use HasActivityTransactionProperty;

@@ -8,7 +8,6 @@ use App\Observers\Salary\SalaryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[ObservedBy([SalaryObserver::class])]
 class EmployeeSalary extends BaseModel
 {
     use HasActivityEmployeeSalaryProperty;

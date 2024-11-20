@@ -7,7 +7,6 @@ use App\Models\Setting\Traits\HasActivitySettingFixedCostProperty;
 use App\Observers\Setting\FixedCostObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
-#[ObservedBy([FixedCostObserver::class])]
 class SettingFixedCost extends BaseModel
 {
     use HasActivitySettingFixedCostProperty;

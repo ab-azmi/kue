@@ -9,7 +9,6 @@ use App\Observers\Cake\IngridientObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[ObservedBy([IngridientObserver::class])]
 class CakeComponentIngridient extends BaseModel
 {
     use HasActivityCakeComponentIngridientProperty;

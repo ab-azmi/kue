@@ -56,6 +56,6 @@ class CakeComponentIngridientController extends Controller
     public function delete(string $id)
     {
         $this->algo->ingridient = CakeComponentIngridient::findOrFail($id);
-        return $this->algo->destroy();
+        return $this->algo->delete();
     }
 }
