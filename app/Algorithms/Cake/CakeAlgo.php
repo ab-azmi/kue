@@ -7,6 +7,7 @@ use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Employee\EmployeeSalary;
 use App\Models\Setting\SettingFixedCost;
 use App\Parser\Cake\CakeParser;
+use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +36,9 @@ class CakeAlgo
                     'variant',
                     'ingridients',
                 ]);
+
+                $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
+                    ->saveActivity('Create new Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -45,8 +49,11 @@ class CakeAlgo
 
     public function update(Request $request)
     {
+
         try {
             DB::transaction(function () use ($request) {
+                $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+
                 $this->detachIngridients();
                 $this->cake->update($request->only([
                     'name',
@@ -57,6 +64,9 @@ class CakeAlgo
                     'images',
                 ]));
                 $this->attachIngridients($request->ingridients);
+
+                $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -69,8 +79,13 @@ class CakeAlgo
     {
         try {
             DB::transaction(function () {
+                $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+
                 $this->cake->ingridients()->detach();
                 $this->cake->delete();
+
+                $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete Cake : ' . $this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -133,7 +148,7 @@ class CakeAlgo
             $this->cake->ingridients()->each(function ($ingridient) {
                 $ingridient->increment('quantity', ($ingridient->used->quantity * $this->cake->stock));
             });
-    
+
             $this->cake->ingridients()->detach();
         } catch (\Exception $e) {
             return errDetachingIngridients($e->getMessage());
@@ -177,15 +192,14 @@ class CakeAlgo
             $totalIngridientCost = 0;
             $ingridientIds = array_unique(array_column($_ingridients, 'id'));
             $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
-    
+
             foreach ($_ingridients as $ingridient) {
                 $pricePerUnit = $ingridients[$ingridient['id']]->price;
                 $quantity = $ingridient['quantity'];
                 $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
             }
-    
-            return $totalIngridientCost;
 
+            return $totalIngridientCost;
         } catch (\Exception $e) {
             errCalculatingIngridientCost($e->getMessage());
         }

@@ -9,7 +9,6 @@ use App\Observers\Cake\DiscountObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[ObservedBy([DiscountObserver::class])]
 class CakeDiscount extends BaseModel
 {
     use HasActivityCakeDiscountProperty;

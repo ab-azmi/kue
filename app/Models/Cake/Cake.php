@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-#[ObservedBy([CakeObserver::class])]
 class Cake extends BaseModel
 {
     use HasActivityCakeProperty;

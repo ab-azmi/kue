@@ -3,6 +3,7 @@
 namespace App\Algorithms\Cake;
 
 use App\Models\Cake\CakeDiscount;
+use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +21,9 @@ class CakeDiscountAlgo
                 $data = array_merge($request->all(), ['fromDate' => $fromData, 'toDate' => $toDate]);
 
                 $this->discount = CakeDiscount::create($data);
+
+                $this->discount->setActivityPropertyAttributes(ActivityAction::CREATE)
+                    ->saveActivity('Create new Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
@@ -32,7 +36,12 @@ class CakeDiscountAlgo
     {
         try {
             DB::transaction(function () use ($request) {
+                $this->discount->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+
                 $this->discount->update($request->all());
+
+                $this->discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
@@ -45,7 +54,12 @@ class CakeDiscountAlgo
     {
         try {
             DB::transaction(function () {
+                $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+
                 $this->discount->delete();
+
+                $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete Discount : ' . $this->discount->id);
             });
 
             return success($this->discount);
