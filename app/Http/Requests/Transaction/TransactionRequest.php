@@ -34,9 +34,4 @@ class TransactionRequest extends FormRequest
             'orders.*.quantity' => 'required|integer',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        return errValidationTransaction($validator->errors()->first());
-    }
 }

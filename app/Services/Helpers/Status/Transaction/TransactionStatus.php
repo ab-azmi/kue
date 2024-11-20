@@ -27,10 +27,3 @@ if(!function_exists("errGetTransaction")) {
         error(404, "Transaction not found!", $internalMsg, $status);
     }
 }
-
-if (!function_exists("errValidationTransaction")) {
-    function errValidationTransaction($internalMsg = "", $status = null)
-    {
-        error(422, "Transaction validation error!", $internalMsg, $status);
-    }
-}
