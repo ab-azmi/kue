@@ -14,7 +14,7 @@ class CakeAlgo
 {
     public function __construct(public ?Cake $cake = null) {}
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
@@ -26,7 +26,9 @@ class CakeAlgo
                     'sellingPrice',
                     'images',
                 ]);
+
                 $this->cake = Cake::create($data);
+
                 $this->attachIngridients($request->ingridients);
 
                 $this->cake->load([
@@ -37,7 +39,7 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateCake($e->getMessage());
         }
     }
 
@@ -59,11 +61,11 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateCake($e->getMessage());
         }
     }
 
-    public function destroy()
+    public function delete()
     {
         try {
             DB::transaction(function () {
@@ -73,7 +75,7 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteCake($e->getMessage());
         }
     }
 
@@ -96,27 +98,46 @@ class CakeAlgo
                 'profitPerItem' => $sellingPrice - $cogs
             ]);
         } catch (\Exception $e) {
-            exception($e);
+            return errCalculatingCOGS($e->getMessage());
         }
     }
 
     /** --- PRIVATE FUNCTIONS --- */
 
+    private function decrementIngridient($ingridients)
+    {
+        try {
+            foreach ($ingridients as $ingridient) {
+                CakeComponentIngridient::find($ingridient['ingridientId'])
+                    ->decrement('quantity', ($ingridient['quantity'] * $this->cake->volume));
+            }
+        } catch (\Exception $e) {
+            return errDecrementingIngridientStock($e->getMessage());
+        }
+    }
+
     private function attachIngridients($ingridients)
     {
-        $this->cake->ingridients()->attach($ingridients);
+        try {
+            $this->cake->ingridients()->attach($ingridients);
 
-        foreach ($ingridients as $ingridient) {
-            CakeComponentIngridient::find($ingridient['ingridientId'])->decrement('quantity', $ingridient['quantity']);
+            $this->decrementIngridient($ingridients);
+        } catch (\Exception $e) {
+            errAttachIngridients($e->getMessage());
         }
     }
 
     private function detachIngridients()
     {
-        $this->cake->ingridients()->each(function ($ingridient) {
-            $ingridient->increment('quantity', $ingridient->used->quantity);
-        });
-        $this->cake->ingridients()->detach();
+        try {
+            $this->cake->ingridients()->each(function ($ingridient) {
+                $ingridient->increment('quantity', ($ingridient->used->quantity * $this->cake->stock));
+            });
+    
+            $this->cake->ingridients()->detach();
+        } catch (\Exception $e) {
+            return errDetachingIngridients($e->getMessage());
+        }
     }
 
     private function calculateSellingPrice(int $cogs, float $margin)
@@ -124,7 +145,7 @@ class CakeAlgo
         return $cogs * (1 + $margin);
     }
 
-    private function getMargin(Request $request) : float
+    private function getMargin(Request $request): float
     {
         $default = 0.3;
 
@@ -135,33 +156,38 @@ class CakeAlgo
         return $default;
     }
 
-    private function getSalarySum() : int
+    private function getSalarySum(): int
     {
         return EmployeeSalary::sum('totalSalary');
     }
 
-    private function getFixedCostMonthly() : int
+    private function getFixedCostMonthly(): int
     {
         return SettingFixedCost::where('frequency', 'monthly')->sum('amount');
     }
 
-    private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngridientCost) : int
+    private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngridientCost): int
     {
         return $salarySum + $fixedCostMonthly + $totalIngridientCost;
     }
 
-    private function calculateIngridientsCost($_ingridients, int $volume) : int
+    private function calculateIngridientsCost($_ingridients, int $volume): int
     {
-        $totalIngridientCost = 0;
-        $ingridientIds = array_unique(array_column($_ingridients, 'id'));
-        $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
+        try {
+            $totalIngridientCost = 0;
+            $ingridientIds = array_unique(array_column($_ingridients, 'id'));
+            $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
+    
+            foreach ($_ingridients as $ingridient) {
+                $pricePerUnit = $ingridients[$ingridient['id']]->price;
+                $quantity = $ingridient['quantity'];
+                $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
+            }
+    
+            return $totalIngridientCost;
 
-        foreach ($_ingridients as $ingridient) {
-            $pricePerUnit = $ingridients[$ingridient['id']]->price;
-            $quantity = $ingridient['quantity'];
-            $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
+        } catch (\Exception $e) {
+            errCalculatingIngridientCost($e->getMessage());
         }
-
-        return $totalIngridientCost;
     }
 }

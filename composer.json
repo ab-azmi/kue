@@ -35,8 +35,12 @@
             "app/Services/Helpers/helpers.php",
 
             "app/Services/Helpers/Status/globals.php",
+
             "app/Services/Helpers/Status/Transaction/TransactionStatus.php",
-            "app/Services/Helpers/Status/Transaction/OrderStatus.php"
+            "app/Services/Helpers/Status/Transaction/TransactionOrderStatus.php",
+
+            "app/Services/Helpers/Status/Cake/CakeStatus.php",
+            "app/Services/Helpers/Status/Cake/CakeIngridientStatus.php"
         ]
     },
     "autoload-dev": {

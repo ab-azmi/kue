@@ -31,7 +31,7 @@ class CakeController extends Controller
      */
     public function create(CakeRequest $request)
     {
-        return $this->algo->store($request);
+        return $this->algo->create($request);
     }
 
     /**
@@ -39,7 +39,12 @@ class CakeController extends Controller
      */
     public function detail(string $id)
     {
-        $cake = Cake::findOrFail($id);
+        $cake = Cake::find($id);
+
+        if (!$cake) {
+            return errGetCake();
+        }
+
         $cake->load([
             'variant',
             'ingridients',
@@ -54,7 +59,12 @@ class CakeController extends Controller
      */
     public function update(CakeRequest $request, string $id)
     {
-        $cake = Cake::findOrFail($id);
+        $cake = Cake::find($id);
+
+        if (!$cake) {
+            return errGetCake();
+        }
+
         $this->algo->cake = $cake;
 
         return $this->algo->update($request);
@@ -65,10 +75,15 @@ class CakeController extends Controller
      */
     public function delete(string $id)
     {
-        $cake = Cake::findOrFail($id);
+        $cake = Cake::find($id);
+
+        if (!$cake) {
+            return errGetCake();
+        }
+
         $this->algo->cake = $cake;
 
-        return $this->algo->destroy();
+        return $this->algo->delete();
     }
 
     public function COGS(CakeCOGSRequest $request)
