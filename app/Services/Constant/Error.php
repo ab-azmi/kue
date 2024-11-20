@@ -87,7 +87,6 @@ class Error extends BaseCodeName
         ],
     ];
 
-    // TODO : Eror status setting & Cake
     const CAKE = [
         'NOT_FOUND' => [
             'code' => 404,
@@ -127,4 +126,6 @@ class Error extends BaseCodeName
             'msg' => 'Failed to Calculate Total Cost of Ingridients'
         ],
     ];
+    
+    // TODO : Eror status setting & Cake
 }
