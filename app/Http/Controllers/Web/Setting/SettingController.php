@@ -36,6 +36,11 @@ class SettingController extends Controller
     public function detail(string $id)
     {
         $setting = Setting::find($id);
+
+        if (!$setting) {
+            return errGetSetting();
+        }
+
         return success($setting);
     }
 
@@ -53,6 +58,11 @@ class SettingController extends Controller
     public function delete(string $id)
     {
         $this->algo->setting = Setting::find($id);
+
+        if (!$this->algo->setting) {
+            return errGetSetting();
+        }
+
         return $this->algo->delete();
     }
 }

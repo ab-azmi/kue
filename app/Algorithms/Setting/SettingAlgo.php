@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 
             return success($this->setting);
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateSetting($e->getMessage());
         }
     }
 
@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\DB;
 
             return success($this->setting);
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateSetting($e->getMessage());
         }
     }
 
@@ -61,7 +61,7 @@ use Illuminate\Support\Facades\DB;
 
             return success($this->setting);
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteSetting($e->getMessage());
         }
     }
  }

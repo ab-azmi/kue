@@ -20,7 +20,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateFixedCost($e->getMessage());
         }
     }
 
@@ -32,7 +32,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateFixedCost($e->getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteFixedCost($e->getMessage());
         }
     }
 }

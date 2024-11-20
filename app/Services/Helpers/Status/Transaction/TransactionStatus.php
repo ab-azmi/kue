@@ -1,29 +1,51 @@
 <?php
 
+use App\Services\Constant\Error;
+
 if (!function_exists("errCreateTransaction")) {
     function errCreateTransaction($internalMsg = "", $status = null)
     {
-        error(500, "Failed to create transaction!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['CREATE_FAILED']['code'],
+            Error::TRANSACTION['CREATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }
 
 if (!function_exists("errUpdateTransaction")) {
     function errUpdateTransaction($internalMsg = "", $status = null)
     {
-        error(500, "Failed to update transaction!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['UPDATE_FAILED']['code'],
+            Error::TRANSACTION['UPDATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }
 
 if (!function_exists("errDeleteTransaction")) {
     function errDeleteTransaction($internalMsg = "", $status = null)
     {
-        error(500, "Failed to delete transaction!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['DELETE_FAILED']['code'],
+            Error::TRANSACTION['DELETE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }
 
-if(!function_exists("errGetTransaction")) {
+if (!function_exists("errGetTransaction")) {
     function errGetTransaction($internalMsg = "", $status = null)
     {
-        error(404, "Transaction not found!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['NOT_FOUND']['code'],
+            Error::TRANSACTION['NOT_FOUND']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }

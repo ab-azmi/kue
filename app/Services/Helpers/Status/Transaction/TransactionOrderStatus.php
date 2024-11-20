@@ -1,15 +1,27 @@
 <?php
 
+use App\Services\Constant\Error;
+
 if (!function_exists("errOutOfStockOrder")) {
     function errOutOfStockOrder($internalMsg = "", $status = null)
     {
-        error(409, "Cake out of stock!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['OUT_OF_STOCK_ORDER']['code'],
+            Error::TRANSACTION['OUT_OF_STOCK_ORDER']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }
 
 if (!function_exists("errCreateOrder")) {
     function errCreateOrder($internalMsg = "", $status = null)
     {
-        error(500, "Failed to create Order!", $internalMsg, $status);
+        error(
+            Error::TRANSACTION['ORDER_CREATE_FAILED']['code'],
+            Error::TRANSACTION['ORDER_CREATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
     }
 }
