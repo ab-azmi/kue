@@ -1,25 +1,31 @@
 <?php
 
-if(!function_exists('errCreateEmployee')){
-    function errCreateEmployee($internalMsg = "", $status = null){
-        error(500, "An error occurred while creating employee!", $internalMsg, $status);
+use App\Services\Constant\Error;
+
+if (!function_exists('errCreateEmployee')) {
+    function errCreateEmployee($internalMsg = "", $status = null)
+    {
+        error(Error::EMPLOYEE['CREATE_FAILED']['code'], Error::EMPLOYEE['CREATE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
-if(!function_exists('errUpdateEmployee')){
-    function errUpdateEmployee($internalMsg = "", $status = null){
-        error(500, "An error occurred while updating employee!", $internalMsg, $status);
+if (!function_exists('errUpdateEmployee')) {
+    function errUpdateEmployee($internalMsg = "", $status = null)
+    {
+        error(Error::EMPLOYEE['UPDATE_FAILED']['code'], Error::EMPLOYEE['UPDATE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
-if(!function_exists('errDeleteEmployee')){
-    function errDeleteEmployee($internalMsg = "", $status = null){
-        error(500, "An error occurred while deleting employee!", $internalMsg, $status);
+if (!function_exists('errDeleteEmployee')) {
+    function errDeleteEmployee($internalMsg = "", $status = null)
+    {
+        error(Error::EMPLOYEE['DELETE_FAILED']['code'], Error::EMPLOYEE['DELETE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
-if(!function_exists('errGetEmployee')){
-    function errGetEmployee($internalMsg = "", $status = null){
-        error(404, "Employee not found!", $internalMsg, $status);
+if (!function_exists('errGetEmployee')) {
+    function errGetEmployee($internalMsg = "", $status = null)
+    {
+        error(Error::EMPLOYEE['NOT_FOUND']['code'], Error::EMPLOYEE['NOT_FOUND']['msg'], $internalMsg, $status);
     }
 }

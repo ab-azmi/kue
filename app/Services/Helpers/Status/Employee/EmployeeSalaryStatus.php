@@ -1,26 +1,28 @@
 <?php
 
+use App\Services\Constant\Error;
+
 if(!function_exists('errCreateSalary')){
     function errCreateSalary($internalMsg = "", $status = null){
-        error(500, "An error occurred while creating Salary!", $internalMsg, $status);
+        error(Error::EMPLOYEE['SALARY_CREATE_FAILED']['code'], Error::EMPLOYEE['SALARY_CREATE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
 if(!function_exists('errUpdateSalary')){
     function errUpdateSalary($internalMsg = "", $status = null){
-        error(500, "An error occurred while updating Salary!", $internalMsg, $status);
+        error(Error::EMPLOYEE['SALARY_UPDATE_FAILED']['code'], Error::EMPLOYEE['SALARY_UPDATE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
 if(!function_exists('errDeleteSalary')){
     function errDeleteSalary($internalMsg = "", $status = null){
-        error(500, "An error occurred while deleting Salary!", $internalMsg, $status);
+        error(Error::EMPLOYEE['SALARY_DELETE_FAILED']['code'], Error::EMPLOYEE['SALARY_DELETE_FAILED']['msg'], $internalMsg, $status);
     }
 }
 
 if(!function_exists('errGetSalary')){
     function errGetSalary($internalMsg = "", $status = null){
-        error(404, "salary not found!", $internalMsg, $status);
+        error(Error::EMPLOYEE['SALARY_NOT_FOUND']['code'], Error::EMPLOYEE['SALARY_NOT_FOUND']['msg'], $internalMsg, $status);
     }
 }
 
