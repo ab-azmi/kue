@@ -46,6 +46,7 @@
             "app/Services/Helpers/Status/Employee/EmployeeUserStatus.php",
             "app/Services/Helpers/Status/Employee/EmployeeSalaryStatus.php",
 
+            "app/Services/Helpers/Status/Setting/SettingStatus.php",
             "app/Services/Helpers/Status/Setting/SettingFixedCostStatus.php"
         ]
     },
