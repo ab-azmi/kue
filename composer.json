@@ -34,7 +34,9 @@
             "app/Services/Helpers/activity.php",
             "app/Services/Helpers/helpers.php",
 
-            "app/Services/Helpers/Status/globals.php"
+            "app/Services/Helpers/Status/globals.php",
+            "app/Services/Helpers/Status/Transaction/TransactionStatus.php",
+            "app/Services/Helpers/Status/Transaction/OrderStatus.php"
         ]
     },
     "autoload-dev": {

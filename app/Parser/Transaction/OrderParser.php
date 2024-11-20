@@ -26,8 +26,8 @@ class OrderParser extends BaseParser
             'transactionId' => $data->transactionId,
             'cakeId' => $data->cakeId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
-            'updatedAt' => $data->updatedAt->format('m/d/Y H:i'),
-            'deletedAt' => $data->deletedAt->format('m/d/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
             'transaction' => TransactionParser::brief($data->transaction),
             'cake' => CakeParser::brief($data->cake)
         ];
@@ -47,8 +47,8 @@ class OrderParser extends BaseParser
             'transactionId' => $data->transactionId,
             'cakeId' => $data->cakeId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
-            'updatedAt' => $data->updatedAt->format('m/d/Y H:i'),
-            'deletedAt' => $data->deletedAt->format('m/d/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
         ];
     }
 
