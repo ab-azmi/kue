@@ -58,4 +58,32 @@ class Error extends BaseCodeName
             'msg' => 'Salary Delete Failed'
         ],
     ];
+
+    const TRANSACTION = [
+        'CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to create transaction!'
+        ],
+        'UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to update transaction!'
+        ],
+        'DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to delete transaction!'
+        ],
+        'NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Transaction not found!'
+        ],
+
+        'OUT_OF_STOCK_ORDER' => [
+            'code' => 409,
+            'msg' => 'Cake out of stock!'
+        ],
+        'ORDER_CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to create Order!'
+        ],
+    ];
 }
