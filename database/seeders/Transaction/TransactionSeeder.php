@@ -38,7 +38,7 @@ class TransactionSeeder extends Seeder
         return array(
             [
                 'quantity' => '1',
-                'customerName' => 'John',
+                'code' => 'TSX34634534',
                 'tax' => '0.3',
                 'orderPrice' => '14000',
                 'totalPrice' => '17000',

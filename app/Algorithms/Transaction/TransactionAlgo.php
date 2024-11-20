@@ -7,6 +7,7 @@ use App\Models\Setting\Setting;
 use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
+use App\Services\Number\Generator\Transaction\PurchaseNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,15 +20,21 @@ class TransactionAlgo
         try {
             DB::transaction(function () use ($request) {
                 $orders = $this->processOrders($request);
+
+                $request->merge([
+                    'code' => PurchaseNumber::generate(),
+                ]);
+
                 $this->transaction = Transaction::create($request->only([
-                    'customerName',
                     'quantity',
+                    'code',
                     'orderPrice',
                     'totalPrice',
                     'totalDiscount',
                     'tax',
                     'employeeId',
                 ]));
+
                 $this->createOrders($orders);
                 $this->transaction->refresh();
             });
@@ -43,7 +50,6 @@ class TransactionAlgo
         try {
             DB::transaction(function () use ($request) {
                 $this->transaction->update($request->only([
-                    'customerName',
                     'quantity',
                     'orderPrice',
                     'totalPrice',

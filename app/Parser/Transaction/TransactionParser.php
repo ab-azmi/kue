@@ -21,15 +21,15 @@ class TransactionParser extends BaseParser
         return [
             'id' => $data->id,
             'quantity' => $data->quantity,
-            'customerName' => $data->customerName,
+            'code' => $data->code,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
-            'deletedAt' => $data->deletedAt,
+            'createdAt' => $data->createdAt->format('m/d/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
             'employee' => EmployeeUserParser::brief($data->employee),
             'orders' => OrderParser::briefs($data->orders)
         ];
@@ -43,15 +43,15 @@ class TransactionParser extends BaseParser
         return [
             'id' => $data->id,
             'quantity' => $data->quantity,
-            'customerName' => $data->customerName,
+            'code' => $data->code,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
             'totalPrice' => $data->totalPrice, 
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
-            'createdAt' => $data->createdAt,
-            'updatedAt' => $data->updatedAt,
-            'deletedAt' => $data->deletedAt,
+            'createdAt' => $data->createdAt->format('m/d/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
         ];
     }
 
