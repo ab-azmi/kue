@@ -36,7 +36,12 @@ class EmployeeSalaryController extends Controller
      */
     public function detail(string $id)
     {
-        $salary = EmployeeSalary::with('employee')->findOrFail($id);
+        $salary = EmployeeSalary::with('employee')->find($id);
+
+        if (!$salary) {
+            return errGetSalary();
+        }
+
         return success(EmployeeSalaryParser::first($salary));
     }
 
@@ -54,6 +59,11 @@ class EmployeeSalaryController extends Controller
     public function delete(string $id)
     {
         $this->algo->salary = EmployeeSalary::findOrFail($id);
+
+        if (!$this->algo->salary) {
+            return errGetSalary();
+        }
+
         return $this->algo->delete();
     }
 }
