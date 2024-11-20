@@ -86,4 +86,6 @@ class Error extends BaseCodeName
             'msg' => 'Failed to create Order!'
         ],
     ];
+
+    // TODO : Eror status setting & Cake
 }
