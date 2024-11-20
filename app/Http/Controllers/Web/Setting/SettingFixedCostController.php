@@ -37,7 +37,12 @@ class SettingFixedCostController extends Controller
      */
     public function detail(string $id)
     {
-        $fixedcost = SettingFixedCost::findOrFail($id);
+        $fixedcost = SettingFixedCost::find($id);
+
+        if (!$fixedcost) {
+            return errGetFixedCost();
+        }
+
         return success(SettingFixedCostParser::first($fixedcost));
     }
 
@@ -46,7 +51,12 @@ class SettingFixedCostController extends Controller
      */
     public function update(SettingFixedCostRequest $request, string $id)
     {
-        $this->algo->fixedCost = SettingFixedCost::findOrFail($id);
+        $this->algo->fixedCost = SettingFixedCost::find($id);
+
+        if (!$this->algo->fixedCost) {
+            return errGetFixedCost();
+        }
+
         return $this->algo->update($request);
     }
 
@@ -55,7 +65,12 @@ class SettingFixedCostController extends Controller
      */
     public function delete(string $id)
     {
-        $this->algo->fixedCost = SettingFixedCost::findOrFail($id);
+        $this->algo->fixedCost = SettingFixedCost::find($id);
+
+        if (!$this->algo->fixedCost) {
+            return errGetFixedCost();
+        }
+
         return $this->algo->delete();
     }
 }
