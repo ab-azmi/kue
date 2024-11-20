@@ -21,7 +21,7 @@ class EmployeeUserAlgo
             return success(EmployeeUserParser::first($this->user));
             
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateUser($e->getMessage());
         }
     }
 
@@ -33,7 +33,7 @@ class EmployeeUserAlgo
 
             return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateUser($e->getMessage());
         }
     }
 
@@ -45,7 +45,7 @@ class EmployeeUserAlgo
 
             return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteUser($e->getMessage());
         }
     }
 }

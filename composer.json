@@ -40,7 +40,10 @@
             "app/Services/Helpers/Status/Transaction/TransactionOrderStatus.php",
 
             "app/Services/Helpers/Status/Cake/CakeStatus.php",
-            "app/Services/Helpers/Status/Cake/CakeIngridientStatus.php"
+            "app/Services/Helpers/Status/Cake/CakeIngridientStatus.php",
+
+            "app/Services/Helpers/Status/Employee/EmployeeStatus.php",
+            "app/Services/Helpers/Status/Employee/EmployeeUserStatus.php"
         ]
     },
     "autoload-dev": {
