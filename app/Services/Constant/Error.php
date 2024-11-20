@@ -87,5 +87,45 @@ class Error extends BaseCodeName
         ],
     ];
 
+    const CAKE = [
+        'NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Cake Not Found'
+        ],
+        'CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Cake Create Failed'
+        ],
+        'UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Cake Update Failed'
+        ],
+        'DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Cake Delete Failed'
+        ],
+
+        'ATTACH_INGRIDIENTS_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Attach Ingridients to Cake'
+        ],
+        'DETACH_INGRIDIENTS_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Detach Ingridients to Cake'
+        ],
+        'DECREMENT_INGRIDIENT_STOCK_FAILED' => [
+            'code' => 409,
+            'msg' => 'Ingridient Out of Stock'
+        ],
+        'CALCULATING_COGS_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to calculate Cost Of Goods Sold (COGS)'
+        ],
+        'CALCULATING_INGRIDIENT_COST_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Calculate Total Cost of Ingridients'
+        ],
+    ];
+    
     // TODO : Eror status setting & Cake
 }
