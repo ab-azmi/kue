@@ -128,4 +128,31 @@ class Error extends BaseCodeName
     ];
     
     // TODO : Eror status setting & Cake
+    const SETTING = [
+        'UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Update Setting'
+        ],
+        'NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Setting not found!'
+        ],
+
+        'FIXEDCOST_CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Create Fixed Cost'
+        ],
+        'FIXEDCOST_UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Update Fixed Cost'
+        ],
+        'FIXEDCOST_DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Delete Fixed Cost'
+        ],
+        'FIXEDCOST_NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Fixed Cost Not Found'
+        ],
+    ];
 }
