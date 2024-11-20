@@ -20,7 +20,7 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateSalary($e->getMessage());
         }
     }
 
@@ -33,7 +33,7 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateSalary($e->getMessage());
         }
     }
     
@@ -45,7 +45,7 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteSalary($e->getMessage());
         }
     }
 }

@@ -36,6 +36,11 @@ class EmployeeController extends Controller
     public function detail(string $id)
     {
         $employee = Employee::find($id);
+
+        if (!$employee) {
+            return errGetEmployee();
+        }
+
         return success($employee);
     }
 
@@ -45,6 +50,11 @@ class EmployeeController extends Controller
     public function update(EmployeeRequest $request, string $id)
     {
         $this->algo->employee = Employee::find($id);
+
+        if(!$this->algo->employee){
+            return errGetEmployee();
+        }
+
         return $this->algo->update($request);
     }
 
@@ -54,6 +64,11 @@ class EmployeeController extends Controller
     public function delete(string $id)
     {
         $this->algo->employee = Employee::find($id);
+
+        if(!$this->algo->employee){
+            return errGetEmployee();
+        }
+        
         return $this->algo->delete();
     }
 }

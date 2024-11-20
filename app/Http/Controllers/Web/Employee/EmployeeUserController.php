@@ -37,7 +37,12 @@ class EmployeeUserController extends Controller
      */
     public function detail($id)
     {
-        $user = EmployeeUser::findOrFail($id);
+        $user = EmployeeUser::find($id);
+
+        if (!$user) {
+            return errGetUser();
+        }
+
         return success(EmployeeUserParser::first($user));
     }
 
@@ -46,8 +51,12 @@ class EmployeeUserController extends Controller
      */
     public function update(UpdateEmployeeUserRequest $request, string $id)
     {
-        $user = EmployeeUser::findOrFail($id);
-        $this->algo->user = $user;
+        $this->algo->user = EmployeeUser::find($id);
+
+        if (!$this->algo->user) {
+            return errGetUser();
+        }
+
         return $this->algo->update($request);
     }
 
@@ -56,8 +65,12 @@ class EmployeeUserController extends Controller
      */
     public function delete(string $id)
     {
-        $user = EmployeeUser::findOrFail($id);
-        $this->algo->user = $user;
+        $this->algo->user = EmployeeUser::findOrFail($id);
+
+        if (!$this->algo->user) {
+            return errGetUser();
+        }
+
         return $this->algo->destroy();
     }
 }

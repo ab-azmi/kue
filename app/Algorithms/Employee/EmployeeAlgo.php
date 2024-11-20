@@ -24,7 +24,7 @@ class EmployeeAlgo
 
             return success($this->employee);
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateEmployee($e->getMessage());
         }
     }
 
@@ -34,14 +34,16 @@ class EmployeeAlgo
             DB::transaction(function () use ($request)
             {
                 $this->employee->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+                
                 $this->employee->update($request->all());
+                
                 $this->employee->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Employee : ' . $this->employee->id);
             });
 
             return success($this->employee);
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateEmployee($e->getMessage());
         }
     }
 
@@ -50,14 +52,16 @@ class EmployeeAlgo
         try {
             DB::transaction(function () {
                 $this->employee->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+                
                 $this->employee->delete();
+                
                 $this->employee->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Employee : ' . $this->employee->id);
             });
 
             return success($this->employee);
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteEmployee($e->getMessage());
         }
     }
 }
