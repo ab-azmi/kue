@@ -28,10 +28,6 @@ class TransactionAlgo
                 $this->transaction = Transaction::create($request->only([
                     'quantity',
                     'code',
-                    'orderPrice',
-                    'totalPrice',
-                    'totalDiscount',
-                    'tax',
                     'employeeId',
                 ]));
 
@@ -41,7 +37,7 @@ class TransactionAlgo
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            exception($e);
+            return errCreateTransaction($e->getMessage());
         }
     }
 
@@ -66,7 +62,7 @@ class TransactionAlgo
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            exception($e);
+            return errUpdateTransaction($e->getMessage());
         }
     }
 
@@ -79,7 +75,7 @@ class TransactionAlgo
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            exception($e);
+            return errDeleteTransaction($e->getMessage());
         }
     }
 
@@ -107,10 +103,15 @@ class TransactionAlgo
         return [];
     }
 
-    private function createOrders($orders): void
+    private function createOrders($orders)
     {
         foreach ($orders as $order) {
             $orderModel = $this->transaction->orders()->create($order);
+
+            if(!$orderModel) {
+                return errCreateOrder();
+            }
+            
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
                 ->saveActivity('Create new Order : ' . $orderModel->id . ' in Transaction : ' . $this->transaction->id);
         }
@@ -137,7 +138,7 @@ class TransactionAlgo
         return $orders;
     }
 
-    private function syncCakeStock($orders) : void
+    private function syncCakeStock($orders)
     {
         $cakesIds = array_unique(array_column($orders, 'cakeId'));
         $cakes = Cake::whereIn('id', $cakesIds)->get()->keyBy('id');
@@ -146,7 +147,7 @@ class TransactionAlgo
             $cake = $cakes[$order['cakeId']];
 
             if ($cake->stock < $order['quantity']) {
-                throw new \Exception('Stock is not enough for cake : ' . $cake->name);
+                return errOutOfStockOrder($cake->name);
             }
     
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);

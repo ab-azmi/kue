@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Transaction;
 
 use GlobalXtreme\Validation\Support\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class TransactionRequest extends FormRequest
 {
@@ -32,5 +33,10 @@ class TransactionRequest extends FormRequest
             'orders.*.cakeId' => 'required|exists:cakes,id',
             'orders.*.quantity' => 'required|integer',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        return errValidationTransaction($validator->errors()->first());
     }
 }

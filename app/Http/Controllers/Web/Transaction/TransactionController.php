@@ -45,7 +45,11 @@ class TransactionController extends Controller
             'orders',
             'orders.cake',
             'employee'
-        ])->findOrFail($id);
+        ])->find($id);
+
+        if(!$transaction) {
+            return errGetTransaction();
+        }
         
         return success(TransactionParser::first($transaction));
     }
@@ -55,7 +59,12 @@ class TransactionController extends Controller
      */
     public function update(TransactionRequest $request, string $id)
     {
-        $this->algo->transaction = Transaction::findOrFail($id);
+        $this->algo->transaction = Transaction::find($id);
+        
+        if(!$this->algo->transaction) {
+            return errGetTransaction();
+        }
+
         return $this->algo->update($request);
     }
 
@@ -65,6 +74,11 @@ class TransactionController extends Controller
     public function delete(string $id)
     {
         $this->algo->transaction = Transaction::findOrFail($id);
+
+        if(!$this->algo->transaction) {
+            return errGetTransaction();
+        }
+
         return $this->algo->delete();
     }
 }

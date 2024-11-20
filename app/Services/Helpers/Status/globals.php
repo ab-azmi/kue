@@ -6,3 +6,10 @@ if (!function_exists("errDefault")) {
         error(500, "An error occurred!", $internalMsg, $status);
     }
 }
+
+if (!function_exists("errUnauthorized")) {
+    function errUnauthorized($internalMsg = "", $status = null)
+    {
+        error(401, "Unauthorized!", $internalMsg, $status);
+    }
+}
