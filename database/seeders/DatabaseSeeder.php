@@ -5,8 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Database\Seeders\Cake\CakeSeeder;
-use Database\Seeders\Employee\UserSeeder;
 use Database\Seeders\Cake\CakeIngridientSeeder;
+use Database\Seeders\Employee\EmployeeSeeder;
 use Database\Seeders\Setting\FixedCostSeeder;
 use Database\Seeders\Setting\SettingSeeder;
 use Database\Seeders\Transaction\TransactionSeeder;
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class,
+            EmployeeSeeder::class,
             CakeIngridientSeeder::class,
             CakeSeeder::class,
             FixedCostSeeder::class,

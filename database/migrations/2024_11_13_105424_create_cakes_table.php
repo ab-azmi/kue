@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');
             
             $table->string('name');
-            $table->string('profitMargin')->nullable();
+            $table->float('profitMargin')->nullable();
             $table->float('COGS')->nullable();
             $table->float('sellingPrice')->nullable();
             $table->json('images')->nullable();
