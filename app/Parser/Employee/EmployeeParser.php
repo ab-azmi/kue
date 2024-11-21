@@ -26,6 +26,7 @@ class EmployeeParser extends BaseParser
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'user' => EmployeeUserParser::brief($data->user),
+            'salary' => EmployeeSalaryParser::brief($data->salary),
         ];
     }
 

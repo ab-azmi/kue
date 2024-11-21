@@ -25,7 +25,7 @@ class Employee extends BaseModel
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(EmployeeUser::class);
+        return $this->belongsTo(EmployeeUser::class, 'userId');
     }
 
     public function transactions()

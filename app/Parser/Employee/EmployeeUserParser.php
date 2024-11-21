@@ -2,7 +2,6 @@
 
 namespace App\Parser\Employee;
 
-use App\Parser\Employee\EmployeeSalaryParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class EmployeeUserParser extends BaseParser
@@ -24,7 +23,6 @@ class EmployeeUserParser extends BaseParser
             'email' => $data->email,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
-            'salary' => EmployeeSalaryParser::brief($data->salary),
         ];
     }
 

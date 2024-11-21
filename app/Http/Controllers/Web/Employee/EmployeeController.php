@@ -6,6 +6,7 @@ use App\Algorithms\Employee\EmployeeAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\EmployeeRequest;
 use App\Models\Employee\Employee;
+use App\Parser\Employee\EmployeeParser;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -35,12 +36,12 @@ class EmployeeController extends Controller
      */
     public function detail($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::with(['user', 'salary'])->find($id);
         if (!$employee) {
             return errGetEmployee();
         }
 
-        return success($employee);
+        return success(EmployeeParser::first($employee));
     }
 
     /**
