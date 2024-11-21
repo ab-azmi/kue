@@ -5,20 +5,20 @@ use App\Services\Constant\BaseCodeName;
 
 class CakeIngridientUnit extends BaseCodeName
 {
-    const GRAM = 'gram';
     const GRAM_ID = 1;
+    const GRAM = 'gram';
 
-    const KILOGRAM = 'kilogram';
     const KILOGRAM_ID = 2;
+    const KILOGRAM = 'kilogram';
 
-    const LITER = 'liter';
     const LITER_ID = 3;
+    const LITER = 'liter';
 
-    const PIECE = 'piece';
     const PIECE_ID = 4;
+    const PIECE = 'piece';
 
-    const PACK = 'pack';
     const PACK_ID = 5;
+    const PACK = 'pack';
 
     const OPTION = [
         self::GRAM_ID => self::GRAM,
