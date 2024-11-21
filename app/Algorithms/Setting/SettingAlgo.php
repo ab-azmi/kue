@@ -8,36 +8,27 @@ use Illuminate\Support\Facades\DB;
 
  class SettingAlgo
  {
-    public function __construct(public ?Setting $setting = null)
+    public function __construct(public Setting|int|null $setting = null)
     {
-    }
-
-    public function create(Request $request)
-    {
-        try {
-            DB::transaction(function () use ($request) {
-                $this->setting = Setting::create($request->only(['key', 'description', 'value']));
-                
-                $this->setting->setActivityPropertyAttributes(ActivityAction::CREATE)
-                ->saveActivity('Create new Setting : ' . $this->setting->id);
-            });
-
-            return success($this->setting);
-        } catch (\Exception $e) {
-            exception($e);
+        if(is_int($setting)){
+            $this->setting = Setting::find($setting);
+            if(!$this->setting){
+                return errGetSetting();
+            }
         }
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request)
     {
         try {
-            DB::transaction(function () use ($request, $id) {
-                $this->setting = Setting::find($id);
-                
+            DB::transaction(function () use ($request) {
                 $this->setting->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
-                Setting::where('id', $id)->update($request->only(['key', 'description', 'value']));
-                $this->setting->refresh();
+                $this->saveSetting($request);
                 
                 $this->setting->setActivityPropertyAttributes(ActivityAction::UPDATE)
                 ->saveActivity('Update Setting : ' . $this->setting->id);
@@ -45,23 +36,27 @@ use Illuminate\Support\Facades\DB;
 
             return success($this->setting);
         } catch (\Exception $e) {
-            return errUpdateSetting($e->getMessage());
+            exception($e);
         }
     }
 
-    public function delete()
+    /** --- PRIVATE FUNCTIONS --- **/
+    
+    private function saveSetting($request)
     {
-        try {
-            DB::transaction(function () {
-                $this->setting->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-                $this->setting->delete();
-                $this->setting->setActivityPropertyAttributes(ActivityAction::DELETE)
-                ->saveActivity('Delete Setting : ' . $this->setting->id);
-            });
+        $request->validate([
+            'description' => 'required|string|max:255',
+            'value' => 'required'
+        ]);
 
-            return success($this->setting);
-        } catch (\Exception $e) {
-            exception($e);
+        $form = $request->only(['description', 'value']);
+
+        if($this->setting)
+        {
+            $updated = $this->setting->update($form);
+            if(!$updated){
+                return errUpdateSetting();
+            }
         }
     }
  }

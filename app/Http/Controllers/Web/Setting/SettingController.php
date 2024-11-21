@@ -9,12 +9,9 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    public function __construct(public $algo = new SettingAlgo())
-    {
-    }
-
     /**
-     * Display a listing of the resource.
+     * @param SettingAlgo $algo
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -23,17 +20,10 @@ class SettingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create(Request $request)
-    {
-        return $this->algo->create($request);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function detail(string $id)
+    public function detail($id)
     {
         $setting = Setting::find($id);
 
@@ -45,24 +35,14 @@ class SettingController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update($id, Request $request)
     {
-        return $this->algo->update($request, $id);
+        $algo = new SettingAlgo($id);
+        return $algo->update($request);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete(string $id)
-    {
-        $this->algo->setting = Setting::find($id);
-
-        if (!$this->algo->setting) {
-            return errGetSetting();
-        }
-
-        return $this->algo->delete();
-    }
 }

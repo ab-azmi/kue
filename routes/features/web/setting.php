@@ -22,9 +22,7 @@ Route::prefix('settings')
         Route::controller(SettingController::class)
             ->group(function () {
                 Route::get('', 'get');
-                Route::post('', 'create');
                 Route::get('{id}', 'detail');
                 Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
             });
     });
