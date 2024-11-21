@@ -27,7 +27,7 @@ class TransactionNumber extends BaseNumber
         $date = now();
         $date = $date->format('dmy');
 
-        $increment = static::getIncrement();
+        $increment = static::getIncrementNumber();
         $number .= str_pad($increment, 5, '0', STR_PAD_LEFT);
         
         $letters = static::getLetters();
@@ -38,21 +38,6 @@ class TransactionNumber extends BaseNumber
     }
 
     /** --- PRIVATE FUNCTION --- **/
-
-    private static function getIncrement(): string
-    {
-        try {
-            return (new static())->model::withTrashed()
-                ->where(function ($query) {
-                    $date = now();
-                    $query->whereMonth('createdAt', $date->month)
-                        ->whereYear('createdAt', $date->year);
-                })->count() + 1;
-        } catch (\Exception $e) {
-            exception($e);
-        }
-        return '';
-    }
 
     private static function getLetters($length = 10): string
     {

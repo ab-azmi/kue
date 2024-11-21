@@ -16,7 +16,10 @@ class TransactionOrder extends BaseModel
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-        self::DELETED_AT => 'datetime'
+        self::DELETED_AT => 'datetime',
+        'price' => 'float',
+        'discount' => 'float',
+        'totalPrice' => 'float',
     ];
 
     /** --- RELATIONSHIP --- */

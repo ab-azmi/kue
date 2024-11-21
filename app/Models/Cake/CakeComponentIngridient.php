@@ -19,7 +19,9 @@ class CakeComponentIngridient extends BaseModel
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-        self::DELETED_AT => 'datetime'
+        self::DELETED_AT => 'datetime',
+        'price' => 'float',
+        'expirationDate' => 'date',
     ];
 
     /** --- RELATIONSHIP --- */
