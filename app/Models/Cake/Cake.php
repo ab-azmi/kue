@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cake extends BaseModel
 {
@@ -33,7 +34,7 @@ class Cake extends BaseModel
     public function ingridients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngridient::class, 'cake_ingridients', 'cakeId', 'ingridientId')
-            ->withPivot('quantity', 'unit')
+            ->withPivot('quantity')
             ->as('used');
     }
 

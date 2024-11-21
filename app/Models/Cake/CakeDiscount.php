@@ -19,7 +19,9 @@ class CakeDiscount extends BaseModel
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-        self::DELETED_AT => 'datetime'
+        self::DELETED_AT => 'datetime',
+        'fromDate' => 'datetime',
+        'toDate' => 'datetime',
     ];
     
     /** --- RELATIONSHIP --- */

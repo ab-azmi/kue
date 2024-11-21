@@ -105,13 +105,25 @@ class Error extends BaseCodeName
             'msg' => 'Cake Delete Failed'
         ],
 
-        'ATTACH_INGRIDIENTS_FAILED' => [
-            'code' => 500,
-            'msg' => 'Failed to Attach Ingridients to Cake'
+        'INGRIDIENT_NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Ingridient Not Found'
         ],
-        'DETACH_INGRIDIENTS_FAILED' => [
+        'INGRIDIENT_CREATE_FAILED' => [
             'code' => 500,
-            'msg' => 'Failed to Detach Ingridients to Cake'
+            'msg' => 'Ingredient Create Failed'
+        ],
+        'INGRIDIENT_UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Ingredient Update Failed'
+        ],
+        'INGRIDIENT_DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Ingredient Delete Failed'
+        ],
+        'SYNC_INGRIDIENTS_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to Sync Ingridients to Cake'
         ],
         'DECREMENT_INGRIDIENT_STOCK_FAILED' => [
             'code' => 409,
@@ -124,6 +136,23 @@ class Error extends BaseCodeName
         'CALCULATING_INGRIDIENT_COST_FAILED' => [
             'code' => 500,
             'msg' => 'Failed to Calculate Total Cost of Ingridients'
+        ],
+
+        'DISCOUNT_NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Discount Not Found'
+        ],
+        'DISCOUNT_CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Create Failed'
+        ],
+        'DISCOUNT_UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Update Failed'
+        ],
+        'DISCOUNT_DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Delete Failed'
         ],
     ];
     

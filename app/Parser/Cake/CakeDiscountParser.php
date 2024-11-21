@@ -21,12 +21,13 @@ class CakeDiscountParser extends BaseParser
             'id' => $data->id,
             'name' => $data->name,
             'description' => $data->description,
-            'fromDate' => $data->fromDate->format('d/m/Y'),
-            'toDate' => $data->toDate->format('d/m/Y'),
+            'fromDate' => $data->fromDate->format('d/m/Y H:i'),
+            'toDate' => $data->toDate->format('d/m/Y H:i'),
             'value' => $data->value,
             'cakeId' => $data->cake_id,
-            'createdAt' => $data->created_at?->format('d/m/Y H:i'),
-            'updatedAt' => $data->updated_at?->format('d/m/Y H:i'),
+            'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('d/m/Y H:i'),
             'cake' => CakeParser::brief($data->cake),
         ];
     }
@@ -41,12 +42,13 @@ class CakeDiscountParser extends BaseParser
             'id' => $data->id,
             'name' => $data->name,
             'description' => $data->description,
-            'fromDate' => $data->fromDate->format('d/m/Y'),
-            'toDate' => $data->toDate->format('d/m/Y'),
+            'fromDate' => $data->fromDate->format('d/m/Y H:i'),
+            'toDate' => $data->toDate->format('d/m/Y H:i'),
             'value' => $data->value,
             'cakeId' => $data->cake_id,
-            'createdAt' => $data->created_at?->format('d/m/Y H:i'),
-            'updatedAt' => $data->updated_at?->format('d/m/Y H:i'),
+            'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('d/m/Y H:i'),
         ];
     }
 

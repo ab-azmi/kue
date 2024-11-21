@@ -11,12 +11,9 @@ use Illuminate\Http\Request;
 
 class CakeDiscountController extends Controller
 {
-    public function __construct(public $algo = new CakeDiscountAlgo())
-    {
-        
-    }
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -25,37 +22,46 @@ class CakeDiscountController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param CakeDiscountRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(CakeDiscountRequest $request)
     {
-        return $this->algo->create($request);
+        $algo = new CakeDiscountAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
-        $discount = CakeDiscount::with('cake')->findOrFail($id);
+        $discount = CakeDiscount::with('cake')->find($id);
+        if (!$discount) {
+            return errCakeDiscountGet();
+        }
         return success($discount);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param $id
+     * @param CakeDiscountRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CakeDiscountRequest $request, string $id)
+    public function update($id, CakeDiscountRequest $request)
     {
-        $this->algo->discount = CakeDiscount::findOrFail($id);
-        return $this->algo->update($request);
+        $algo = new CakeDiscountAlgo($id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->discount = CakeDiscount::findOrFail($id);
-        return $this->algo->delete();
+        $algo = new CakeDiscountAlgo($id);
+        return $algo->delete();
     }
 }

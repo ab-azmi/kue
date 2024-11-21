@@ -2,24 +2,60 @@
 
 use App\Services\Constant\Error;
 
-if (!function_exists("errAttachIngridients")) {
-    function errAttachIngridients($internalMsg = "", $status = null)
+if (!function_exists("errIngredientNotFound")) {
+    function errIngredientNotFound($internalMsg = "", $status = null)
     {
         error(
-            Error::CAKE['ATTACH_INGRIDIENTS_FAILED']['code'],
-            Error::CAKE['ATTACH_INGRIDIENTS_FAILED']['msg'],
+            Error::CAKE['INGRIDIENT_NOT_FOUND']['code'],
+            Error::CAKE['INGRIDIENT_NOT_FOUND']['msg'],
             $internalMsg,
             $status
         );
     }
 }
 
-if (!function_exists("errDetachingIngridients")) {
-    function errDetachingIngridients($internalMsg = "", $status = null)
+if (!function_exists("errIngredientUpdate")) {
+    function errIngredientUpdate($internalMsg = "", $status = null)
     {
         error(
-            Error::CAKE['DETACH_INGRIDIENTS_FAILED']['code'],
-            Error::CAKE['DETACH_INGRIDIENTS_FAILED']['msg'],
+            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errIngredientCreate")) {
+    function errIngredientCreate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['INGRIDIENT_CREATE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_CREATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errIngredientDelete")) {
+    function errIngredientDelete($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['INGRIDIENT_DELETE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_DELETE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errSyncIngridients")) {
+    function errSyncIngridients($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['SYNC_INGRIDIENTS_FAILED']['code'],
+            Error::CAKE['SYNC_INGRIDIENTS_FAILED']['msg'],
             $internalMsg,
             $status
         );

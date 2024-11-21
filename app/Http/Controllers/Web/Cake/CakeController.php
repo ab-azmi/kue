@@ -12,82 +12,70 @@ use Illuminate\Http\Request;
 
 class CakeController extends Controller
 {
-    public function __construct(public $algo = new CakeAlgo())
-    {
-    }
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
         $cakes = Cake::orderBy('createdAt', 'desc')
-        ->getOrPaginate($request, true);
+            ->getOrPaginate($request, true);
 
         return success(CakeParser::briefs($cakes));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param CakeRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(CakeRequest $request)
     {
-        return $this->algo->create($request);
+        $algo = new CakeAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
-        $cake = Cake::find($id);
+        $cake = Cake::with([
+            'variant',
+            'ingridients',
+            'discounts'
+        ])->find($id);
 
         if (!$cake) {
             return errGetCake();
         }
-
-        $cake->load([
-            'variant',
-            'ingridients',
-            'discounts'
-        ]);
 
         return success($cake);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param CakeRequest $request
+     * @param string $id
      */
-    public function update(CakeRequest $request, string $id)
+    public function update($id, CakeRequest $request)
     {
-        $cake = Cake::find($id);
-
-        if (!$cake) {
-            return errGetCake();
-        }
-
-        $this->algo->cake = $cake;
-
-        return $this->algo->update($request);
+        $algo = new CakeAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $cake = Cake::find($id);
-
-        if (!$cake) {
-            return errGetCake();
-        }
-
-        $this->algo->cake = $cake;
-
-        return $this->algo->delete();
+        $algo = new CakeAlgo((int)$id);
+        return $algo->delete();
     }
 
     public function COGS(CakeCOGSRequest $request)
     {
-        return $this->algo->COGS($request);
+        $algo = new CakeAlgo();
+        return $algo->COGS($request);
     }
 }

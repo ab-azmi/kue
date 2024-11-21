@@ -24,6 +24,7 @@ class CakeRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'cakeVariantId' => 'required|exists:cake_variants,id',
+            'stock' => 'required|numeric|max:255',
             'profitMargin' => 'nullable|string|max:255',
             'COGS' => 'nullable|numeric|max:255',
             'sellingPrice' => 'nullable|numeric|max:255',

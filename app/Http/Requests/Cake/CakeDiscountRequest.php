@@ -22,11 +22,11 @@ class CakeDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'fromDate' => 'required|string',
-            'toDate' => 'required|string',
-            'value' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'fromDate' => 'required|string|max:255',
+            'toDate' => 'required|string|max:255',
+            'value' => 'required|integer|min:1',
             'cakeId' => 'required|integer|exists:cakes,id',
         ];
     }
