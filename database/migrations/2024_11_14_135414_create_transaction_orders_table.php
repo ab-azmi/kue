@@ -25,8 +25,8 @@ return new class extends Migration
             
             $table->integer('quantity')->default(1);
             $table->float('price')->nullable();
-            $table->float('totalPrice')->nullable();
             $table->float('discount')->nullable();
+            $table->float('totalPrice')->nullable();
 
             $this->getDefaultTimestamps($table);
         });

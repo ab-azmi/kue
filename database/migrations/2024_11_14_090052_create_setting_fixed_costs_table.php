@@ -18,9 +18,9 @@ return new class extends Migration
         Schema::create('setting_fixed_costs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
             $table->float('amount');
             $table->integer('frequency')->default(1);
+            $table->string('description')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }

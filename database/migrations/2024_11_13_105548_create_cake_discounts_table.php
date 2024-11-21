@@ -21,10 +21,10 @@ return new class extends Migration
             $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
             
             $table->string('name');
-            $table->string('description')->nullable();
             $table->date('fromDate');
             $table->date('toDate');
             $table->float('value');
+            $table->string('description')->nullable();
 
             $this->getDefaultTimestamps($table);
         });
