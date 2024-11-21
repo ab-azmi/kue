@@ -20,7 +20,7 @@ class CakeAlgo
         if (is_int($cake)) {
             $this->cake = Cake::find($cake);
             if (!$this->cake) {
-                errGetCake();
+                errCakeGet();
             }
         }
     }
@@ -83,7 +83,7 @@ class CakeAlgo
 
                 $deleted = $this->cake->delete();
                 if (!$deleted) {
-                    errDeleteCake();
+                    errCakeDelete();
                 }
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
@@ -117,7 +117,7 @@ class CakeAlgo
 
             $cogs = $sums / $request->volume;
             if ($cogs <= 0) {
-                errCalculatingCOGS();
+                errCakeCOGS();
             }
 
             return success([
@@ -147,7 +147,7 @@ class CakeAlgo
         if ($this->cake) {
             $updated = $this->cake->update($form);
             if (!$updated) {
-                errUpdateCake();
+                errCakeUpdate();
             }
 
             $this->syncIngridientStock($request->ingridients, $this->cake->ingridients);
@@ -155,7 +155,7 @@ class CakeAlgo
         } else {
             $this->cake = Cake::create($form);
             if (!$this->cake) {
-                errCreateCake();
+                errCakeCreate();
             }
 
             $this->syncIngridients($request->ingridients);
@@ -173,7 +173,7 @@ class CakeAlgo
 
                 $incremented = $oldIngridient->save();
                 if (!$incremented) {
-                    errDecrementingIngridientStock();
+                    errCakeIngredientDecrementStock();
                 }
             }
         }
@@ -181,14 +181,14 @@ class CakeAlgo
         foreach ($ingridients as $ingridient) {
             $ingridientModel = $this->cake->ingridients()->find($ingridient['ingridientId']);
             if (!$ingridientModel) {
-                errIngredientNotFound();
+                errCakeIngredientGet();
             }
 
             $ingridientModel->quantity -= ($ingridient['quantity'] * $this->cake->stock);
 
             $decremented = $ingridientModel->save();
             if (!$decremented) {
-                errDecrementingIngridientStock();
+                errCakeIngredientDecrementStock();
             }
         }
     }
@@ -206,7 +206,7 @@ class CakeAlgo
         );
 
         if (!$sync) {
-            errSyncIngridients();
+            errCakeIngredientSync();
         }
     }
 
@@ -250,7 +250,7 @@ class CakeAlgo
 
         $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
         if (count($ingridients) !== count($ingridientIds)) {
-            errCalculatingIngridientCost();
+            errCakeIngredientTotalCost();
         }
 
         foreach ($_ingridients as $ingridient) {
@@ -262,7 +262,7 @@ class CakeAlgo
         }
 
         if ($totalIngridientCost <= 0) {
-            errCalculatingIngridientCost();
+            errCakeIngredientTotalCost();
         }
 
         return $totalIngridientCost;

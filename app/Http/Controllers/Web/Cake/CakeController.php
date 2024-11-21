@@ -47,7 +47,7 @@ class CakeController extends Controller
         ])->find($id);
 
         if (!$cake) {
-            errGetCake();
+            errCakeGet();
         }
 
         return success($cake);

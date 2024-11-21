@@ -14,7 +14,7 @@ class SettingFixedCostAlgo
         if (is_int($fixedCost)) {
             $this->fixedCost = SettingFixedCost::find($fixedCost);
             if (!$this->fixedCost) {
-                errGetFixedCost();
+                errSettingFixedCostGet();
             }
         }
     }
@@ -35,7 +35,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            errCreateFixedCost($e->getMessage());
+            exception($e);
         }
     }
 
@@ -57,7 +57,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            errUpdateFixedCost($e->getMessage());
+            exception($e);
         }
     }
 
@@ -70,7 +70,10 @@ class SettingFixedCostAlgo
             DB::transaction(function () {
                 $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->fixedCost->delete();
+                $deleted = $this->fixedCost->delete();
+                if (!$deleted) {
+                    errSettingFixedCostDelete();
+                }
 
                 $this->fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Fixed Cost : ' . $this->fixedCost->id);
@@ -78,7 +81,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            errDeleteFixedCost($e->getMessage());
+            exception($e);
         }
     }
 
@@ -96,12 +99,12 @@ class SettingFixedCostAlgo
         if($this->fixedCost) {
             $updated = $this->fixedCost->update($form);
             if (!$updated) {
-                errUpdateFixedCost();
+                errSettingFixedCostUpdate();
             }
         } else {
             $this->fixedCost = SettingFixedCost::create($form);
             if (!$this->fixedCost) {
-                errCreateFixedCost();
+                errSettingFixedCostCreate();
             }
         }
     }

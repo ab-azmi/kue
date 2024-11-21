@@ -35,19 +35,10 @@
             "app/Services/Helpers/helpers.php",
 
             "app/Services/Helpers/Status/globals.php",
-
-            "app/Services/Helpers/Status/Transaction/TransactionStatus.php",
-            "app/Services/Helpers/Status/Transaction/TransactionOrderStatus.php",
-
-            "app/Services/Helpers/Status/Cake/CakeStatus.php",
-            "app/Services/Helpers/Status/Cake/CakeIngridientStatus.php",
-
-            "app/Services/Helpers/Status/Employee/EmployeeStatus.php",
-            "app/Services/Helpers/Status/Employee/EmployeeUserStatus.php",
-            "app/Services/Helpers/Status/Employee/EmployeeSalaryStatus.php",
-
-            "app/Services/Helpers/Status/Setting/SettingStatus.php",
-            "app/Services/Helpers/Status/Setting/SettingFixedCostStatus.php"
+            "app/Services/Helpers/Status/transactions.php",
+            "app/Services/Helpers/Status/cakes.php",
+            "app/Services/Helpers/Status/employees.php",
+            "app/Services/Helpers/Status/settings.php"
         ]
     },
     "autoload-dev": {

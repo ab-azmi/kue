@@ -13,7 +13,7 @@ class CakeComponentIngridientAlgo
         if(is_int($ingridient)){
             $this->ingridient = CakeComponentIngridient::find($ingridient);
             if(!$this->ingridient){
-                errIngredientNotFound();
+                errCakeIngredientGet();
             }
         }
     }
@@ -87,12 +87,12 @@ class CakeComponentIngridientAlgo
         if($this->ingridient){
             $updated = $this->ingridient->update($form);
             if(!$updated){
-                errIngredientUpdate();
+                errCakeIngredientUpdate();
             }
         } else {
             $this->ingridient = CakeComponentIngridient::create($form);
             if(!$this->ingridient){
-                errIngredientCreate();
+                errCakeIngredientCreate();
             }
         }
     }
