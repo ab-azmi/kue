@@ -14,7 +14,7 @@ class EmployeeUserAlgo
         if (is_int($user)) {
             $this->user = EmployeeUser::find($user);
             if (!$this->user) {
-                return errGetUser();
+                errGetUser();
             }
         }
     }
@@ -32,7 +32,7 @@ class EmployeeUserAlgo
 
             return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
-            return errCreateUser($e->getMessage());
+            errCreateUser($e->getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ class EmployeeUserAlgo
 
             return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
-            return errUpdateUser($e->getMessage());
+            errUpdateUser($e->getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ class EmployeeUserAlgo
 
             return success(EmployeeUserParser::first($this->user));
         } catch (\Exception $e) {
-            return errDeleteUser($e->getMessage());
+            errDeleteUser($e->getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ class EmployeeUserAlgo
 
             $updated = $this->user->update($form);
             if (!$updated) {
-                return errUpdateUser();
+                errUpdateUser();
             }
         }else{
             $form = $request->safe()->only([
@@ -89,7 +89,7 @@ class EmployeeUserAlgo
 
             $this->user = EmployeeUser::create($form);
             if (!$this->user) {
-                return errCreateUser();
+                errCreateUser();
             }
         }
     }

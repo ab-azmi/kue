@@ -154,7 +154,7 @@ class TransactionAlgo
             $orderModel = $this->transaction->orders()->create($order);
 
             if (!$orderModel) {
-                return errCreateOrder();
+                errCreateOrder();
             }
 
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
@@ -192,7 +192,7 @@ class TransactionAlgo
             $cake = $cakes[$order['cakeId']];
 
             if ($cake->stock < $order['quantity']) {
-                return errOutOfStockOrder($cake->name);
+                errOutOfStockOrder($cake->name);
             }
 
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);

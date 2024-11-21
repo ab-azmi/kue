@@ -15,7 +15,7 @@ class CakeDiscountAlgo
         if (is_int($discount)) {
             $this->discount = CakeDiscount::find($discount);
             if (!$this->discount) {
-                return errCakeDiscountGet();
+                errCakeDiscountGet();
             }
         }
     }
@@ -92,7 +92,7 @@ class CakeDiscountAlgo
         $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
 
         if ($fromDate > $toDate) {
-            return errCreateCake('From date must be less than to date');
+            errCreateCake('From date must be less than to date');
         }
 
         return [
@@ -118,12 +118,12 @@ class CakeDiscountAlgo
         if($this->discount) {
             $updated = $this->discount->update($form);
             if (!$updated) {
-                return errUpdateCake();
+                errUpdateCake();
             }
         } else {
             $this->discount = CakeDiscount::create($form);
             if (!$this->discount) {
-                return errCreateCake();
+                errCreateCake();
             }
         }
         

@@ -35,7 +35,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            return errCreateFixedCost($e->getMessage());
+            errCreateFixedCost($e->getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            return errUpdateFixedCost($e->getMessage());
+            errUpdateFixedCost($e->getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class SettingFixedCostAlgo
 
             return success($this->fixedCost);
         } catch (\Exception $e) {
-            return errDeleteFixedCost($e->getMessage());
+            errDeleteFixedCost($e->getMessage());
         }
     }
 
@@ -96,12 +96,12 @@ class SettingFixedCostAlgo
         if($this->fixedCost) {
             $updated = $this->fixedCost->update($form);
             if (!$updated) {
-                return errUpdateFixedCost();
+                errUpdateFixedCost();
             }
         } else {
             $this->fixedCost = SettingFixedCost::create($form);
             if (!$this->fixedCost) {
-                return errCreateFixedCost();
+                errCreateFixedCost();
             }
         }
     }
