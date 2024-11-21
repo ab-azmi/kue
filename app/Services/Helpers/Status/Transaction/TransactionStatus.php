@@ -49,3 +49,39 @@ if (!function_exists("errGetTransaction")) {
         );
     }
 }
+
+if (!function_exists("errTransactionTotalPrice")) {
+    function errTransactionTotalPrice($internalMsg = "", $status = null)
+    {
+        error(
+            Error::TRANSACTION['FAILED_CALCULATE_TOTAL_PRICE']['code'],
+            Error::TRANSACTION['FAILED_CALCULATE_TOTAL_PRICE']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errTransactionTotalDiscount")) {
+    function errTransactionTotalDiscount($internalMsg = "", $status = null)
+    {
+        error(
+            Error::TRANSACTION['FAILED_CALCULATE_TOTAL_DISCOUNT']['code'],
+            Error::TRANSACTION['FAILED_CALCULATE_TOTAL_DISCOUNT']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errTransactionTax")) {
+    function errTransactionTax($internalMsg = "", $status = null)
+    {
+        error(
+            Error::TRANSACTION['FAILED_CALCULATE_TAX']['code'],
+            Error::TRANSACTION['FAILED_CALCULATE_TAX']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
