@@ -5,17 +5,17 @@ use App\Services\Constant\BaseCodeName;
 
 class FrequencyConstant extends BaseCodeName
 {
-    const MONTHLY = 'monthly';
     const MONTHLY_ID = 1;
+    const MONTHLY = 'monthly';
 
-    const QUARTERLY = 'quarterly';
     const QUARTERLY_ID = 2;
+    const QUARTERLY = 'quarterly';
 
-    const YEARLY = 'yearly';
     const YEARLY_ID = 3;
+    const YEARLY = 'yearly';
 
-    const WEEKLY = 'weekly';
     const WEEKLY_ID = 4;
+    const WEEKLY = 'weekly';
 
     const OPTION = [
         self::MONTHLY_ID => self::MONTHLY,

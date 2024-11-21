@@ -5,6 +5,7 @@ namespace Database\Seeders\Cake;
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Cake\CakeVariant;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,10 +18,10 @@ class CakeSeeder extends Seeder
     public function run(): void
     {
         DB::table('cake_variants')->insert([
-            ['name' => 'Vanilla', 'price' => '100000'],
-            ['name' => 'Chocolate', 'price' => '150000'],
-            ['name' => 'Strawberry', 'price' => '200000'],
-            ['name' => 'Blueberry', 'price' => '250000'],
+            ['name' => 'Vanilla', 'price' => 100000],
+            ['name' => 'Chocolate', 'price' => 150000],
+            ['name' => 'Strawberry', 'price' => 200000],
+            ['name' => 'Blueberry', 'price' => 250000],
         ]);
 
 
@@ -40,17 +41,17 @@ class CakeSeeder extends Seeder
             [
                 'name' => 'Discount 1',
                 'description' => 'Discount 1 Description',
-                'fromDate' => '2021-01-01',
-                'toDate' => '2021-12-31',
-                'value' => '10000',
+                'fromDate' => Carbon::parse('2021-01-01'),
+                'toDate' => Carbon::parse('2021-12-31'),
+                'value' => 10000,
                 'cakeId' => Cake::all()->random()->id,
             ],
             [
                 'name' => 'Discount 2',
                 'description' => 'Discount 2 Description',
-                'fromDate' => '2021-01-01',
-                'toDate' => '2021-12-31',
-                'value' => '20000',
+                'fromDate' => Carbon::parse('2021-01-01'),
+                'toDate' => Carbon::parse('2021-12-31'),
+                'value' => 20000,
                 'cakeId' => Cake::all()->random()->id,
             ],
         ]);
@@ -65,10 +66,10 @@ class CakeSeeder extends Seeder
             [
                 'name' => 'Polar Bear Cake',
                 'cakeVariantId' => CakeVariant::all()->random()->id,
-                'profitMargin' => '0.5',
-                'COGS' => '100000',
-                'stock' => '10',
-                'sellingPrice' => '150000',
+                'profitMargin' => 0.5,
+                'COGS' => 100000,
+                'stock' => 10,
+                'sellingPrice' => 150000,
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
@@ -78,9 +79,9 @@ class CakeSeeder extends Seeder
                 'name' => 'Panda Cake',
                 'cakeVariantId' => CakeVariant::all()->random()->id,
                 'profitMargin' => null,
-                'COGS' => '400000',
-                'stock' => '15',
-                'sellingPrice' => '600000',
+                'COGS' => 400000,
+                'stock' => 15,
+                'sellingPrice' => 600000,
                 'images' => json_encode([
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',

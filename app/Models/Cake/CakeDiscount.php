@@ -22,6 +22,7 @@ class CakeDiscount extends BaseModel
         self::DELETED_AT => 'datetime',
         'fromDate' => 'datetime',
         'toDate' => 'datetime',
+        'value' => 'float',
     ];
     
     /** --- RELATIONSHIP --- */

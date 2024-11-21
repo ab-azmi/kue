@@ -4,6 +4,7 @@ namespace Database\Seeders\Cake;
 
 use App\Models\Cake\CakeComponentIngridient;
 use App\Services\Constant\Cake\CakeIngridientUnit;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class CakeIngridientSeeder extends Seeder
@@ -28,34 +29,34 @@ class CakeIngridientSeeder extends Seeder
         return array(
             [
                 'name' => 'Flour',
-                'unit' => CakeIngridientUnit::KILOGRAM_ID,
-                'price' => '10000',
-                'expirationDate' => '2025-11-13',
-                'quantity' => '100',
+                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
+                'price' => 10000,
+                'expirationDate' => Carbon::parse('2025-11-13'),
+                'quantity' => 100,
                 'supplier' => 'PT. Tepung',
             ],
             [
                 'name' => 'Sugar',
-                'unit' => CakeIngridientUnit::KILOGRAM_ID,
-                'price' => '15000',
-                'expirationDate' => '2025-11-13',
-                'quantity' => '70',
+                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
+                'price' => 15000,
+                'expirationDate' => Carbon::parse('2025-11-13'),
+                'quantity' => 70,
                 'supplier' => 'PT. Gula',
             ],
             [
                 'name' => 'Egg',
-                'unit' => CakeIngridientUnit::PIECE_ID,
-                'price' => '2000',
-                'expirationDate' => '2025-11-13',
-                'quantity' => '50',
+                'unitId' => CakeIngridientUnit::PIECE_ID,
+                'price' => 2000,
+                'expirationDate' => Carbon::parse('2025-11-13'),
+                'quantity' => 50,
                 'supplier' => 'PT. Telur',
             ],
             [
                 'name' => 'Milk',
-                'unit' => CakeIngridientUnit::LITER_ID,
-                'price' => '20000',
-                'expirationDate' => '2025-11-13',
-                'quantity' => '30',
+                'unitId' => CakeIngridientUnit::LITER_ID,
+                'price' => 20000,
+                'expirationDate' => Carbon::parse('2025-11-13'),
+                'quantity' => 30,
                 'supplier' => 'PT. Susu',
             ]
         );

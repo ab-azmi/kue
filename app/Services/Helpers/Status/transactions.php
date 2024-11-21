@@ -88,8 +88,8 @@ if (!function_exists("errTransactionTax")) {
 
 /** --- TRANSACTION ORDER --- **/
 
-if (!function_exists("errTransactionOrderStock")) {
-    function errTransactionOrderStock($internalMsg = "", $status = null)
+if (!function_exists("errOutOfStockOrder")) {
+    function errOutOfStockOrder($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['OUT_OF_STOCK_ORDER']['code'],
@@ -100,8 +100,8 @@ if (!function_exists("errTransactionOrderStock")) {
     }
 }
 
-if (!function_exists("errTransactionOrderCreate")) {
-    function errTransactionOrderCreate($internalMsg = "", $status = null)
+if (!function_exists("errCreateOrder")) {
+    function errCreateOrder($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['ORDER_CREATE_FAILED']['code'],

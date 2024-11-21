@@ -20,12 +20,12 @@ return new class extends Migration
             $table->foreignId('employeeId');
             $table->foreign('employeeId')->references('id')->on('employees')->cascadeOnDelete();
 
+            $table->string('number')->nullable();
             $table->integer('quantity')->nullable();
-            $table->string('code')->nullable();
-            $table->float('tax')->nullable();
             $table->float('orderPrice')->nullable();
-            $table->float('totalPrice')->nullable();
             $table->float('totalDiscount')->nullable();
+            $table->float('tax')->nullable();
+            $table->float('totalPrice')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }
