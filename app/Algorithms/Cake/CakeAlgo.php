@@ -5,9 +5,11 @@ namespace App\Algorithms\Cake;
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngridient;
 use App\Models\Employee\EmployeeSalary;
+use App\Models\Setting\Setting;
 use App\Models\Setting\SettingFixedCost;
 use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Activity\ActivityAction;
+use App\Services\Constant\Setting\SettingConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -215,7 +217,7 @@ class CakeAlgo
 
     private function getMargin(Request $request): float
     {
-        $default = 0.3;
+        $default = Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value;
 
         if ($request->has('margin') && $request->margin) {
             $default = (float) $request->margin;

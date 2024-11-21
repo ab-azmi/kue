@@ -20,9 +20,6 @@ class EmployeeSalaryParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'basic_salary' => $data->basic_salary,
-            'tax' => $data->tax,
-            'overtime' => $data->overtime,
             'totalSalary' => $data->totalSalary,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
@@ -38,9 +35,6 @@ class EmployeeSalaryParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'basic_salary' => $data->basic_salary,
-            'tax' => $data->tax,
-            'overtime' => $data->overtime,
             'totalSalary' => $data->totalSalary,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),

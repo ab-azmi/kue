@@ -7,6 +7,7 @@ use App\Models\Setting\Setting;
 use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
+use App\Services\Constant\Setting\SettingConstant;
 use App\Services\Number\Generator\Transaction\PurchaseNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -200,7 +201,7 @@ class TransactionAlgo
 
     private function setTotalPrices($orders): array
     {
-        $tax = Setting::where('key', 'tax')->first()->value;
+        $tax = Setting::where('key', SettingConstant::TAX_KEY)->first()->value;
         $totalPrice = 0;
         $sumOrderPrice = 0;
         $totalDiscount = 0;

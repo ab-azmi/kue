@@ -3,6 +3,7 @@
 namespace Database\Seeders\Setting;
 
 use App\Models\Setting\Setting;
+use App\Services\Constant\Setting\SettingConstant;
 use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
@@ -26,14 +27,14 @@ class SettingSeeder extends Seeder
     {
         return array(
             [
-                'key' => 'tax',
+                'key' => SettingConstant::TAX_KEY,
                 'description' => 'Tax percentage',
-                'value' => '0.12',
+                'value' => 0.12
             ],
             [
-                'key' => 'profitMargin',
+                'key' => SettingConstant::PROFIT_MARGIN_KEY,
                 'description' => 'Profit margin percentage',
-                'value' => '0.30',
+                'value' => 0.3,
             ]
         );
     }
