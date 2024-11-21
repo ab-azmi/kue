@@ -17,8 +17,8 @@ class SettingFixedCostController extends Controller
      */
     public function get(Request $request)
     {
-        $fixedcosts = SettingFixedCost::orderBy('createdAt')->getOrPaginate($request, true);
-        return success($fixedcosts);
+        $fixedCosts = SettingFixedCost::orderBy('createdAt')->getOrPaginate($request, true);
+        return success($fixedCosts);
     }
 
     /**
@@ -37,12 +37,12 @@ class SettingFixedCostController extends Controller
      */
     public function detail($id)
     {
-        $fixedcost = SettingFixedCost::find($id);
-        if (!$fixedcost) {
-            return errGetFixedCost();
+        $fixedCost = SettingFixedCost::find($id);
+        if (!$fixedCost) {
+            errGetFixedCost();
         }
 
-        return success(SettingFixedCostParser::first($fixedcost));
+        return success(SettingFixedCostParser::first($fixedCost));
     }
 
     /**

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
         if(is_int($setting)){
             $this->setting = Setting::find($setting);
             if(!$this->setting){
-                return errGetSetting();
+                errGetSetting();
             }
         }
     }
@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\DB;
         {
             $updated = $this->setting->update($form);
             if(!$updated){
-                return errUpdateSetting();
+                errUpdateSetting();
             }
         }
     }

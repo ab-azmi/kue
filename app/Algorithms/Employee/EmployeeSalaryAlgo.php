@@ -14,7 +14,7 @@ class EmployeeSalaryAlgo
         if (is_int($salary)) {
             $this->salary = EmployeeSalary::find($salary);
             if (!$this->salary) {
-                return errGetSalary();
+                errGetSalary();
             }
         }
     }
@@ -61,7 +61,7 @@ class EmployeeSalaryAlgo
 
                 $deleted = $this->salary->delete();
                 if (!$deleted) {
-                    return errDeleteSalary();
+                    errDeleteSalary();
                 }
 
                 $this->salary->setActivityPropertyAttributes(ActivityAction::DELETE)
@@ -86,12 +86,12 @@ class EmployeeSalaryAlgo
         if($this->salary) {
             $updated = $this->salary->update($form);
             if(!$updated) {
-                return errUpdateSalary();
+                errUpdateSalary();
             }
         } else {
             $this->salary = EmployeeSalary::create($form);
             if(!$this->salary) {
-                return errCreateSalary();
+                errCreateSalary();
             }
         }
     }

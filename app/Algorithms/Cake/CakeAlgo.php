@@ -20,7 +20,7 @@ class CakeAlgo
         if (is_int($cake)) {
             $this->cake = Cake::find($cake);
             if (!$this->cake) {
-                return errGetCake();
+                errGetCake();
             }
         }
     }

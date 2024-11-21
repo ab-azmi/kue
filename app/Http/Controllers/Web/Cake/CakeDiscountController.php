@@ -39,7 +39,7 @@ class CakeDiscountController extends Controller
     {
         $discount = CakeDiscount::with('cake')->find($id);
         if (!$discount) {
-            return errCakeDiscountGet();
+            errCakeDiscountGet();
         }
         return success($discount);
     }
