@@ -10,11 +10,9 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function __construct(public $algo = new EmployeeAlgo())
-    {
-    }
     /**
-     * Display a listing of the resource.
+     * @param Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -23,20 +21,21 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param App\Http\Requests\Employee\EmployeeRequest
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(EmployeeRequest $request)
     {
-        return $this->algo->create($request);
+        $algo = new EmployeeAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $employee = Employee::find($id);
-
         if (!$employee) {
             return errGetEmployee();
         }
@@ -45,30 +44,23 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param App\Http\Requests\Employee\EmployeeRequest
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(EmployeeRequest $request, string $id)
+    public function update($id, EmployeeRequest $request)
     {
-        $this->algo->employee = Employee::find($id);
-
-        if(!$this->algo->employee){
-            return errGetEmployee();
-        }
-
-        return $this->algo->update($request);
+        $algo = new EmployeeAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete(string $id)
     {
-        $this->algo->employee = Employee::find($id);
-
-        if(!$this->algo->employee){
-            return errGetEmployee();
-        }
-        
-        return $this->algo->delete();
+        $algo = new EmployeeAlgo((int)$id);
+        return $algo->delete();
     }
 }

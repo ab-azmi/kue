@@ -12,11 +12,9 @@ use Illuminate\Http\Request;
 
 class EmployeeUserController extends Controller
 {
-    // constructor
-    public function __construct(public $algo = new EmployeeUserAlgo()){
-    }
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -25,20 +23,22 @@ class EmployeeUserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param App\Http\Requests\Employee\EmployeeUser\CreateEmployeeUserRequest
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(CreateEmployeeUserRequest $request)
     {
-        return $this->algo->store($request);
+        $algo = new EmployeeUserAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
     {
         $user = EmployeeUser::find($id);
-
         if (!$user) {
             return errGetUser();
         }
@@ -47,30 +47,22 @@ class EmployeeUserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param App\Http\Requests\Employee\EmployeeUser\UpdateEmployeeUserRequest;
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateEmployeeUserRequest $request, string $id)
+    public function update($id, UpdateEmployeeUserRequest $request)
     {
-        $this->algo->user = EmployeeUser::find($id);
-
-        if (!$this->algo->user) {
-            return errGetUser();
-        }
-
-        return $this->algo->update($request);
+        $algo = new EmployeeUserAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string|int $id
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->user = EmployeeUser::findOrFail($id);
-
-        if (!$this->algo->user) {
-            return errGetUser();
-        }
-
-        return $this->algo->destroy();
+        $algo = new EmployeeUserAlgo((int)$id);
+        return $algo->destroy();
     }
 }

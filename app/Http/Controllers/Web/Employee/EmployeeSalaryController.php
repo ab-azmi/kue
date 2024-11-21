@@ -11,33 +11,34 @@ use Illuminate\Http\Request;
 
 class EmployeeSalaryController extends Controller
 {
-    public function __construct(public $algo = new EmployeeSalaryAlgo())
-    {
-    }
     /**
-     * Display a listing of the resource.
+     * @param Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
-        $salaries = EmployeeSalary::with('employee')->getOrPaginate($request, true);
+        $salaries = EmployeeSalary::with('employee')
+            ->getOrPaginate($request, true);
         return success(EmployeeSalaryParser::briefs($salaries));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param App\Http\Requests\Employee\EmployeeSalaryRequest
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(EmployeeSalaryRequest $request)
     {
-        return $this->algo->create($request);
+        $algo = new EmployeeSalaryAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $salary = EmployeeSalary::with('employee')->find($id);
-
         if (!$salary) {
             return errGetSalary();
         }
@@ -46,24 +47,23 @@ class EmployeeSalaryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param App\Http\Requests\Employee\EmployeeSalaryRequest
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(EmployeeSalaryRequest $request, string $id)
+    public function update($id, EmployeeSalaryRequest $request)
     {
-        return $this->algo->update($request, $id);
+        $algo = new EmployeeSalaryAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->salary = EmployeeSalary::findOrFail($id);
-
-        if (!$this->algo->salary) {
-            return errGetSalary();
-        }
-
-        return $this->algo->delete();
+        $algo = new EmployeeSalaryAlgo((int)$id);
+        return $algo->delete();
     }
 }

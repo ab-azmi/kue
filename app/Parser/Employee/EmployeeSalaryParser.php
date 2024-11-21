@@ -23,9 +23,9 @@ class EmployeeSalaryParser extends BaseParser
             'basic_salary' => $data->basic_salary,
             'tax' => $data->tax,
             'overtime' => $data->overtime,
-            'total_salary' => $data->total_salary,
-            'created_at' => $data->createdAt->format('d/m/Y H:i'),
-            'updated_at' => $data->updatedAt->format('d/m/Y H:i'),
+            'totalSalary' => $data->totalSalary,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'employee' => EmployeeParser::brief($data->employee),
         ];
     }
@@ -41,9 +41,9 @@ class EmployeeSalaryParser extends BaseParser
             'basic_salary' => $data->basic_salary,
             'tax' => $data->tax,
             'overtime' => $data->overtime,
-            'total_salary' => $data->total_salary,
-            'created_at' => $data->createdAt->format('d/m/Y H:i'),
-            'updated_at' => $data->updatedAt->format('d/m/Y H:i'),
+            'totalSalary' => $data->totalSalary,
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
 

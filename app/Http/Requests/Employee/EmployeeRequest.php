@@ -25,7 +25,7 @@ class EmployeeRequest extends FormRequest
             'phone' => ['required', 'string', 'max:15'], 
             'address' => ['nullable', 'string', 'max:255'],
             'bankNumber' => ['nullable', 'string', 'max:255'],
-            'userId' => ['nullable', 'exists:users,id']
+            'userId' => ['nullable', 'exists:employee_users,id']
         ];
     }
 }
