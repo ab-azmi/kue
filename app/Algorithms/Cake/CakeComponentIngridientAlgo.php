@@ -80,7 +80,7 @@ class CakeComponentIngridientAlgo
     /** --- PRIVATE FUNCTIONS --- **/
 
     private function saveIngredient(Request $request){
-        $form = $request->only([
+        $form = $request->safe()->only([
             'name', 'unit', 'price', 'expirationDate', 'quantity', 'supplier'
         ]);
 

@@ -49,3 +49,51 @@ if (!function_exists("errGetCake")) {
         );
     }
 }
+
+if (!function_exists("errCakeDiscountGet")) {
+    function errCakeDiscountGet($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['DISCOUNT_NOT_FOUND']['code'],
+            Error::CAKE['DISCOUNT_NOT_FOUND']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errCakeDiscountCreate")) {
+    function errCakeDiscountCreate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['DISCOUNT_CREATE_FAILED']['code'],
+            Error::CAKE['DISCOUNT_CREATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errCakeDiscountUpdate")) {
+    function errCakeDiscountUpdate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['DISCOUNT_UPDATE_FAILED']['code'],
+            Error::CAKE['DISCOUNT_UPDATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errCakeDiscountDelete")) {
+    function errCakeDiscountDelete($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['DISCOUNT_DELETE_FAILED']['code'],
+            Error::CAKE['DISCOUNT_DELETE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}

@@ -3,53 +3,69 @@
 namespace App\Algorithms\Cake;
 
 use App\Models\Cake\CakeDiscount;
+use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CakeDiscountAlgo
 {
-    public function __construct(public ?CakeDiscount $discount = null) {}
+    public function __construct(public CakeDiscount|int|null $discount = null)
+    {
+        if (is_int($discount)) {
+            $this->discount = CakeDiscount::find($discount);
+            if (!$this->discount) {
+                return errCakeDiscountGet();
+            }
+        }
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $fromData = date('Y-m-d H:i:s', strtotime($request->fromDate));
-                $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
-
-                $data = array_merge($request->all(), ['fromDate' => $fromData, 'toDate' => $toDate]);
-
-                $this->discount = CakeDiscount::create($data);
+                $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Discount : ' . $this->discount->id);
             });
 
-            return success($this->discount);
+            return success(CakeDiscountParser::brief($this->discount));
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
                 $this->discount->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
-                $this->discount->update($request->all());
+                $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Discount : ' . $this->discount->id);
             });
 
-            return success($this->discount);
+            return success(CakeDiscountParser::brief($this->discount));
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function delete()
     {
         try {
@@ -62,9 +78,54 @@ class CakeDiscountAlgo
                     ->saveActivity('Delete Discount : ' . $this->discount->id);
             });
 
-            return success($this->discount);
+            return success(CakeDiscountParser::brief($this->discount));
         } catch (\Exception $e) {
             exception($e);
         }
+    }
+
+    /** --- PRIVATE FUNCTIONS --- **/
+
+    private function getDates(Request $request)
+    {
+        $fromDate = date('Y-m-d H:i:s', strtotime($request->fromDate));
+        $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
+
+        if ($fromDate > $toDate) {
+            return errCreateCake('From date must be less than to date');
+        }
+
+        return [
+            'from' => $fromDate,
+            'to' => $toDate,
+        ];
+    }
+
+    private function saveDiscount(Request $request)
+    {
+        $dates = $this->getDates($request);
+        
+        $form = $request->safe()->only([
+            'name',
+            'description',
+            'value',
+            'cakeId',
+        ]);
+
+        $form['fromDate'] = $dates['from'];
+        $form['toDate'] = $dates['to'];
+
+        if($this->discount) {
+            $updated = $this->discount->update($form);
+            if (!$updated) {
+                return errUpdateCake();
+            }
+        } else {
+            $this->discount = CakeDiscount::create($form);
+            if (!$this->discount) {
+                return errCreateCake();
+            }
+        }
+        
     }
 }

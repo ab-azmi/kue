@@ -137,6 +137,23 @@ class Error extends BaseCodeName
             'code' => 500,
             'msg' => 'Failed to Calculate Total Cost of Ingridients'
         ],
+
+        'DISCOUNT_NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Discount Not Found'
+        ],
+        'DISCOUNT_CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Create Failed'
+        ],
+        'DISCOUNT_UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Update Failed'
+        ],
+        'DISCOUNT_DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Discount Delete Failed'
+        ],
     ];
     
     // TODO : Eror status setting & Cake
