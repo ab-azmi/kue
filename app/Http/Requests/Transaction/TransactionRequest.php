@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             'quantity' => 'required|numeric',
-            'tax' => 'nullable|string',
+            'tax' => 'nullable|numeric',
             'orderPrice' => 'nullable|numeric',
             'totalPrice' => 'nullable|numeric',
             'totalDiscount' => 'nullable|numeric',

@@ -85,6 +85,18 @@ class Error extends BaseCodeName
             'code' => 500,
             'msg' => 'Failed to create Order!'
         ],
+        'FAILED_CALCULATE_TOTAL_PRICE' => [
+            'code' => 500,
+            'msg' => 'Failed to calculate total price!'
+        ],
+        'FAILED_CALCULATE_TOTAL_DISCOUNT' => [
+            'code' => 500,
+            'msg' => 'Failed to calculate total discount!'
+        ],
+        'FAILED_CALCULATE_TAX' => [
+            'code' => 500,
+            'msg' => 'Failed to calculate tax!'
+        ],
     ];
 
     const CAKE = [
@@ -155,7 +167,7 @@ class Error extends BaseCodeName
             'msg' => 'Discount Delete Failed'
         ],
     ];
-    
+
     // TODO : Eror status setting & Cake
     const SETTING = [
         'UPDATE_FAILED' => [

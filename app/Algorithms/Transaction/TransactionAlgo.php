@@ -13,8 +13,20 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionAlgo
 {
-    public function __construct(public ?Transaction $transaction = null) {}
+    public function __construct(public Transaction|int|null $transaction = null)
+    {
+        if (is_int($transaction)) {
+            $this->transaction = Transaction::find($transaction);
+            if (!$this->transaction) {
+                errGetTransaction();
+            }
+        }
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         try {
@@ -24,35 +36,27 @@ class TransactionAlgo
                 $request->merge([
                     'code' => PurchaseNumber::generate(),
                 ]);
-
-                $this->transaction = Transaction::create($request->only([
-                    'quantity',
-                    'code',
-                    'employeeId',
-                ]));
+                
+                $this->saveTransaction($request);
 
                 $this->createOrders($orders);
-                $this->transaction->refresh();
             });
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            return errCreateTransaction($e->getMessage());
+            exception($e);
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->transaction->update($request->only([
-                    'quantity',
-                    'orderPrice',
-                    'totalPrice',
-                    'totalDiscount',
-                    'tax',
-                    'employeeId',
-                ]));
+                $this->saveTransaction($request);
 
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
@@ -62,24 +66,55 @@ class TransactionAlgo
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            return errUpdateTransaction($e->getMessage());
+            exception($e);
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete()
     {
         try {
             DB::transaction(function () {
-                $this->transaction->delete();
+                $deleted = $this->transaction->delete();
+                if (!$deleted) {
+                    errDeleteTransaction();
+                }
             });
 
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
-            return errDeleteTransaction($e->getMessage());
+            exception($e);
         }
     }
 
     /** --- PRIVATE FUNCTIONS --- */
+
+    private function saveTransaction($request)
+    {
+        $form = $request->only([
+            'quantity',
+            'orderPrice',
+            'totalPrice',
+            'totalDiscount',
+            'tax',
+            'employeeId',
+            'code'
+        ]);
+
+        if($this->transaction) {
+            $updated = $this->transaction->update($form);
+            if(!$updated) {
+                errUpdateTransaction();
+            }
+        } else {
+            $this->transaction = Transaction::create($form);
+            if(!$this->transaction) {
+                errCreateTransaction();
+            }
+        }
+    }
 
     private function processOrders(Request $request): array
     {
@@ -89,6 +124,15 @@ class TransactionAlgo
             $this->syncCakeStock($orders);
 
             extract($this->setTotalPrices($orders));
+            if(!$totalPrice) {
+                errTransactionTotalPrice();
+            }
+            if(!$totalDiscount){
+                errTransactionTotalDiscount();
+            }
+            if(!$tax) {
+                errTransactionTax();
+            }
 
             $request->merge([
                 'orderPrice' => $orderPrice,
@@ -108,10 +152,10 @@ class TransactionAlgo
         foreach ($orders as $order) {
             $orderModel = $this->transaction->orders()->create($order);
 
-            if(!$orderModel) {
+            if (!$orderModel) {
                 return errCreateOrder();
             }
-            
+
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
                 ->saveActivity('Create new Order : ' . $orderModel->id . ' in Transaction : ' . $this->transaction->id);
         }
@@ -123,7 +167,7 @@ class TransactionAlgo
         $this->createOrders($request);
     }
 
-    private function implementCakesDiscountToOrders($orders) : array
+    private function implementCakesDiscountToOrders($orders): array
     {
         foreach ($orders as $key => $order) {
             $cake = Cake::with('variant')->find($order['cakeId']);
@@ -149,27 +193,27 @@ class TransactionAlgo
             if ($cake->stock < $order['quantity']) {
                 return errOutOfStockOrder($cake->name);
             }
-    
+
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);
         }
     }
 
-    private function setTotalPrices($orders) : array
+    private function setTotalPrices($orders): array
     {
         $tax = Setting::where('key', 'tax')->first()->value;
         $totalPrice = 0;
         $sumOrderPrice = 0;
         $totalDiscount = 0;
-
+  
         foreach ($orders as $order) {
             $sumOrderPrice += $order['price'] * $order['quantity'];
             $totalDiscount += $order['discount'];
         }
 
         $totalPrice = $sumOrderPrice - $totalDiscount;
-        $tax = $totalPrice * (int)$tax;
-        $totalPrice += $tax;
-
+        $tax = $totalPrice * (float)$tax;
+        $totalPrice += (float)$tax;
+        
         return [
             'orderPrice' => $sumOrderPrice,
             'totalPrice' => $totalPrice,

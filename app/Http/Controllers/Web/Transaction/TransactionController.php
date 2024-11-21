@@ -11,12 +11,9 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function __construct(public $algo = new TransactionAlgo())
-    {
-        
-    }
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -24,61 +21,56 @@ class TransactionController extends Controller
             'orders',
             'employee'
         ])->orderBy('createdAt')->getOrPaginate($request, true);
-        
+
         return success(TransactionParser::briefs($transactions));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param App\Http\Requests\Transaction\TransactionRequest;
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(TransactionRequest $request)
     {
-        return $this->algo->store($request);
+        $algo = new TransactionAlgo();
+        return $algo->store($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $transaction = Transaction::with([
             'orders',
             'orders.cake',
             'employee'
         ])->find($id);
-
-        if(!$transaction) {
-            return errGetTransaction();
+        if (!$transaction) {
+            errGetTransaction();
         }
-        
+
         return success(TransactionParser::first($transaction));
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param App\Http\Requests\Transaction\TransactionRequest;
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(TransactionRequest $request, string $id)
+    public function update($id, TransactionRequest $request)
     {
-        $this->algo->transaction = Transaction::find($id);
-        
-        if(!$this->algo->transaction) {
-            return errGetTransaction();
-        }
-
-        return $this->algo->update($request);
+        $algo = new TransactionAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->transaction = Transaction::findOrFail($id);
-
-        if(!$this->algo->transaction) {
-            return errGetTransaction();
-        }
-
-        return $this->algo->delete();
+        $algo = new TransactionAlgo((int)$id);
+        return $algo->delete();
     }
 }
