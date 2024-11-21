@@ -6,11 +6,10 @@ use App\Http\Controllers\Web\Transaction\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('transactions')
-    ->controller(TransactionController::class)
     ->group(function () {
-        Route::get('', 'get');
-        Route::post('', 'create');
-        Route::get('{id}', 'detail');
-        Route::put('{id}', 'update');
-        Route::delete('{id}', 'delete');
+        Route::get('', [TransactionController::class, 'get']);
+        Route::post('', [TransactionController::class, 'create']);
+        Route::get('{id}', [TransactionController::class, 'detail']);
+        Route::put('{id}', [TransactionController::class, 'update']);
+        Route::delete('{id}', [TransactionController::class, 'delete']);
     });

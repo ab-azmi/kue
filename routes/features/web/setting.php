@@ -10,19 +10,16 @@ Route::prefix('settings')
     ->group(function () {
 
         Route::prefix('fixed_costs')
-            ->controller(SettingFixedCostController::class)
             ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
+                Route::get('', [SettingFixedCostController::class, 'get']);
+                Route::post('', [SettingFixedCostController::class, 'create']);
+                Route::get('{id}', [SettingFixedCostController::class, 'detail']);
+                Route::put('{id}', [SettingFixedCostController::class, 'update']);
+                Route::delete('{id}', [SettingFixedCostController::class, 'delete']);
             });
 
-        Route::controller(SettingController::class)
-            ->group(function () {
-                Route::get('', 'get');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-            });
+
+        Route::get('', [SettingController::class, 'get']);
+        Route::get('{id}', [SettingController::class, 'detail']);
+        Route::put('{id}', [SettingController::class, 'update']);
     });

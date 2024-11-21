@@ -11,38 +11,33 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('cakes')
     ->group(function () {
         Route::prefix('variants')
-            ->controller(CakeVariantController::class)
             ->group(function () {
-                Route::get('', 'get');
+                Route::get('', [CakeVariantController::class, 'get']);
             });
 
         Route::prefix('discounts')
-            ->controller(CakeDiscountController::class)
             ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
+                Route::get('', [CakeDiscountController::class, 'get']);
+                Route::post('', [CakeDiscountController::class, 'create']);
+                Route::get('{id}', [CakeDiscountController::class, 'detail']);
+                Route::put('{id}', [CakeDiscountController::class, 'update']);
+                Route::delete('{id}', [CakeDiscountController::class, 'delete']);
             });
 
         Route::prefix('ingridients')
-            ->controller(CakeComponentIngridientController::class)
             ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
+                Route::get('', [CakeComponentIngridientController::class, 'get']);
+                Route::post('', [CakeComponentIngridientController::class, 'create']);
+                Route::get('{id}', [CakeComponentIngridientController::class, 'detail']);
+                Route::put('{id}', [CakeComponentIngridientController::class, 'update']);
+                Route::delete('{id}', [CakeComponentIngridientController::class, 'delete']);
             });
 
-        Route::controller(CakeController::class)
-            ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::post('cogs', 'COGS');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
-            });
+
+        Route::get('', [CakeController::class, 'get']);
+        Route::post('', [CakeController::class, 'create']);
+        Route::post('cogs', [CakeController::class, 'COGS']);
+        Route::get('{id}', [CakeController::class, 'detail']);
+        Route::put('{id}', [CakeController::class, 'update']);
+        Route::delete('{id}', [CakeController::class, 'delete']);
     });

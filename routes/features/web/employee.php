@@ -9,31 +9,27 @@ Route::prefix('employees')
     ->group(function () {
 
         Route::prefix('users')
-            ->controller(EmployeeUserController::class)
             ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
+                Route::get('', [EmployeeUserController::class, 'get']);
+                Route::post('', [EmployeeUserController::class, 'create']);
+                Route::get('{id}', [EmployeeUserController::class, 'detail']);
+                Route::put('{id}', [EmployeeUserController::class, 'update']);
+                Route::delete('{id}', [EmployeeUserController::class, 'delete']);
             });
 
         Route::prefix('salaries')
-            ->controller(EmployeeSalaryController::class)
             ->group(function () {
-                Route::get('', 'get');
-                Route::post('', 'create');
-                Route::get('{id}', 'detail');
-                Route::put('{id}', 'update');
-                Route::delete('{id}', 'delete');
+                Route::get('', [EmployeeSalaryController::class, 'get']);
+                Route::post('', [EmployeeSalaryController::class, 'create']);
+                Route::get('{id}', [EmployeeSalaryController::class, 'detail']);
+                Route::put('{id}', [EmployeeSalaryController::class, 'update']);
+                Route::delete('{id}', [EmployeeSalaryController::class, 'delete']);
             });
 
-        Route::controller(EmployeeController::class)
-            ->group(function () {
-                Route::get('/', 'get');
-                Route::post('/', 'create');
-                Route::get('/{id}', 'detail');
-                Route::put('/{id}', 'update');
-                Route::delete('/{id}', 'delete');
-            });
+
+        Route::get('/', [EmployeeController::class, 'get']);
+        Route::post('/', [EmployeeController::class, 'create']);
+        Route::get('/{id}', [EmployeeController::class, 'detail']);
+        Route::put('/{id}', [EmployeeController::class, 'update']);
+        Route::delete('/{id}', [EmployeeController::class, 'delete']);
     });
