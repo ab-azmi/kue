@@ -92,7 +92,7 @@ class CakeDiscountAlgo
         $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
 
         if ($fromDate > $toDate) {
-            errCreateCake('From date must be less than to date');
+            errCakeCreate('From date must be less than to date');
         }
 
         return [
@@ -118,12 +118,12 @@ class CakeDiscountAlgo
         if($this->discount) {
             $updated = $this->discount->update($form);
             if (!$updated) {
-                errUpdateCake();
+                errCakeUpdate();
             }
         } else {
             $this->discount = CakeDiscount::create($form);
             if (!$this->discount) {
-                errCreateCake();
+                errCakeCreate();
             }
         }
         
