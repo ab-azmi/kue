@@ -9,13 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeSalaryAlgo
 {
-    public function __construct(public ?EmployeeSalary $salary = null) {}
+    public function __construct(public EmployeeSalary|int|null $salary = null)
+    {
+        if (is_int($salary)) {
+            $this->salary = EmployeeSalary::find($salary);
+            if (!$this->salary) {
+                return errGetSalary();
+            }
+        }
+    }
 
     public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->salary = EmployeeSalary::create($request->all());
+                $this->saveSalary($request);
 
                 $this->salary->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new EmployeeSalary : ' . $this->salary->id);
@@ -23,18 +31,17 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            return errCreateSalary($e->getMessage());
+            exception($e);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try {
-            DB::transaction(function () use ($request, $id) {
+            DB::transaction(function () use ($request) {
                 $this->salary->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
-                EmployeeSalary::where('id', $id)->update($request->all());
-                $this->salary = EmployeeSalary::findOrFail($id);
+                $this->saveSalary($request);
 
                 $this->salary->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update EmployeeSalary : ' . $this->salary->id);
@@ -42,7 +49,7 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            return errUpdateSalary($e->getMessage());
+            exception($e);
         }
     }
 
@@ -52,7 +59,10 @@ class EmployeeSalaryAlgo
             DB::transaction(function () {
                 $this->salary->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->salary->delete();
+                $deleted = $this->salary->delete();
+                if (!$deleted) {
+                    return errDeleteSalary();
+                }
 
                 $this->salary->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete EmployeeSalary : ' . $this->salary->id);
@@ -60,7 +70,29 @@ class EmployeeSalaryAlgo
 
             return success($this->salary);
         } catch (\Exception $e) {
-            return errDeleteSalary($e->getMessage());
+            exception($e);
+        }
+    }
+
+    /** --- PRIVATE FUNCTIONS --- **/
+
+    private function saveSalary($request)
+    {
+        $form = $request->safe()->only([
+            'totalSalary',
+            'employeeId',
+        ]);
+
+        if($this->salary) {
+            $updated = $this->salary->update($form);
+            if(!$updated) {
+                return errUpdateSalary();
+            }
+        } else {
+            $this->salary = EmployeeSalary::create($form);
+            if(!$this->salary) {
+                return errCreateSalary();
+            }
         }
     }
 }
