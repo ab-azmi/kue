@@ -35,7 +35,7 @@ class TransactionAlgo
                 $orders = $this->processOrders($request);
 
                 $request->merge([
-                    'code' => PurchaseNumber::generate(),
+                    'number' => PurchaseNumber::generate(),
                 ]);
                 
                 $this->saveTransaction($request);
@@ -101,7 +101,7 @@ class TransactionAlgo
             'totalDiscount',
             'tax',
             'employeeId',
-            'code'
+            'number'
         ]);
 
         if($this->transaction) {
@@ -154,7 +154,7 @@ class TransactionAlgo
             $orderModel = $this->transaction->orders()->create($order);
 
             if (!$orderModel) {
-                errTransactionOrderCreate();
+                errCreateOrder();
             }
 
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
@@ -192,7 +192,7 @@ class TransactionAlgo
             $cake = $cakes[$order['cakeId']];
 
             if ($cake->stock < $order['quantity']) {
-                errTransactionOrderStock($cake->name);
+                errOutOfStockOrder($cake->name);
             }
 
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);
