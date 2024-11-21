@@ -11,12 +11,9 @@ use Illuminate\Http\Request;
 
 class SettingFixedCostController extends Controller
 {
-    public function __construct(public $algo = new SettingFixedCostAlgo())
-    {
-        
-    }
     /**
-     * Display a listing of the resource.
+     * @param Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -25,20 +22,22 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param App\Http\Requests\Setting\SettingFixedCostRequest
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(SettingFixedCostRequest $request)
     {
-        return $this->algo->create($request);
+        $algo = new SettingFixedCostAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $fixedcost = SettingFixedCost::find($id);
-
         if (!$fixedcost) {
             return errGetFixedCost();
         }
@@ -47,30 +46,23 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param App\Http\Requests\Setting\SettingFixedCostRequest
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(SettingFixedCostRequest $request, string $id)
+    public function update($id, SettingFixedCostRequest $request)
     {
-        $this->algo->fixedCost = SettingFixedCost::find($id);
-
-        if (!$this->algo->fixedCost) {
-            return errGetFixedCost();
-        }
-
-        return $this->algo->update($request);
+        $algo = new SettingFixedCostAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->fixedCost = SettingFixedCost::find($id);
-
-        if (!$this->algo->fixedCost) {
-            return errGetFixedCost();
-        }
-
-        return $this->algo->delete();
+        $algo = new SettingFixedCostAlgo((int)$id);
+        return $algo->delete();
     }
 }
