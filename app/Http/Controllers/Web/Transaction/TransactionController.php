@@ -47,7 +47,7 @@ class TransactionController extends Controller
             'employee'
         ])->find($id);
         if (!$transaction) {
-            errGetTransaction();
+            errTransactionGet();
         }
 
         return success(TransactionParser::first($transaction));

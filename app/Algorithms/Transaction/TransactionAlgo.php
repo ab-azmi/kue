@@ -19,7 +19,7 @@ class TransactionAlgo
         if (is_int($transaction)) {
             $this->transaction = Transaction::find($transaction);
             if (!$this->transaction) {
-                errGetTransaction();
+                errTransactionGet();
             }
         }
     }
@@ -80,7 +80,7 @@ class TransactionAlgo
             DB::transaction(function () {
                 $deleted = $this->transaction->delete();
                 if (!$deleted) {
-                    errDeleteTransaction();
+                    errTransactionDelete();
                 }
             });
 
@@ -107,12 +107,12 @@ class TransactionAlgo
         if($this->transaction) {
             $updated = $this->transaction->update($form);
             if(!$updated) {
-                errUpdateTransaction();
+                errTransactionUpdate();
             }
         } else {
             $this->transaction = Transaction::create($form);
             if(!$this->transaction) {
-                errCreateTransaction();
+                errTransactionCreate();
             }
         }
     }
@@ -154,7 +154,7 @@ class TransactionAlgo
             $orderModel = $this->transaction->orders()->create($order);
 
             if (!$orderModel) {
-                errCreateOrder();
+                errTransactionOrderCreate();
             }
 
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
@@ -192,7 +192,7 @@ class TransactionAlgo
             $cake = $cakes[$order['cakeId']];
 
             if ($cake->stock < $order['quantity']) {
-                errOutOfStockOrder($cake->name);
+                errTransactionOrderStock($cake->name);
             }
 
             Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);

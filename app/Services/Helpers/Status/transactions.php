@@ -2,8 +2,8 @@
 
 use App\Services\Constant\Error;
 
-if (!function_exists("errCreateTransaction")) {
-    function errCreateTransaction($internalMsg = "", $status = null)
+if (!function_exists("errTransactionCreate")) {
+    function errTransactionCreate($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['CREATE_FAILED']['code'],
@@ -14,8 +14,8 @@ if (!function_exists("errCreateTransaction")) {
     }
 }
 
-if (!function_exists("errUpdateTransaction")) {
-    function errUpdateTransaction($internalMsg = "", $status = null)
+if (!function_exists("errTransactionUpdate")) {
+    function errTransactionUpdate($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['UPDATE_FAILED']['code'],
@@ -26,8 +26,8 @@ if (!function_exists("errUpdateTransaction")) {
     }
 }
 
-if (!function_exists("errDeleteTransaction")) {
-    function errDeleteTransaction($internalMsg = "", $status = null)
+if (!function_exists("errTransactionDelete")) {
+    function errTransactionDelete($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['DELETE_FAILED']['code'],
@@ -38,8 +38,8 @@ if (!function_exists("errDeleteTransaction")) {
     }
 }
 
-if (!function_exists("errGetTransaction")) {
-    function errGetTransaction($internalMsg = "", $status = null)
+if (!function_exists("errTransactionGet")) {
+    function errTransactionGet($internalMsg = "", $status = null)
     {
         error(
             Error::TRANSACTION['NOT_FOUND']['code'],
@@ -80,6 +80,32 @@ if (!function_exists("errTransactionTax")) {
         error(
             Error::TRANSACTION['FAILED_CALCULATE_TAX']['code'],
             Error::TRANSACTION['FAILED_CALCULATE_TAX']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+/** --- TRANSACTION ORDER --- **/
+
+if (!function_exists("errTransactionOrderStock")) {
+    function errTransactionOrderStock($internalMsg = "", $status = null)
+    {
+        error(
+            Error::TRANSACTION['OUT_OF_STOCK_ORDER']['code'],
+            Error::TRANSACTION['OUT_OF_STOCK_ORDER']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errTransactionOrderCreate")) {
+    function errTransactionOrderCreate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::TRANSACTION['ORDER_CREATE_FAILED']['code'],
+            Error::TRANSACTION['ORDER_CREATE_FAILED']['msg'],
             $internalMsg,
             $status
         );
