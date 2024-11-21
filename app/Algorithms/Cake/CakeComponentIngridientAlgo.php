@@ -81,7 +81,7 @@ class CakeComponentIngridientAlgo
 
     private function saveIngredient(Request $request){
         $form = $request->safe()->only([
-            'name', 'unit', 'price', 'expirationDate', 'quantity', 'supplier'
+            'name', 'unitId', 'price', 'expirationDate', 'quantity', 'supplier'
         ]);
 
         if($this->ingridient){

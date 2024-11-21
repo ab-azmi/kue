@@ -19,7 +19,7 @@ class CakeComponentIngridientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unit' => $data->unit,
+            'unitId' => $data->unitId,
             'price' => $data->price,
             'expirationDate' => $data->expirationDate,
             'quantity' => $data->quantity,
@@ -38,7 +38,7 @@ class CakeComponentIngridientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unit' => $data->unit,
+            'unitId' => $data->unitId,
             'price' => $data->price,
             'expirationDate' => $data->expirationDate,
             'quantity' => $data->quantity,

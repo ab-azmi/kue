@@ -28,7 +28,7 @@ class CakeIngridientSeeder extends Seeder
         return array(
             [
                 'name' => 'Flour',
-                'unit' => CakeIngridientUnit::KILOGRAM_ID,
+                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
                 'price' => '10000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '100',
@@ -36,7 +36,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Sugar',
-                'unit' => CakeIngridientUnit::KILOGRAM_ID,
+                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
                 'price' => '15000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '70',
@@ -44,7 +44,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Egg',
-                'unit' => CakeIngridientUnit::PIECE_ID,
+                'unitId' => CakeIngridientUnit::PIECE_ID,
                 'price' => '2000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '50',
@@ -52,7 +52,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Milk',
-                'unit' => CakeIngridientUnit::LITER_ID,
+                'unitId' => CakeIngridientUnit::LITER_ID,
                 'price' => '20000',
                 'expirationDate' => '2025-11-13',
                 'quantity' => '30',
