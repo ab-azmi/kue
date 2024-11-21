@@ -41,9 +41,7 @@
 
             "app/Services/Helpers/Status/cakes.php",
             "app/Services/Helpers/Status/employees.php",
-
-            "app/Services/Helpers/Status/Setting/SettingStatus.php",
-            "app/Services/Helpers/Status/Setting/SettingFixedCostStatus.php"
+            "app/Services/Helpers/Status/settings.php"
         ]
     },
     "autoload-dev": {

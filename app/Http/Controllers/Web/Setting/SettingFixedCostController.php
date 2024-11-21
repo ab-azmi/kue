@@ -39,7 +39,7 @@ class SettingFixedCostController extends Controller
     {
         $fixedCost = SettingFixedCost::find($id);
         if (!$fixedCost) {
-            errGetFixedCost();
+            errSettingFixedCostGet();
         }
 
         return success(SettingFixedCostParser::first($fixedCost));

@@ -28,7 +28,7 @@ class SettingController extends Controller
         $setting = Setting::find($id);
 
         if (!$setting) {
-            errGetSetting();
+            errSettingGet();
         }
 
         return success($setting);
