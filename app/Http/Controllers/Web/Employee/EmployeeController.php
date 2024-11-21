@@ -38,7 +38,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::with(['user', 'salary'])->find($id);
         if (!$employee) {
-            errGetEmployee();
+            errEmployeeGet();
         }
 
         return success(EmployeeParser::first($employee));

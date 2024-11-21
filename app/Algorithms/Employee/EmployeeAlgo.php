@@ -20,7 +20,7 @@ class EmployeeAlgo
                 'salary'
             ])->find($employee);
             if (!$this->employee) {
-                errGetEmployee();
+                errEmployeeGet();
             }
         }
     }
@@ -107,12 +107,12 @@ class EmployeeAlgo
         if ($this->employee) {
             $updated = $this->employee->update($form);
             if (!$updated) {
-                errUpdateEmployee();
+                errEmployeeUpdate();
             }
         } else {
             $this->employee = Employee::create($form);
             if (!$this->employee) {
-                errCreateEmployee();
+                errEmployeeCreate();
             }
         }
     }
@@ -129,12 +129,12 @@ class EmployeeAlgo
         if ($this->employee) {
             $updated = $this->employee->user->update($form);
             if (!$updated) {
-                errUpdateUser();
+                errEmployeeUserUpdate();
             }
         } else {
             $user = EmployeeUser::create($form);
             if (!$user) {
-                errCreateUser();
+                errEmployeeUserCreate();
             }
 
             $request['userId'] = $user->id;
@@ -151,10 +151,12 @@ class EmployeeAlgo
 
         if ($this->employee) {
             $form['employeeId'] = $this->employee->id;
+
             $this->employee->salary()->delete();
+            
             $updated = $this->employee->salary()->create($form);
             if (!$updated) {
-                errUpdateSalary();
+                errEmployeeSalaryUpdate();
             }
         }
     }
@@ -163,12 +165,12 @@ class EmployeeAlgo
     {
         $deleteEmployee = $this->employee->delete();
         if (!$deleteEmployee) {
-            errDeleteEmployee();
+            errEmployeeDelete();
         }
         
         $deleteSalary = $this->employee->salary->delete();
         if (!$deleteSalary) {
-            errDeleteSalary();
+            errEmployeeSalaryDelete();
         }
     }
 }
