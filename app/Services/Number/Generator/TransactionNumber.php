@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Number\Generator\Transaction;
+namespace App\Services\Number\Generator;
 
 use App\Models\Transaction\Transaction;
 use App\Services\Number\BaseNumber;
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseNumber extends BaseNumber
+class TransactionNumber extends BaseNumber
 {
     /**
      * @var string

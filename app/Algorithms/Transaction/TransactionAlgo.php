@@ -8,7 +8,7 @@ use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
 use App\Services\Constant\Setting\SettingConstant;
-use App\Services\Number\Generator\Transaction\PurchaseNumber;
+use App\Services\Number\Generator\TransactionNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +35,7 @@ class TransactionAlgo
                 $orders = $this->processOrders($request);
 
                 $request->merge([
-                    'number' => PurchaseNumber::generate(),
+                    'number' => TransactionNumber::generate(),
                 ]);
                 
                 $this->saveTransaction($request);
