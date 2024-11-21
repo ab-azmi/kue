@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Setting;
 
+use App\Rules\ValidFrequency;
 use GlobalXtreme\Validation\Support\FormRequest;
 
 class SettingFixedCostRequest extends FormRequest
@@ -25,7 +26,7 @@ class SettingFixedCostRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'amount' => 'required|numeric',
-            'frequency' => 'required|number',
+            'frequency' => ['required', 'numeric', new ValidFrequency()],
         ];
     }
 }
