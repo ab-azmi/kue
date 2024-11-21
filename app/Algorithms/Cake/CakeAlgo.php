@@ -58,8 +58,6 @@ class CakeAlgo
 
                 $this->saveCake($request);
 
-                $this->syncIngridients($request->ingridients);
-
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : ' . $this->cake->id);
             });
@@ -82,7 +80,7 @@ class CakeAlgo
                 $this->cake->ingridients()->detach();
 
                 $deleted = $this->cake->delete();
-                if(!$deleted){
+                if (!$deleted) {
                     errDeleteCake();
                 }
 
@@ -103,7 +101,6 @@ class CakeAlgo
     public function COGS(Request $request)
     {
         try {
-            // Assunming the unit are the same as in ingridient table
             $margin = $this->getMargin($request);
 
             $salarySum = $this->getSalarySum();
@@ -117,7 +114,7 @@ class CakeAlgo
             $sellingPrice = $this->calculateSellingPrice($sums, $margin) / $request->volume;
 
             $cogs = $sums / $request->volume;
-            if($cogs <= 0) {
+            if ($cogs <= 0) {
                 errCalculatingCOGS();
             }
 
@@ -135,7 +132,7 @@ class CakeAlgo
 
     private function saveCake(Request $request)
     {
-        $form = $request->only([
+        $form = $request->safe()->only([
             'name',
             'stock',
             'cakeVariantId',
@@ -244,31 +241,28 @@ class CakeAlgo
 
     private function calculateIngridientsCost($_ingridients, int $volume): int
     {
-        try {
-            $totalIngridientCost = 0;
 
-            $ingridientIds = array_unique(array_column($_ingridients, 'id'));
+        $totalIngridientCost = 0;
 
-            $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
-            if (count($ingridients) !== count($ingridientIds)) {
-                errCalculatingIngridientCost();
-            }
+        $ingridientIds = array_unique(array_column($_ingridients, 'id'));
 
-            foreach ($_ingridients as $ingridient) {
-                $pricePerUnit = $ingridients[$ingridient['id']]->price;
-
-                $quantity = $ingridient['quantity'];
-
-                $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
-            }
-
-            if ($totalIngridientCost <= 0) {
-                errCalculatingIngridientCost();
-            }
-
-            return $totalIngridientCost;
-        } catch (\Exception $e) {
-            exception($e);
+        $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
+        if (count($ingridients) !== count($ingridientIds)) {
+            errCalculatingIngridientCost();
         }
+
+        foreach ($_ingridients as $ingridient) {
+            $pricePerUnit = $ingridients[$ingridient['id']]->price;
+
+            $quantity = $ingridient['quantity'];
+
+            $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
+        }
+
+        if ($totalIngridientCost <= 0) {
+            errCalculatingIngridientCost();
+        }
+
+        return $totalIngridientCost;
     }
 }

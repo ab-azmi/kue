@@ -38,7 +38,7 @@ class CakeController extends Controller
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $cake = Cake::with([
             'variant',
@@ -57,7 +57,7 @@ class CakeController extends Controller
      * @param CakeRequest $request
      * @param string $id
      */
-    public function update(CakeRequest $request, string $id)
+    public function update($id, CakeRequest $request)
     {
         $algo = new CakeAlgo((int)$id);
         return $algo->update($request);
@@ -67,7 +67,7 @@ class CakeController extends Controller
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
         $algo = new CakeAlgo((int)$id);
         return $algo->delete();

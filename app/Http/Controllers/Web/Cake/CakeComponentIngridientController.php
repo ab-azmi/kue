@@ -10,11 +10,9 @@ use Illuminate\Http\Request;
 
 class CakeComponentIngridientController extends Controller
 {
-    public function __construct(public $algo = new CakeComponentIngridientAlgo())
-    {
-    }
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
@@ -25,37 +23,43 @@ class CakeComponentIngridientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param CakeComponentIngridientRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create(CakeComponentIngridientRequest $request)
     {
-        return $this->algo->store($request);
+        $algo = new CakeComponentIngridientAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detail(string $id)
+    public function detail($id)
     {
         $ingridient = CakeComponentIngridient::findOrFail($id);
         return success($ingridient);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string|int $id
+     * @param CakeComponentIngridientRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CakeComponentIngridientRequest $request, string $id)
+    public function update($id, CakeComponentIngridientRequest $request)
     {
-        $this->algo->ingridient = CakeComponentIngridient::findOrFail($id);
-        return $this->algo->update($request);
+        $algo = new CakeComponentIngridientAlgo((int)$id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string|int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(string $id)
+    public function delete($id)
     {
-        $this->algo->ingridient = CakeComponentIngridient::findOrFail($id);
-        return $this->algo->delete();
+        $algo = new CakeComponentIngridientAlgo((int)$id);
+        return $algo->delete();
     }
 }

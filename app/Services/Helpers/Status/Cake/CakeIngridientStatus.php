@@ -14,6 +14,42 @@ if (!function_exists("errIngredientNotFound")) {
     }
 }
 
+if (!function_exists("errIngredientUpdate")) {
+    function errIngredientUpdate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errIngredientCreate")) {
+    function errIngredientCreate($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['INGRIDIENT_CREATE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_CREATE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+if (!function_exists("errIngredientDelete")) {
+    function errIngredientDelete($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['INGRIDIENT_DELETE_FAILED']['code'],
+            Error::CAKE['INGRIDIENT_DELETE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
 if (!function_exists("errSyncIngridients")) {
     function errSyncIngridients($internalMsg = "", $status = null)
     {

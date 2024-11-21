@@ -109,6 +109,18 @@ class Error extends BaseCodeName
             'code' => 404,
             'msg' => 'Ingridient Not Found'
         ],
+        'INGRIDIENT_CREATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Ingredient Create Failed'
+        ],
+        'INGRIDIENT_UPDATE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Ingredient Update Failed'
+        ],
+        'INGRIDIENT_DELETE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Ingredient Delete Failed'
+        ],
         'SYNC_INGRIDIENTS_FAILED' => [
             'code' => 500,
             'msg' => 'Failed to Sync Ingridients to Cake'
