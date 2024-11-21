@@ -31,8 +31,7 @@ class CakeSeeder extends Seeder
             // Attach random ingridients
             foreach (CakeComponentIngridient::all()->random(3) as $ingridient) {
                 $cake->ingridients()->attach($ingridient->id, [
-                    'quantity' => rand(1, 5),
-                    'unit' => $ingridient->unit,
+                    'quantity' => rand(1, 5)
                 ]);
             }
         }

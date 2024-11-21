@@ -13,29 +13,27 @@ use Illuminate\Support\Facades\DB;
 
 class CakeAlgo
 {
-    public function __construct(public ?Cake $cake = null) {}
+    public function __construct(public Cake|int|null $cake = null)
+    {
+        if (is_int($cake)) {
+            $this->cake = Cake::find($cake);
+            if (!$this->cake) {
+                return errGetCake();
+            }
+        }
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
-                $data = $request->only([
-                    'name',
-                    'cakeVariantId',
-                    'profitMargin',
-                    'COGS',
-                    'sellingPrice',
-                    'images',
-                ]);
+                $this->saveCake($request);
 
-                $this->cake = Cake::create($data);
-
-                $this->attachIngridients($request->ingridients);
-
-                $this->cake->load([
-                    'variant',
-                    'ingridients',
-                ]);
+                $this->cake->load('variant');
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : ' . $this->cake->id);
@@ -43,10 +41,14 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            return errCreateCake($e->getMessage());
+            exception($e);
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
 
@@ -54,16 +56,9 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
-                $this->detachIngridients();
-                $this->cake->update($request->only([
-                    'name',
-                    'cakeVariantId',
-                    'profitMargin',
-                    'COGS',
-                    'sellingPrice',
-                    'images',
-                ]));
-                $this->attachIngridients($request->ingridients);
+                $this->saveCake($request);
+
+                $this->syncIngridients($request->ingridients);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : ' . $this->cake->id);
@@ -71,10 +66,13 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            return errUpdateCake($e->getMessage());
+            exception($e);
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete()
     {
         try {
@@ -82,7 +80,11 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
                 $this->cake->ingridients()->detach();
-                $this->cake->delete();
+
+                $deleted = $this->cake->delete();
+                if(!$deleted){
+                    errDeleteCake();
+                }
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
                     ->saveActivity('Delete Cake : ' . $this->cake->id);
@@ -90,22 +92,34 @@ class CakeAlgo
 
             return success(CakeParser::first($this->cake));
         } catch (\Exception $e) {
-            return errDeleteCake($e->getMessage());
+            return exception($e);
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function COGS(Request $request)
     {
         try {
             // Assunming the unit are the same as in ingridient table
             $margin = $this->getMargin($request);
+
             $salarySum = $this->getSalarySum();
+
             $fixedCostMonthly = $this->getFixedCostMonthly();
+
             $totalIngridientCost = $this->calculateIngridientsCost($request->ingridients, $request->volume);
 
             $sums = $this->calculateSums($salarySum, $fixedCostMonthly, $totalIngridientCost);
+
             $sellingPrice = $this->calculateSellingPrice($sums, $margin) / $request->volume;
+
             $cogs = $sums / $request->volume;
+            if($cogs <= 0) {
+                errCalculatingCOGS();
+            }
 
             return success([
                 'COGS' => $cogs,
@@ -113,45 +127,87 @@ class CakeAlgo
                 'profitPerItem' => $sellingPrice - $cogs
             ]);
         } catch (\Exception $e) {
-            return errCalculatingCOGS($e->getMessage());
+            return exception($e);
         }
     }
 
     /** --- PRIVATE FUNCTIONS --- */
 
-    private function decrementIngridient($ingridients)
+    private function saveCake(Request $request)
     {
-        try {
-            foreach ($ingridients as $ingridient) {
-                CakeComponentIngridient::find($ingridient['ingridientId'])
-                    ->decrement('quantity', ($ingridient['quantity'] * $this->cake->volume));
+        $form = $request->only([
+            'name',
+            'stock',
+            'cakeVariantId',
+            'profitMargin',
+            'COGS',
+            'sellingPrice',
+            'images',
+        ]);
+
+        if ($this->cake) {
+            $updated = $this->cake->update($form);
+            if (!$updated) {
+                errUpdateCake();
             }
-        } catch (\Exception $e) {
-            return errDecrementingIngridientStock($e->getMessage());
+
+            $this->syncIngridientStock($request->ingridients, $this->cake->ingridients);
+            $this->syncIngridients($request->ingridients);
+        } else {
+            $this->cake = Cake::create($form);
+            if (!$this->cake) {
+                errCreateCake();
+            }
+
+            $this->syncIngridients($request->ingridients);
+            $this->syncIngridientStock($request->ingridients);
         }
     }
 
-    private function attachIngridients($ingridients)
+    private function syncIngridientStock($ingridients, $oldIngridients = null)
     {
-        try {
-            $this->cake->ingridients()->attach($ingridients);
+        if ($oldIngridients) {
+            foreach ($oldIngridients as $oldIngridient) {
+                $usedQuantity = $oldIngridient->used->quantity * $this->cake->stock;
 
-            $this->decrementIngridient($ingridients);
-        } catch (\Exception $e) {
-            errAttachIngridients($e->getMessage());
+                $oldIngridient->quantity += $usedQuantity;
+
+                $incremented = $oldIngridient->save();
+                if (!$incremented) {
+                    errDecrementingIngridientStock();
+                }
+            }
+        }
+
+        foreach ($ingridients as $ingridient) {
+            $ingridientModel = $this->cake->ingridients()->find($ingridient['ingridientId']);
+            if (!$ingridientModel) {
+                errIngredientNotFound();
+            }
+
+            $ingridientModel->quantity -= ($ingridient['quantity'] * $this->cake->stock);
+
+            $decremented = $ingridientModel->save();
+            if (!$decremented) {
+                errDecrementingIngridientStock();
+            }
         }
     }
 
-    private function detachIngridients()
+    private function syncIngridients($ingridients)
     {
-        try {
-            $this->cake->ingridients()->each(function ($ingridient) {
-                $ingridient->increment('quantity', ($ingridient->used->quantity * $this->cake->stock));
-            });
+        $sync = $this->cake->ingridients()->sync(
+            collect($ingridients)->mapWithKeys(function ($ingridient) {
+                return [
+                    $ingridient['ingridientId'] => [
+                        'quantity' => $ingridient['quantity']
+                    ]
+                ];
+            })
+        );
 
-            $this->cake->ingridients()->detach();
-        } catch (\Exception $e) {
-            return errDetachingIngridients($e->getMessage());
+        if (!$sync) {
+            errSyncIngridients();
         }
     }
 
@@ -190,18 +246,29 @@ class CakeAlgo
     {
         try {
             $totalIngridientCost = 0;
+
             $ingridientIds = array_unique(array_column($_ingridients, 'id'));
+
             $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
+            if (count($ingridients) !== count($ingridientIds)) {
+                errCalculatingIngridientCost();
+            }
 
             foreach ($_ingridients as $ingridient) {
                 $pricePerUnit = $ingridients[$ingridient['id']]->price;
+
                 $quantity = $ingridient['quantity'];
+
                 $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
+            }
+
+            if ($totalIngridientCost <= 0) {
+                errCalculatingIngridientCost();
             }
 
             return $totalIngridientCost;
         } catch (\Exception $e) {
-            errCalculatingIngridientCost($e->getMessage());
+            exception($e);
         }
     }
 }

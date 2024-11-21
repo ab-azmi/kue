@@ -105,13 +105,13 @@ class Error extends BaseCodeName
             'msg' => 'Cake Delete Failed'
         ],
 
-        'ATTACH_INGRIDIENTS_FAILED' => [
-            'code' => 500,
-            'msg' => 'Failed to Attach Ingridients to Cake'
+        'INGRIDIENT_NOT_FOUND' => [
+            'code' => 404,
+            'msg' => 'Ingridient Not Found'
         ],
-        'DETACH_INGRIDIENTS_FAILED' => [
+        'SYNC_INGRIDIENTS_FAILED' => [
             'code' => 500,
-            'msg' => 'Failed to Detach Ingridients to Cake'
+            'msg' => 'Failed to Sync Ingridients to Cake'
         ],
         'DECREMENT_INGRIDIENT_STOCK_FAILED' => [
             'code' => 409,

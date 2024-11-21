@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-#[ObservedBy([UserObserver::class])]
 class EmployeeUser extends Authenticatable implements JWTSubject
 {
     use HasActivityEmployeeUserProperty, GetOrPaginate;

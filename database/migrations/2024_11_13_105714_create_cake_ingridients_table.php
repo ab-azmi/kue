@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreign('ingridientId')->references('id')->on('cake_component_ingridients')->constrained()->onDelete('cascade');
             
             $table->integer('quantity');
-            $table->string('unit');
             $this->getDefaultTimestamps($table);
         });
     }
