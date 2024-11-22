@@ -4,7 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Cake;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CakeVariant extends BaseModel
 {
@@ -21,8 +21,8 @@ class CakeVariant extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
-    public function cakes(): HasMany
+    public function cake(): BelongsTo
     {
-        return $this->hasMany(Cake::class);
+        return $this->belongsTo(Cake::class, 'cakeId');
     }
 }

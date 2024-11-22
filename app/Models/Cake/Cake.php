@@ -41,11 +41,6 @@ class Cake extends BaseModel
             ->as('used');
     }
 
-    public function variant(): BelongsTo
-    {
-        return $this->belongsTo(CakeVariant::class, 'cakeVariantId');
-    }
-
     public function order(): HasMany
     {
         return $this->hasMany(TransactionOrder::class, 'cakeId');
@@ -59,6 +54,11 @@ class Cake extends BaseModel
     public function discounts(): HasMany
     {
         return $this->hasMany(CakeDiscount::class, 'cakeId');
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(CakeVariant::class, 'cakeId');
     }
 
 }

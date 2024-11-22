@@ -16,10 +16,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cakes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cakeVariantId');
-            $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->constrained()->onDelete('cascade');
-            
+            $table->id();           
             $table->string('name');
             $table->integer('stock')->default(0);
             $table->float('profitMargin')->nullable();

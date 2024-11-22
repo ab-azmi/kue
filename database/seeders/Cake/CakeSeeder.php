@@ -17,24 +17,24 @@ class CakeSeeder extends Seeder
 
     public function run(): void
     {
-        DB::table('cake_variants')->insert([
-            ['name' => 'Vanilla', 'price' => 100000],
-            ['name' => 'Chocolate', 'price' => 150000],
-            ['name' => 'Strawberry', 'price' => 200000],
-            ['name' => 'Blueberry', 'price' => 250000],
-        ]);
-
-
         $data = $this->getData();
 
         foreach ($data as $item) {
-            $cake = Cake::create($item);
-            // Attach random ingredients
+            $cake = Cake::create([
+                'name' => $item['name'],
+                'profitMargin' => $item['profitMargin'],
+                'COGS' => $item['COGS'],
+                'stock' => $item['stock'],
+                'sellingPrice' => $item['sellingPrice'],
+                'images' => $item['images'],
+            ]);
+            
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
                 $cake->ingredients()->attach($ingredient->id, [
                     'quantity' => rand(1, 5)
                 ]);
             }
+            $cake->variants()->createMany($item['variants']);
         }
 
         DB::table('cake_discounts')->insert([
@@ -65,7 +65,6 @@ class CakeSeeder extends Seeder
         return array(
             [
                 'name' => 'Polar Bear Cake',
-                'cakeVariantId' => CakeVariant::all()->random()->id,
                 'profitMargin' => 0.5,
                 'COGS' => 100000,
                 'stock' => 10,
@@ -74,10 +73,21 @@ class CakeSeeder extends Seeder
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
                 ]),
+                'variants' => [
+                    [
+                        'name' => 'Polar Bear Cake - Medium',
+                        'price' => 50000,
+                        'description' => 'Polar Bear Cake - Variant 1 Description',
+                    ],
+                    [
+                        'name' => 'Polar Bear Cake - Party',
+                        'price' => 100000,
+                        'description' => 'Polar Bear Cake - Variant 2 Description',
+                    ],
+                ]
             ],
             [
                 'name' => 'Panda Cake',
-                'cakeVariantId' => CakeVariant::all()->random()->id,
                 'profitMargin' => null,
                 'COGS' => 400000,
                 'stock' => 15,
@@ -86,6 +96,18 @@ class CakeSeeder extends Seeder
                     'https://via.placeholder.com/150',
                     'https://via.placeholder.com/150',
                 ]),
+                'variants' => [
+                    [
+                        'name' => 'Panda Cake - Chocolate',
+                        'price' => 200000,
+                        'description' => 'Panda Cake - Variant 1 Description',
+                    ],
+                    [
+                        'name' => 'Panda Cake - Vanilla',
+                        'price' => 400000,
+                        'description' => 'Panda Cake - Variant 2 Description',
+                    ],
+                ]
             ]
         );
     }
