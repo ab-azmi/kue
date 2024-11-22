@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Database\Seeders\Cake\CakeSeeder;
-use Database\Seeders\Cake\CakeIngridientSeeder;
+use Database\Seeders\Cake\CakeIngredientSeeder;
 use Database\Seeders\Employee\EmployeeSeeder;
 use Database\Seeders\Setting\FixedCostSeeder;
 use Database\Seeders\Setting\SettingSeeder;
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             EmployeeSeeder::class,
-            CakeIngridientSeeder::class,
+            CakeIngredientSeeder::class,
             CakeSeeder::class,
             FixedCostSeeder::class,
             TransactionSeeder::class,

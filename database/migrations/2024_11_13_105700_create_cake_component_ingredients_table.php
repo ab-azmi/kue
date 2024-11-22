@@ -15,15 +15,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cake_ingridients', function (Blueprint $table) {
+        Schema::create('cake_component_ingredients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cakeId');
-            $table->foreign('cakeId')->references('id')->on('cakes')->constrained()->onDelete('cascade');
-            $table->foreignId('ingridientId');
-            $table->foreign('ingridientId')->references('id')->on('cake_component_ingridients')->constrained()->onDelete('cascade');
-            
+            $table->string('name');
+            $table->float('price');
+            $table->integer('unitId');
             $table->integer('quantity');
-            $table->boolean('isActive')->default(true);
+            $table->date('expirationDate');
+            $table->string('supplier')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cake_ingridients');
+        Schema::dropIfExists('cake_component_ingredients');
     }
 };

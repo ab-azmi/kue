@@ -3,7 +3,7 @@
 namespace Database\Seeders\Cake;
 
 use App\Models\Cake\Cake;
-use App\Models\Cake\CakeComponentIngridient;
+use App\Models\Cake\CakeComponentIngredient;
 use App\Models\Cake\CakeVariant;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -29,9 +29,9 @@ class CakeSeeder extends Seeder
 
         foreach ($data as $item) {
             $cake = Cake::create($item);
-            // Attach random ingridients
-            foreach (CakeComponentIngridient::all()->random(3) as $ingridient) {
-                $cake->ingridients()->attach($ingridient->id, [
+            // Attach random ingredients
+            foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
+                $cake->ingredients()->attach($ingredient->id, [
                     'quantity' => rand(1, 5)
                 ]);
             }

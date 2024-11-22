@@ -3,7 +3,7 @@
 namespace App\Parser\Cake;
 use GlobalXtreme\Parser\BaseParser;
 
-class CakeComponentIngridientParser extends BaseParser
+class CakeComponentIngredientParser extends BaseParser
 {
     /**
      * @param $data

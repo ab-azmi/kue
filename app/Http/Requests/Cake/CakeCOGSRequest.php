@@ -24,9 +24,9 @@ class CakeCOGSRequest extends FormRequest
         return [
             'volume' => 'required|numeric',
             'margin' => 'nullable|string',
-            'ingridients' => 'required|array',
-            'ingridients.*.id' => 'required|exists:cake_component_ingridients,id',
-            'ingridients.*.quantity' => 'required|numeric',
+            'ingredients' => 'required|array',
+            'ingredients.*.id' => 'required|exists:cake_component_ingredients,id',
+            'ingredients.*.quantity' => 'required|numeric',
         ];
     }
 }

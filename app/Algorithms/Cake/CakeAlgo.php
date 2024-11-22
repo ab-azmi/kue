@@ -3,7 +3,7 @@
 namespace App\Algorithms\Cake;
 
 use App\Models\Cake\Cake;
-use App\Models\Cake\CakeComponentIngridient;
+use App\Models\Cake\CakeComponentIngredient;
 use App\Models\Employee\EmployeeSalary;
 use App\Models\Setting\Setting;
 use App\Models\Setting\SettingFixedCost;
@@ -79,8 +79,8 @@ class CakeAlgo
             DB::transaction(function () {
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $ids = $this->cake->ingridients()->pluck('id')->toArray();
-                $this->cake->ingridients()->updateExistingPivot($ids, ['isActive' => false]);
+                $ids = $this->cake->ingredients()->pluck('id')->toArray();
+                $this->cake->ingredients()->updateExistingPivot($ids, ['isActive' => false]);
 
                 $deleted = $this->cake->delete();
                 if (!$deleted) {
@@ -110,9 +110,9 @@ class CakeAlgo
 
             $fixedCostMonthly = $this->getFixedCostMonthly();
 
-            $totalIngridientCost = $this->calculateIngridientsCost($request->ingridients, $request->volume);
+            $totalIngredientCost = $this->calculateIngredientsCost($request->ingredients, $request->volume);
 
-            $sums = $this->calculateSums($salarySum, $fixedCostMonthly, $totalIngridientCost);
+            $sums = $this->calculateSums($salarySum, $fixedCostMonthly, $totalIngredientCost);
 
             $sellingPrice = $this->calculateSellingPrice($sums, $margin) / $request->volume;
 
@@ -151,40 +151,40 @@ class CakeAlgo
                 errCakeUpdate();
             }
 
-            $oldIngridients = $this->cake->ingridients;
+            $oldIngredients = $this->cake->ingredients;
 
-            $this->syncIngridientsRelationship($request->ingridients);
+            $this->syncIngredientsRelationship($request->ingredients);
             
-            $this->syncIngridientStock($request->ingridients, $oldIngridients);
+            $this->syncIngredientStock($request->ingredients, $oldIngredients);
         } else {
             $this->cake = Cake::create($form);
             if (!$this->cake) {
                 errCakeCreate();
             }
 
-            $this->syncIngridientsRelationship($request->ingridients);
+            $this->syncIngredientsRelationship($request->ingredients);
 
-            $this->syncIngridientStock($request->ingridients);
+            $this->syncIngredientStock($request->ingredients);
         }
     }
 
-    private function syncIngridientsRelationship($ingridients)
+    private function syncIngredientsRelationship($ingredients)
     {
-        $existingIds = $this->cake->ingridients()->pluck('cake_component_ingridients.id')->toArray();
+        $existingIds = $this->cake->ingredients()->pluck('cake_component_ingredients.id')->toArray();
 
-        $this->cake->ingridients()->updateExistingPivot($existingIds, ['isActive' => false, 'quantity' => 0]);
+        $this->cake->ingredients()->updateExistingPivot($existingIds, ['isActive' => false, 'quantity' => 0]);
         
         
-        foreach ($ingridients as $ingridient) {
-            if (in_array($ingridient['ingridientId'], $existingIds)) 
+        foreach ($ingredients as $ingredient) {
+            if (in_array($ingredient['ingredientId'], $existingIds)) 
             {
-                $this->cake->ingridients()->updateExistingPivot($ingridient['ingridientId'], [
-                    'quantity' => $ingridient['quantity'] * $this->cake->stock,
+                $this->cake->ingredients()->updateExistingPivot($ingredient['ingredientId'], [
+                    'quantity' => $ingredient['quantity'] * $this->cake->stock,
                     'isActive' => true
                 ]);
             } else {
-                $this->cake->ingridients()->attach($ingridient['ingridientId'], [
-                    'quantity' => $ingridient['quantity'] * $this->cake->stock,
+                $this->cake->ingredients()->attach($ingredient['ingredientId'], [
+                    'quantity' => $ingredient['quantity'] * $this->cake->stock,
                     'isActive' => true
                 ]);
             }
@@ -192,35 +192,35 @@ class CakeAlgo
         
     }
 
-    private function syncIngridientStock($ingridients, $oldIngridients = null)
+    private function syncIngredientStock($ingredients, $oldIngredients = null)
     {
-        if ($oldIngridients) {
-            $this->incrementIngredientStock($oldIngridients);
+        if ($oldIngredients) {
+            $this->incrementIngredientStock($oldIngredients);
         }
 
-        foreach ($ingridients as $ingridient) {
-            $ingridientModel = $this->cake->ingridients()->find($ingridient['ingridientId']);
-            if (!$ingridientModel) {
+        foreach ($ingredients as $ingredient) {
+            $ingredientModel = $this->cake->ingredients()->find($ingredient['ingredientId']);
+            if (!$ingredientModel) {
                 errCakeIngredientGet();
             }
 
-            $ingridientModel->quantity -= ($ingridient['quantity'] * $this->cake->stock);
+            $ingredientModel->quantity -= ($ingredient['quantity'] * $this->cake->stock);
 
-            $decremented = $ingridientModel->save();
+            $decremented = $ingredientModel->save();
             if (!$decremented) {
                 errCakeIngredientDecrementStock();
             }
         }
     }
 
-    private function incrementIngredientStock($oldIngridients)
+    private function incrementIngredientStock($oldIngredients)
     {
-        foreach ($oldIngridients as $oldIngridient) {
-            $usedQuantity = $oldIngridient->used->quantity * $this->cake->stock;
+        foreach ($oldIngredients as $oldIngredient) {
+            $usedQuantity = $oldIngredient->used->quantity * $this->cake->stock;
 
-            $oldIngridient->quantity += $usedQuantity;
+            $oldIngredient->quantity += $usedQuantity;
 
-            $incremented = $oldIngridient->save();
+            $incremented = $oldIngredient->save();
 
             if (!$incremented) {
                 errCakeIngredientDecrementStock();
@@ -254,35 +254,35 @@ class CakeAlgo
         return SettingFixedCost::where('frequency', 'monthly')->sum('amount');
     }
 
-    private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngridientCost): int
+    private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngredientCost): int
     {
-        return $salarySum + $fixedCostMonthly + $totalIngridientCost;
+        return $salarySum + $fixedCostMonthly + $totalIngredientCost;
     }
 
-    private function calculateIngridientsCost($_ingridients, int $volume): int
+    private function calculateIngredientsCost($_ingredients, int $volume): int
     {
 
-        $totalIngridientCost = 0;
+        $totalIngredientCost = 0;
 
-        $ingridientIds = array_unique(array_column($_ingridients, 'id'));
+        $ingredientIds = array_unique(array_column($_ingredients, 'id'));
 
-        $ingridients = CakeComponentIngridient::whereIn('id', $ingridientIds)->get()->keyBy('id');
-        if (count($ingridients) !== count($ingridientIds)) {
+        $ingredients = CakeComponentIngredient::whereIn('id', $ingredientIds)->get()->keyBy('id');
+        if (count($ingredients) !== count($ingredientIds)) {
             errCakeIngredientTotalCost();
         }
 
-        foreach ($_ingridients as $ingridient) {
-            $pricePerUnit = $ingridients[$ingridient['id']]->price;
+        foreach ($_ingredients as $ingredient) {
+            $pricePerUnit = $ingredients[$ingredient['id']]->price;
 
-            $quantity = $ingridient['quantity'];
+            $quantity = $ingredient['quantity'];
 
-            $totalIngridientCost += ($pricePerUnit * $quantity) * $volume;
+            $totalIngredientCost += ($pricePerUnit * $quantity) * $volume;
         }
 
-        if ($totalIngridientCost <= 0) {
+        if ($totalIngredientCost <= 0) {
             errCakeIngredientTotalCost();
         }
 
-        return $totalIngridientCost;
+        return $totalIngredientCost;
     }
 }

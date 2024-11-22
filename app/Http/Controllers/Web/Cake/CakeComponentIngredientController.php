@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Web\Cake;
 
-use App\Algorithms\Cake\CakeComponentIngridientAlgo;
+use App\Algorithms\Cake\CakeComponentIngredientAlgo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Cake\CakeComponentIngridientRequest;
-use App\Models\Cake\CakeComponentIngridient;
+use App\Http\Requests\Cake\CakeComponentIngredientRequest;
+use App\Models\Cake\CakeComponentIngredient;
 use Illuminate\Http\Request;
 
-class CakeComponentIngridientController extends Controller
+class CakeComponentIngredientController extends Controller
 {
     /**
      * @param Request $request
@@ -16,19 +16,19 @@ class CakeComponentIngridientController extends Controller
      */
     public function get(Request $request)
     {
-        $ingridients = CakeComponentIngridient::orderBy('createdAt', 'desc')
+        $ingredients = CakeComponentIngredient::orderBy('createdAt', 'desc')
             ->getOrPaginate($request, true);
         
-        return success($ingridients);
+        return success($ingredients);
     }
 
     /**
-     * @param CakeComponentIngridientRequest $request
+     * @param CakeComponentIngredientRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(CakeComponentIngridientRequest $request)
+    public function create(CakeComponentIngredientRequest $request)
     {
-        $algo = new CakeComponentIngridientAlgo();
+        $algo = new CakeComponentIngredientAlgo();
         return $algo->create($request);
     }
 
@@ -38,18 +38,18 @@ class CakeComponentIngridientController extends Controller
      */
     public function detail($id)
     {
-        $ingridient = CakeComponentIngridient::findOrFail($id);
-        return success($ingridient);
+        $ingredient = CakeComponentIngredient::findOrFail($id);
+        return success($ingredient);
     }
 
     /**
      * @param string|int $id
-     * @param CakeComponentIngridientRequest $request
+     * @param CakeComponentIngredientRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update($id, CakeComponentIngridientRequest $request)
+    public function update($id, CakeComponentIngredientRequest $request)
     {
-        $algo = new CakeComponentIngridientAlgo((int)$id);
+        $algo = new CakeComponentIngredientAlgo((int)$id);
         return $algo->update($request);
     }
 
@@ -59,7 +59,7 @@ class CakeComponentIngridientController extends Controller
      */
     public function delete($id)
     {
-        $algo = new CakeComponentIngridientAlgo((int)$id);
+        $algo = new CakeComponentIngredientAlgo((int)$id);
         return $algo->delete();
     }
 }

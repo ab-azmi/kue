@@ -2,7 +2,7 @@
 
 namespace App\Routes\Features\Web;
 
-use App\Http\Controllers\Web\Cake\CakeComponentIngridientController;
+use App\Http\Controllers\Web\Cake\CakeComponentIngredientController;
 use App\Http\Controllers\Web\Cake\CakeController;
 use App\Http\Controllers\Web\Cake\CakeDiscountController;
 use App\Http\Controllers\Web\Cake\CakeVariantController;
@@ -24,13 +24,13 @@ Route::prefix('cakes')
                 Route::delete('{id}', [CakeDiscountController::class, 'delete']);
             });
 
-        Route::prefix('ingridients')
+        Route::prefix('ingredients')
             ->group(function () {
-                Route::get('', [CakeComponentIngridientController::class, 'get']);
-                Route::post('', [CakeComponentIngridientController::class, 'create']);
-                Route::get('{id}', [CakeComponentIngridientController::class, 'detail']);
-                Route::put('{id}', [CakeComponentIngridientController::class, 'update']);
-                Route::delete('{id}', [CakeComponentIngridientController::class, 'delete']);
+                Route::get('', [CakeComponentIngredientController::class, 'get']);
+                Route::post('', [CakeComponentIngredientController::class, 'create']);
+                Route::get('{id}', [CakeComponentIngredientController::class, 'detail']);
+                Route::put('{id}', [CakeComponentIngredientController::class, 'update']);
+                Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
             });
 
 

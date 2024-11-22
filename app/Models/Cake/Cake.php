@@ -4,7 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
-use App\Models\Cake\CakeComponentIngridient;
+use App\Models\Cake\CakeComponentIngredient;
 use App\Models\Cake\CakeVariant;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
@@ -34,9 +34,9 @@ class Cake extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
-    public function ingridients(): BelongsToMany
+    public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(CakeComponentIngridient::class, 'cake_ingridients', 'cakeId', 'ingridientId')
+        return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
             ->withPivot(['quantity', 'isActive'])
             ->as('used');
     }

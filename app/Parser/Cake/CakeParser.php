@@ -2,7 +2,7 @@
 
 namespace App\Parser\Cake;
 
-use App\Parser\Cake\CakeComponentIngridientParser;
+use App\Parser\Cake\CakeComponentIngredientParser;
 use App\Parser\Cake\CakeVariantParser;
 use GlobalXtreme\Parser\BaseParser;
 
@@ -29,7 +29,7 @@ class CakeParser extends BaseParser
             'images' => $data->images,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
-            'ingridients' => CakeComponentIngridientParser::get($data->ingridients()->wherePivot('isActive', true)->get()),
+            'ingredients' => CakeComponentIngredientParser::get($data->ingredients()->wherePivot('isActive', true)->get()),
             'variant' => CakeVariantParser::first($data->variant),
             'discounts' => CakeDiscountParser::get($data->discount),
         ];

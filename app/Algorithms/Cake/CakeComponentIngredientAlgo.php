@@ -1,18 +1,18 @@
 <?php
 namespace App\Algorithms\Cake;
 
-use App\Models\Cake\CakeComponentIngridient;
+use App\Models\Cake\CakeComponentIngredient;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CakeComponentIngridientAlgo
+class CakeComponentIngredientAlgo
 {
-    public function __construct(public CakeComponentIngridient|int|null $ingridient = null)
+    public function __construct(public CakeComponentIngredient|int|null $ingredient = null)
     {
-        if(is_int($ingridient)){
-            $this->ingridient = CakeComponentIngridient::find($ingridient);
-            if(!$this->ingridient){
+        if(is_int($ingredient)){
+            $this->ingredient = CakeComponentIngredient::find($ingredient);
+            if(!$this->ingredient){
                 errCakeIngredientGet();
             }
         }
@@ -27,10 +27,10 @@ class CakeComponentIngridientAlgo
             DB::transaction(function() use ($request){
                 $this->saveIngredient($request);
 
-                $this->ingridient->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Ingridient : ' . $this->ingridient->id);
+                $this->ingredient->setActivityPropertyAttributes(ActivityAction::CREATE)
+                    ->saveActivity('Create new Ingredient : ' . $this->ingredient->id);
             });
-            return success($this->ingridient);
+            return success($this->ingredient);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -43,14 +43,14 @@ class CakeComponentIngridientAlgo
     public function update(Request $request){
         try {
             DB::transaction(function() use ($request){
-                $this->ingridient->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+                $this->ingredient->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 $this->saveIngredient($request);
 
-                $this->ingridient->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Ingridient : ' . $this->ingridient->id);
+                $this->ingredient->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update Ingredient : ' . $this->ingredient->id);
             });
-            return success($this->ingridient);
+            return success($this->ingredient);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -62,17 +62,17 @@ class CakeComponentIngridientAlgo
     public function delete(){
         try {
             DB::transaction(function(){
-                $this->ingridient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+                $this->ingredient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $ids = $this->ingridient->cakes->pluck('id')->toArray();
-                $this->ingridient->cakes()->updateExistingPivot($ids, ['isActive' => false]);
+                $ids = $this->ingredient->cakes->pluck('id')->toArray();
+                $this->ingredient->cakes()->updateExistingPivot($ids, ['isActive' => false]);
                 
-                $this->ingridient->delete();
+                $this->ingredient->delete();
 
-                $this->ingridient->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Ingridient : ' . $this->ingridient->id);
+                $this->ingredient->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete Ingredient : ' . $this->ingredient->id);
             });
-            return success($this->ingridient);
+            return success($this->ingredient);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -85,14 +85,14 @@ class CakeComponentIngridientAlgo
             'name', 'unitId', 'price', 'expirationDate', 'quantity', 'supplier'
         ]);
 
-        if($this->ingridient){
-            $updated = $this->ingridient->update($form);
+        if($this->ingredient){
+            $updated = $this->ingredient->update($form);
             if(!$updated){
                 errCakeIngredientUpdate();
             }
         } else {
-            $this->ingridient = CakeComponentIngridient::create($form);
-            if(!$this->ingridient){
+            $this->ingredient = CakeComponentIngredient::create($form);
+            if(!$this->ingredient){
                 errCakeIngredientCreate();
             }
         }
