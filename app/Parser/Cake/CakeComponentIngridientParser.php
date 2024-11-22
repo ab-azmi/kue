@@ -26,6 +26,7 @@ class CakeComponentIngridientParser extends BaseParser
             'supplier' => $data->supplier,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
+            'used' => $data->used,
         ];
     }
 

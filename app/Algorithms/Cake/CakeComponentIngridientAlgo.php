@@ -64,7 +64,8 @@ class CakeComponentIngridientAlgo
             DB::transaction(function(){
                 $this->ingridient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->ingridient->cakes()->detach();
+                $ids = $this->ingridient->cakes->pluck('id')->toArray();
+                $this->ingridient->cakes()->updateExistingPivot($ids, ['isActive' => false]);
                 
                 $this->ingridient->delete();
 
