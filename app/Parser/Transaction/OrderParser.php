@@ -2,7 +2,8 @@
 
 namespace App\Parser\Transaction;
 
-use App\Parser\Cake\CakeParser;
+use App\Models\Cake\CakeVariant;
+use App\Parser\Cake\CakeVariantParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class OrderParser extends BaseParser
@@ -17,19 +18,17 @@ class OrderParser extends BaseParser
         if (!$data) {
             return null;
         }
-
         return [
             'price' => $data->price,
             'totalPrice' => $data->totalPrice,
             'quantity' => $data->quantity,
             'discount' => $data->discount,
             'transactionId' => $data->transactionId,
-            'cakeId' => $data->cakeId,
+            'cakeVariantId' => $data->cakeVariantId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
-            'transaction' => TransactionParser::brief($data->transaction),
-            'cake' => CakeParser::brief($data->cake)
+            'cakeVariant' => CakeVariantParser::first($data->cakeVariant)
         ];
     }
 
@@ -45,7 +44,7 @@ class OrderParser extends BaseParser
             'quantity' => $data->quantity,
             'discount' => $data->discount,
             'transactionId' => $data->transactionId,
-            'cakeId' => $data->cakeId,
+            'cakeVariantId' => $data->cakeVariantId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),

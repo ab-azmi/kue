@@ -3,7 +3,7 @@
 namespace App\Models\Transaction;
 
 use App\Models\BaseModel;
-use App\Models\Cake\Cake;
+use App\Models\Cake\CakeVariant;
 use App\Models\Transaction\Traits\HasActivityOrderProperty;
 
 class TransactionOrder extends BaseModel
@@ -29,9 +29,9 @@ class TransactionOrder extends BaseModel
         return $this->belongsTo(Transaction::class, 'transactionId');
     }
 
-    public function cake()
+    public function cakeVariant()
     {
-        return $this->belongsTo(Cake::class, 'cakeId');
+        return $this->belongsTo(CakeVariant::class, 'cakeVariantId');
     }
 
 }

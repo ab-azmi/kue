@@ -64,7 +64,7 @@ trait HasActivityOrderProperty
     {
         $this->refresh();
 
-        return OrderParser::first($this);
+        return OrderParser::brief($this);
     }
 
 }

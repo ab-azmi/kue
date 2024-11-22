@@ -3,6 +3,7 @@
 namespace App\Algorithms\Transaction;
 
 use App\Models\Cake\Cake;
+use App\Models\Cake\CakeVariant;
 use App\Models\Setting\Setting;
 use App\Models\Transaction\Transaction;
 use App\Parser\Transaction\TransactionParser;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionAlgo
 {
-    public function __construct(public Transaction|int|null $transaction = null)
+    public function __construct(public Transaction|int|null $transaction = null, private $cakeVariants = [])
     {
         if (is_int($transaction)) {
             $this->transaction = Transaction::find($transaction);
@@ -28,7 +29,7 @@ class TransactionAlgo
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         try {
             DB::transaction(function () use ($request) {
@@ -42,7 +43,7 @@ class TransactionAlgo
 
                 $this->createOrders($orders);
             });
-
+            
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
@@ -64,7 +65,7 @@ class TransactionAlgo
                     $this->updateOrders($orders);
                 }
             });
-
+            
             return success(TransactionParser::first($this->transaction));
         } catch (\Exception $e) {
             exception($e);
@@ -152,7 +153,6 @@ class TransactionAlgo
     {
         foreach ($orders as $order) {
             $orderModel = $this->transaction->orders()->create($order);
-
             if (!$orderModel) {
                 errCreateOrder();
             }
@@ -171,31 +171,44 @@ class TransactionAlgo
     private function implementCakesDiscountToOrders($orders): array
     {
         foreach ($orders as $key => $order) {
-            $cake = Cake::with('variant')->find($order['cakeId']);
+            $cakeVariant = CakeVariant::with('cake')->find($order['cakeVariantId']);
+            if(!$cakeVariant) {
+                errCakeGet();
+            }
 
-            $sellingPrice = $cake->sellingPrice + $cake->variant->price;
+            $this->cakeVariants[$cakeVariant->id] = $cakeVariant;
+
+            $sellingPrice = $this->calculateCakeVariantsPrice($cakeVariant);
 
             $orders[$key]['price'] = $sellingPrice;
-            $orders[$key]['discount'] = $cake->discounts->sum('value');
+            $orders[$key]['discount'] = $cakeVariant->cake->discounts->sum('value');
             $orders[$key]['totalPrice'] = ($sellingPrice * $order['quantity']) - $orders[$key]['discount'];
         }
 
         return $orders;
     }
 
+    private function calculateCakeVariantsPrice($cakeVariant): float
+    {
+        $sellingPrice = $cakeVariant->cake->sellingPrice;
+
+        if ($cakeVariant->price) {
+            $sellingPrice += $cakeVariant->price;
+        }
+
+        return $sellingPrice;
+    }
+
     private function syncCakeStock($orders)
     {
-        $cakesIds = array_unique(array_column($orders, 'cakeId'));
-        $cakes = Cake::whereIn('id', $cakesIds)->get()->keyBy('id');
-
         foreach ($orders as $order) {
-            $cake = $cakes[$order['cakeId']];
+            $cake = $this->cakeVariants[$order['cakeVariantId']]->cake;
 
             if ($cake->stock < $order['quantity']) {
                 errOutOfStockOrder($cake->name);
             }
 
-            Cake::where('id', $order['cakeId'])->decrement('stock', $order['quantity']);
+            $cake->decrement('stock', $order['quantity']);
         }
     }
 

@@ -19,13 +19,13 @@ class TransactionSeeder extends Seeder
                 'price' => 10000,
                 'quantity' => 1,
                 'discount' => null,
-                'cakeId' => 1,
+                'cakeVariantId' => 1,
             ],
             [
                 'price' => 4000,
                 'quantity' => 1,
                 'discount' => null,
-                'cakeId' => 2,
+                'cakeVariantId' => 3,
             ]
         ]);
     }

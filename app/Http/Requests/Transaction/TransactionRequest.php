@@ -30,7 +30,7 @@ class TransactionRequest extends FormRequest
             'totalDiscount' => 'nullable|numeric',
             'employeeId' => 'required|exists:employees,id',
             'orders' => 'required|array',
-            'orders.*.cakeId' => 'required|exists:cakes,id',
+            'orders.*.cakeVariantId' => 'required|exists:cake_variants,id',
             'orders.*.quantity' => 'required|integer',
         ];
     }
