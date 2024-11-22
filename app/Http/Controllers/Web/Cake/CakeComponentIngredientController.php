@@ -6,6 +6,7 @@ use App\Algorithms\Cake\CakeComponentIngredientAlgo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cake\CakeComponentIngredientRequest;
 use App\Models\Cake\CakeComponentIngredient;
+use App\Parser\Cake\CakeComponentIngredientParser;
 use Illuminate\Http\Request;
 
 class CakeComponentIngredientController extends Controller
@@ -19,7 +20,7 @@ class CakeComponentIngredientController extends Controller
         $ingredients = CakeComponentIngredient::orderBy('createdAt', 'desc')
             ->getOrPaginate($request, true);
         
-        return success($ingredients);
+        return success(CakeComponentIngredientParser::briefs($ingredients));
     }
 
     /**
@@ -39,7 +40,7 @@ class CakeComponentIngredientController extends Controller
     public function detail($id)
     {
         $ingredient = CakeComponentIngredient::findOrFail($id);
-        return success($ingredient);
+        return success(CakeComponentIngredientParser::first($ingredient));
     }
 
     /**

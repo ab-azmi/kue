@@ -50,6 +50,20 @@ if (!function_exists("errCakeGet")) {
     }
 }
 
+if (!function_exists("errCakeUploadImage")) {
+    function errCakeUploadImage($internalMsg = "", $status = null)
+    {
+        error(
+            Error::CAKE['UPLOAD_IMAGE_FAILED']['code'],
+            Error::CAKE['UPLOAD_IMAGE_FAILED']['msg'],
+            $internalMsg,
+            $status
+        );
+    }
+}
+
+/** --- CAKE DISCOUNT --- **/
+
 if (!function_exists("errCakeDiscountGet")) {
     function errCakeDiscountGet($internalMsg = "", $status = null)
     {

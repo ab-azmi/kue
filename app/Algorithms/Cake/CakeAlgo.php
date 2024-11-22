@@ -9,9 +9,11 @@ use App\Models\Setting\Setting;
 use App\Models\Setting\SettingFixedCost;
 use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Activity\ActivityAction;
+use App\Services\Constant\Path\Path;
 use App\Services\Constant\Setting\SettingConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CakeAlgo
 {
@@ -126,6 +128,39 @@ class CakeAlgo
                 'sellingPrice' => $sellingPrice,
                 'profitPerItem' => $sellingPrice - $cogs
             ]);
+        } catch (\Exception $e) {
+            return exception($e);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function file(Request $request)
+    {
+        try {
+            $path = Path::STORAGE_PUBLIC_PATH('cakes');
+
+            $attachment = [];
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+
+                $fileName = $file->getClientOriginalName();
+
+                $uploaded = $file->storeAs($path, $fileName, 'public');
+                if(!$uploaded) {
+                    errCakeUploadImage();
+                }
+
+                $attachment = [
+                    'name' => $fileName,
+                    'path' => Path::CAKE_URL_PATH($fileName)
+                ];
+            }
+
+            return success($attachment);
         } catch (\Exception $e) {
             return exception($e);
         }

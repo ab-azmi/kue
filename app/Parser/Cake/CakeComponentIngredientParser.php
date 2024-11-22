@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Parser\Cake;
+
+use App\Services\Constant\Cake\CakeIngredientUnit;
 use GlobalXtreme\Parser\BaseParser;
 
 class CakeComponentIngredientParser extends BaseParser
@@ -19,9 +21,12 @@ class CakeComponentIngredientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unitId' => $data->unitId,
+            'unit' => [
+                'id' => $data->unitId,
+                'name' => CakeIngredientUnit::OPTION[$data->unitId]
+            ],
             'price' => $data->price,
-            'expirationDate' => $data->expirationDate,
+            'expirationDate' => $data->expirationDate->format('d/m/Y H:i'),
             'quantity' => $data->quantity,
             'supplier' => $data->supplier,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
@@ -39,9 +44,12 @@ class CakeComponentIngredientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unitId' => $data->unitId,
+            'unit' => [
+                'id' => $data->unitId,
+                'name' => CakeIngredientUnit::OPTION[$data->unitId]
+            ],
             'price' => $data->price,
-            'expirationDate' => $data->expirationDate,
+            'expirationDate' => $data->expirationDate->format('d/m/Y H:i'),
             'quantity' => $data->quantity,
             'supplier' => $data->supplier,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),

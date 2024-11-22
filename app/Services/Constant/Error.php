@@ -116,6 +116,10 @@ class Error extends BaseCodeName
             'code' => 500,
             'msg' => 'Cake Delete Failed'
         ],
+        'UPLOAD_IMAGE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to upload image'
+        ],
 
         'INGRIDIENT_NOT_FOUND' => [
             'code' => 404,
