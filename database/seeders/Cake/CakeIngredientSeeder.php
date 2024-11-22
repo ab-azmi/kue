@@ -2,12 +2,12 @@
 
 namespace Database\Seeders\Cake;
 
-use App\Models\Cake\CakeComponentIngridient;
-use App\Services\Constant\Cake\CakeIngridientUnit;
+use App\Models\Cake\CakeComponentIngredient;
+use App\Services\Constant\Cake\CakeIngredientUnit;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class CakeIngridientSeeder extends Seeder
+class CakeIngredientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class CakeIngridientSeeder extends Seeder
         $data = $this->getData();
 
         foreach ($data as $item) {
-            CakeComponentIngridient::create($item);
+            CakeComponentIngredient::create($item);
         }
     }
 
@@ -29,7 +29,7 @@ class CakeIngridientSeeder extends Seeder
         return array(
             [
                 'name' => 'Flour',
-                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
+                'unitId' => CakeIngredientUnit::KILOGRAM_ID,
                 'price' => 10000,
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 100,
@@ -37,7 +37,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Sugar',
-                'unitId' => CakeIngridientUnit::KILOGRAM_ID,
+                'unitId' => CakeIngredientUnit::KILOGRAM_ID,
                 'price' => 15000,
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 70,
@@ -45,7 +45,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Egg',
-                'unitId' => CakeIngridientUnit::PIECE_ID,
+                'unitId' => CakeIngredientUnit::PIECE_ID,
                 'price' => 2000,
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 50,
@@ -53,7 +53,7 @@ class CakeIngridientSeeder extends Seeder
             ],
             [
                 'name' => 'Milk',
-                'unitId' => CakeIngridientUnit::LITER_ID,
+                'unitId' => CakeIngredientUnit::LITER_ID,
                 'price' => 20000,
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 30,

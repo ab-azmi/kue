@@ -3,10 +3,10 @@
 namespace App\Models\Cake\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Cake\CakeComponentIngridientParser;
+use App\Parser\Cake\CakeComponentIngredientParser;
 use App\Services\Constant\Activity\ActivityType;
 
-trait HasActivityCakeComponentIngridientProperty
+trait HasActivityCakeComponentIngredientProperty
 {
     use HasActivity;
 
@@ -64,7 +64,7 @@ trait HasActivityCakeComponentIngridientProperty
     {
         $this->refresh();
 
-        return CakeComponentIngridientParser::first($this);
+        return CakeComponentIngredientParser::first($this);
     }
 
 }

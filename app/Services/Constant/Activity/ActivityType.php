@@ -10,7 +10,7 @@ class ActivityType extends BaseCodeName
     const COMPONENT = 'component';
 
     const CAKE = 'cake';
-    const INGRIDIENT = 'ingridient';
+    const INGRIDIENT = 'ingredient';
     const DISCOUNT = 'discount';
     const ORDER = 'order';
     const TRANSACTION = 'transaction';

@@ -116,10 +116,14 @@ class Error extends BaseCodeName
             'code' => 500,
             'msg' => 'Cake Delete Failed'
         ],
+        'UPLOAD_IMAGE_FAILED' => [
+            'code' => 500,
+            'msg' => 'Failed to upload image'
+        ],
 
         'INGRIDIENT_NOT_FOUND' => [
             'code' => 404,
-            'msg' => 'Ingridient Not Found'
+            'msg' => 'Ingredient Not Found'
         ],
         'INGRIDIENT_CREATE_FAILED' => [
             'code' => 500,
@@ -135,11 +139,11 @@ class Error extends BaseCodeName
         ],
         'SYNC_INGRIDIENTS_FAILED' => [
             'code' => 500,
-            'msg' => 'Failed to Sync Ingridients to Cake'
+            'msg' => 'Failed to Sync Ingredients to Cake'
         ],
         'DECREMENT_INGRIDIENT_STOCK_FAILED' => [
             'code' => 409,
-            'msg' => 'Ingridient Out of Stock'
+            'msg' => 'Ingredient Out of Stock'
         ],
         'CALCULATING_COGS_FAILED' => [
             'code' => 500,
@@ -147,7 +151,7 @@ class Error extends BaseCodeName
         ],
         'CALCULATING_INGRIDIENT_COST_FAILED' => [
             'code' => 500,
-            'msg' => 'Failed to Calculate Total Cost of Ingridients'
+            'msg' => 'Failed to Calculate Total Cost of Ingredients'
         ],
 
         'DISCOUNT_NOT_FOUND' => [

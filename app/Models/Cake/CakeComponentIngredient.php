@@ -4,16 +4,14 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Cake;
-use App\Models\Cake\Traits\HasActivityCakeComponentIngridientProperty;
-use App\Observers\Cake\IngridientObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Models\Cake\Traits\HasActivityCakeComponentIngredientProperty;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class CakeComponentIngridient extends BaseModel
+class CakeComponentIngredient extends BaseModel
 {
-    use HasActivityCakeComponentIngridientProperty;
+    use HasActivityCakeComponentIngredientProperty;
     
-    protected $table = 'cake_component_ingridients';
+    protected $table = 'cake_component_ingredients';
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -28,8 +26,8 @@ class CakeComponentIngridient extends BaseModel
 
     public function cakes(): BelongsToMany
     {
-        return $this->belongsToMany(Cake::class, 'cake_ingridients', 'ingridientId', 'cakeId')
-            ->withPivot('quantity')
+        return $this->belongsToMany(Cake::class, 'cake_ingredients', 'ingredientId', 'cakeId')
+            ->withPivot(['quantity', 'isActive'])
             ->as('used');
     }
 

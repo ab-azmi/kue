@@ -8,6 +8,7 @@ use App\Http\Requests\Cake\CakeCOGSRequest;
 use App\Http\Requests\Cake\CakeRequest;
 use App\Models\Cake\Cake;
 use App\Parser\Cake\CakeParser;
+use App\Services\Constant\Path\Path;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller
@@ -42,7 +43,7 @@ class CakeController extends Controller
     {
         $cake = Cake::with([
             'variant',
-            'ingridients',
+            'ingredients',
             'discounts'
         ])->find($id);
 
@@ -73,9 +74,24 @@ class CakeController extends Controller
         return $algo->delete();
     }
 
+    /**
+     * @param CakeCOGSRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function COGS(CakeCOGSRequest $request)
     {
         $algo = new CakeAlgo();
         return $algo->COGS($request);
+    }
+
+    public function file(Request $request)
+    {
+        $algo = new CakeAlgo();
+        return $algo->file($request);
+    }
+
+    public function getFile($path)
+    {
+        return response()->file(Path::STORAGE_PUBLIC_PATH('cakes') . '/' . $path);
     }
 }

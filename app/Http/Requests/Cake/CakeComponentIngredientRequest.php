@@ -5,7 +5,7 @@ namespace App\Http\Requests\Cake;
 use App\Rules\ValidUnit;
 use GlobalXtreme\Validation\Support\FormRequest;
 
-class CakeComponentIngridientRequest extends FormRequest
+class CakeComponentIngredientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

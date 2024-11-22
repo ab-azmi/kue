@@ -3,7 +3,7 @@ namespace App\Services\Constant\Cake;
 
 use App\Services\Constant\BaseCodeName;
 
-class CakeIngridientUnit extends BaseCodeName
+class CakeIngredientUnit extends BaseCodeName
 {
     const GRAM_ID = 1;
     const GRAM = 'gram';
