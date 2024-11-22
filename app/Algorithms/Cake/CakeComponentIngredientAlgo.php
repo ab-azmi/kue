@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class CakeComponentIngredientAlgo
 {
+    /**
+     * @param CakeComponentIngredient|int|null
+     */
     public function __construct(public CakeComponentIngredient|int|null $ingredient = null)
     {
         if(is_int($ingredient)){

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class CakeDiscountAlgo
 {
+    /**
+     * @param CakeDiscount|int|null
+     */
     public function __construct(public CakeDiscount|int|null $discount = null)
     {
         if (is_int($discount)) {

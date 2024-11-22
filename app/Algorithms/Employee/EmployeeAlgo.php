@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeAlgo
 {
+    /**
+     * @param Employee|int|null
+     */
     public function  __construct(public Employee|int|null $employee = null)
     {
         if (is_int($employee)) {

@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Storage;
 
 class CakeAlgo
 {
+    /**
+     * @param Cake|int|null
+     */
     public function __construct(public Cake|int|null $cake = null)
     {
         if (is_int($cake)) {
@@ -137,7 +140,7 @@ class CakeAlgo
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function file(Request $request)
+    public function saveCakeImage(Request $request)
     {
         try {
             $path = Path::STORAGE_PUBLIC_PATH('cakes');
