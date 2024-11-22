@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class SettingFixedCostAlgo
 {
+    /**
+     * @param SettingFixedCost|int|null
+     */
     public function __construct(public SettingFixedCost|int|null $fixedCost = null)
     {
         if (is_int($fixedCost)) {

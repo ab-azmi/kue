@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthAlgo
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         try {
@@ -42,6 +46,10 @@ class AuthAlgo
 
     public function register(Request $request) {}
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request) {
         try {
             Auth::logout();
@@ -54,6 +62,9 @@ class AuthAlgo
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function refresh() {
         try {
             $token = Auth::refresh();

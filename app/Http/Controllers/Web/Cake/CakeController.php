@@ -87,7 +87,7 @@ class CakeController extends Controller
     public function file(Request $request)
     {
         $algo = new CakeAlgo();
-        return $algo->file($request);
+        return $algo->saveCakeImage($request);
     }
 
     public function getFile($path)

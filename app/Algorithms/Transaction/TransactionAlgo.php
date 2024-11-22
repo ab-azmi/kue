@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionAlgo
 {
+    /**
+     * @param Transaction|int|null
+     * @param array
+     */
     public function __construct(public Transaction|int|null $transaction = null, private $cakeVariants = [])
     {
         if (is_int($transaction)) {
