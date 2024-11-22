@@ -30,7 +30,7 @@ class CakeParser extends BaseParser
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'ingredients' => CakeComponentIngredientParser::get($data->ingredients()->wherePivot('isActive', true)->get()),
-            'variant' => CakeVariantParser::first($data->variant),
+            'variants' => CakeVariantParser::briefs($data->variants),
             'discounts' => CakeDiscountParser::get($data->discount),
         ];
     }

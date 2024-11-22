@@ -32,7 +32,7 @@ class TransactionController extends Controller
     public function create(TransactionRequest $request)
     {
         $algo = new TransactionAlgo();
-        return $algo->store($request);
+        return $algo->create($request);
     }
 
     /**

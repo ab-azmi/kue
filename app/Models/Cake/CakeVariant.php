@@ -4,7 +4,11 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Cake;
+use App\Models\Transaction\Transaction;
+use App\Models\Transaction\TransactionOrder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class CakeVariant extends BaseModel
 {
@@ -21,8 +25,18 @@ class CakeVariant extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
-    public function cakes(): HasMany
+    public function cake(): BelongsTo
     {
-        return $this->hasMany(Cake::class);
+        return $this->belongsTo(Cake::class, 'cakeId');
+    }
+
+    public function order(): HasMany
+    {
+        return $this->hasMany(TransactionOrder::class, 'cakeVariantId');
+    }
+
+    public function transactions(): HasManyThrough
+    {
+        return $this->hasManyThrough(TransactionOrder::class, Transaction::class, 'cakeVariantId', 'transactionId');
     }
 }

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('transactionId');
             $table->foreign('transactionId')->references('id')->on('transactions')->cascadeOnDelete();
 
-            $table->foreignId('cakeId');
-            $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
+            $table->foreignId('cakeVariantId');
+            $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->cascadeOnDelete();
             
             $table->integer('quantity')->default(1);
             $table->float('price')->nullable();

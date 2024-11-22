@@ -17,6 +17,9 @@ return new class extends Migration
     {
         Schema::create('cake_variants', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cakeId');
+            $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
+            
             $table->string('name');
             $table->float('price');
             $table->string('description')->nullable();
