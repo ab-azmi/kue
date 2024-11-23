@@ -27,10 +27,11 @@ class CakeRequest extends FormRequest
             'stock' => 'required|numeric|max:255',
             'profitMargin' => 'nullable|string|max:255',
             'COGS' => 'nullable|numeric|max:255',
-            'sellingPrice' => 'nullable|numeric|max:255',
-            'images' => 'json',
+            'sellingPrice' => 'nullable|numeric',
+            'images' => 'array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'ingredients' => 'array',
-            'ingredients.*.id' => 'numeric|max:255',
+            'ingredients.*.ingredientId' => 'numeric|max:255',
             'ingredients.*.quantity' => 'numeric|max:255',
         ];
     }

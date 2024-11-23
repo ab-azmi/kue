@@ -37,7 +37,6 @@ Route::prefix('cakes')
         Route::get('', [CakeController::class, 'get']);
         Route::post('', [CakeController::class, 'create']);
         Route::post('cogs', [CakeController::class, 'COGS']);
-        Route::post('files', [CakeController::class, 'file']);
         Route::get('{id}', [CakeController::class, 'detail']);
         Route::put('{id}', [CakeController::class, 'update']);
         Route::delete('{id}', [CakeController::class, 'delete']);

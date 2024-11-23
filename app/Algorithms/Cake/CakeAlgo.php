@@ -40,6 +40,8 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $this->saveCake($request);
 
+                $this->saveCakeImages($request);
+
                 $this->syncIngredientsRelationship($request->ingredients);
 
                 $this->syncIngredientStock($request->ingredients);
@@ -150,29 +152,25 @@ class CakeAlgo
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveCakeImage(Request $request)
+    public function saveCakeImages(Request $request)
     {
-        try {
-            $path = Path::STORAGE_CAKE_PUBLIC;
 
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
+        $path = Path::STORAGE_CAKE_PUBLIC;
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
                 $fileName = $file->getClientOriginalName();
-                
+
                 $uploaded = $file->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
                 if (!$uploaded) {
                     errCakeUploadImage();
                 }
 
-                return success([
-                    'name' => $path . DIRECTORY_SEPARATOR . $fileName,
-                    'path' => storage_link($path.'/'.$fileName)
-                ]);
-            }
+                $images = json_decode($this->cake->images, true);
+                $images[] = storage_link($path . DIRECTORY_SEPARATOR . $fileName);;
 
-        } catch (\Exception $e) {
-            return exception($e);
+                $this->cake->update(['images' => json_encode($images)]);
+            }
         }
     }
 
@@ -187,7 +185,6 @@ class CakeAlgo
             'profitMargin',
             'COGS',
             'sellingPrice',
-            'images',
         ]);
 
         if ($this->cake) {
@@ -213,6 +210,10 @@ class CakeAlgo
 
 
         foreach ($ingredients as $ingredient) {
+            if(is_string($ingredient)) {
+                $ingredient = json_decode($ingredient, true);
+            }
+
             if (in_array($ingredient['ingredientId'], $existingIds)) {
                 $this->cake->ingredients()->updateExistingPivot($ingredient['ingredientId'], [
                     'quantity' => $ingredient['quantity'] * $this->cake->stock,
@@ -234,6 +235,10 @@ class CakeAlgo
         }
 
         foreach ($ingredients as $ingredient) {
+            if(is_string($ingredient)) {
+                $ingredient = json_decode($ingredient, true);
+            }
+            
             $ingredientModel = $this->cake->ingredients()->find($ingredient['ingredientId']);
             if (!$ingredientModel) {
                 errCakeIngredientGet();

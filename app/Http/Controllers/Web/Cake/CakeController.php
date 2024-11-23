@@ -84,12 +84,6 @@ class CakeController extends Controller
         return $algo->COGS($request);
     }
 
-    public function file(Request $request)
-    {
-        $algo = new CakeAlgo();
-        return $algo->saveCakeImage($request);
-    }
-
     public function getFile($path)
     {
         $cake = Path::STORAGE_CAKE_PUBLIC;
