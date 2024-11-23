@@ -92,6 +92,7 @@ class CakeController extends Controller
 
     public function getFile($path)
     {
-        return response()->file(Path::STORAGE_PUBLIC_PATH('cakes') . '/' . $path);
+        $cake = Path::STORAGE_CAKE_PUBLIC;
+        return response()->file(Path::STORAGE_PUBLIC_PATH($cake) . '/' . $path);
     }
 }
