@@ -71,6 +71,8 @@ class CakeAlgo
 
                 $this->saveCake($request);
 
+                $this->saveCakeImages($request);
+
                 $oldIngredients = $this->cake->ingredients;
 
                 $this->syncIngredientsRelationship($request->ingredients);
@@ -154,22 +156,25 @@ class CakeAlgo
      */
     public function saveCakeImages(Request $request)
     {
+        if ($request->has('images')) {
+            $path = Path::STORAGE_CAKE_PUBLIC;
 
-        $path = Path::STORAGE_CAKE_PUBLIC;
+            foreach ($request->file('images') as $obj) {
+                if ($obj['file']) {
+                    $fileName = $this->getFileName($obj['file']->getClientOriginalName());
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $fileName = $file->getClientOriginalName();
+                    $uploaded = $obj['file']->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
+                    if (!$uploaded) {
+                        errCakeUploadImage();
+                    }
 
-                $uploaded = $file->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
-                if (!$uploaded) {
-                    errCakeUploadImage();
+                    $images[] = [
+                        'path' => $path . DIRECTORY_SEPARATOR . $fileName,
+                        'mime' => $obj['file']->getClientMimeType(),
+                        'file' => null,
+                        'link' => storage_link($path . DIRECTORY_SEPARATOR . $fileName)
+                    ];
                 }
-
-                $images[] = [
-                    'path' => $path . DIRECTORY_SEPARATOR . $fileName,
-                    'link' => storage_link($path . DIRECTORY_SEPARATOR . $fileName)
-                ];
 
                 $this->cake->images = $images;
                 $this->cake->save();
@@ -213,7 +218,7 @@ class CakeAlgo
 
 
         foreach ($ingredients as $ingredient) {
-            if(is_string($ingredient)) {
+            if (is_string($ingredient)) {
                 $ingredient = json_decode($ingredient, true);
             }
 
@@ -238,10 +243,10 @@ class CakeAlgo
         }
 
         foreach ($ingredients as $ingredient) {
-            if(is_string($ingredient)) {
+            if (is_string($ingredient)) {
                 $ingredient = json_decode($ingredient, true);
             }
-            
+
             $ingredientModel = $this->cake->ingredients()->find($ingredient['ingredientId']);
             if (!$ingredientModel) {
                 errCakeIngredientGet();
@@ -322,5 +327,16 @@ class CakeAlgo
         }
 
         return $totalIngredientCost;
+    }
+
+    private function getFileName($originalName): string
+    {
+        $rand = rand(1000, 9999);
+
+        $time = time();
+        
+        $fileName = str_replace(' ', '_', $originalName);
+
+        return $time . $rand . '_' . $fileName;
     }
 }
