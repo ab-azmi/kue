@@ -6,15 +6,8 @@ use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
 use App\Models\Cake\CakeComponentIngredient;
 use App\Models\Cake\CakeVariant;
-use App\Models\Transaction\Transaction;
-use App\Models\Transaction\TransactionOrder;
-use App\Observers\Cake\CakeObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cake extends BaseModel
 {
