@@ -1,9 +1,9 @@
 <?php
 namespace App\Services\Constant\Cake;
 
-use App\Services\Constant\BaseCodeName;
+use App\Services\Constant\BaseIDName;
 
-class CakeIngredientUnit extends BaseCodeName
+class CakeIngredientUnit extends BaseIDName
 {
     const GRAM_ID = 1;
     const GRAM = 'gram';

@@ -31,4 +31,15 @@ class CakeComponentIngredient extends BaseModel
             ->as('used');
     }
 
+    /** --- FUNCTIONS --- **/
+    
+    public function incrementStock(int $quantity)
+    {
+        return $this->increment('quantity', $quantity);
+    }
+
+    public function decrementStock(int $quantity)
+    {
+        return $this->decrement('quantity', $quantity);
+    }
 }
