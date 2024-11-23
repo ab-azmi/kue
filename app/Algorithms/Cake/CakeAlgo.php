@@ -153,27 +153,24 @@ class CakeAlgo
     public function saveCakeImage(Request $request)
     {
         try {
-            $path = Path::STORAGE_PUBLIC_PATH('cakes');
-
-            $attachment = [];
+            $path = Path::STORAGE_CAKE_PUBLIC;
 
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
 
                 $fileName = $file->getClientOriginalName();
-
-                $uploaded = $file->storeAs($path, $fileName, 'public');
+                
+                $uploaded = $file->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
                 if (!$uploaded) {
                     errCakeUploadImage();
                 }
 
-                $attachment = [
-                    'name' => $fileName,
-                    'path' => Path::CAKE_URL_PATH($fileName)
-                ];
+                return success([
+                    'name' => $path . DIRECTORY_SEPARATOR . $fileName,
+                    'path' => storage_link($path.'/'.$fileName)
+                ]);
             }
 
-            return success($attachment);
         } catch (\Exception $e) {
             return exception($e);
         }

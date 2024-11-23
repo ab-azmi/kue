@@ -41,6 +41,6 @@ Route::prefix('cakes')
         Route::get('{id}', [CakeController::class, 'detail']);
         Route::put('{id}', [CakeController::class, 'update']);
         Route::delete('{id}', [CakeController::class, 'delete']);
-        Route::get('files/{path}', [CakeController::class, 'getFile'])->withoutMiddleware('auth:api');
     });
-
+    
+    Route::get('storage/cakes/{path}', [CakeController::class, 'getFile'])->withoutMiddleware('auth:api');
