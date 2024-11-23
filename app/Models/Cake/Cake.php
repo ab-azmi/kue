@@ -23,6 +23,7 @@ class Cake extends BaseModel
         'profitMargin' => 'float',
         'COGS' => 'float',
         'sellingPrice' => 'float',
+        'images' => 'array',
     ];
 
     /** --- RELATIONSHIP --- */
