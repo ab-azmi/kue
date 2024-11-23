@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Cake\Cake;
 use Illuminate\Console\Command;
 
 class TestCommand extends Command
@@ -11,6 +12,6 @@ class TestCommand extends Command
 
     public function handle()
     {
-        //
+        
     }
 }

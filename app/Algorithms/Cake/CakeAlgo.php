@@ -166,10 +166,13 @@ class CakeAlgo
                     errCakeUploadImage();
                 }
 
-                $images = json_decode($this->cake->images, true);
-                $images[] = storage_link($path . DIRECTORY_SEPARATOR . $fileName);;
+                $images[] = [
+                    'path' => $path . DIRECTORY_SEPARATOR . $fileName,
+                    'link' => storage_link($path . DIRECTORY_SEPARATOR . $fileName)
+                ];
 
-                $this->cake->update(['images' => json_encode($images)]);
+                $this->cake->images = $images;
+                $this->cake->save();
             }
         }
     }
