@@ -21,10 +21,7 @@ class CakeComponentIngredientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unit' => [
-                'id' => $data->unitId,
-                'name' => CakeIngredientUnit::OPTION[$data->unitId]
-            ],
+            'unit' => CakeIngredientUnit::idName($data->unitId),
             'price' => $data->price,
             'expirationDate' => $data->expirationDate->format('d/m/Y H:i'),
             'quantity' => $data->quantity,
@@ -44,10 +41,7 @@ class CakeComponentIngredientParser extends BaseParser
         return [
             'id' => $data->id,
             'name' => $data->name,
-            'unit' => [
-                'id' => $data->unitId,
-                'name' => CakeIngredientUnit::OPTION[$data->unitId]
-            ],
+            'unit' => CakeIngredientUnit::idName($data->unitId),
             'price' => $data->price,
             'expirationDate' => $data->expirationDate->format('d/m/Y H:i'),
             'quantity' => $data->quantity,
