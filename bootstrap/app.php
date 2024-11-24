@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\JWTMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         Route::match(['get', 'post'], 'testing', "$namespace\\Controller@testing");
 
         Route::prefix(config('base.conf.prefix.web') . "/$version/$service")
-            ->middleware(['web', 'auth:api'])
+            ->middleware(['web', 'jwt'])
             ->namespace("$namespace\\" . config('base.conf.namespace.web'))
             ->group(base_path('routes/web.php'));
 
@@ -32,9 +33,12 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: ['/api/*']);
+        $middleware->alias([
+            'jwt' => JWTMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        
+        //handle unauthenticated
     })->withSchedule(function () {
         //
     })->create();

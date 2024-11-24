@@ -48,7 +48,7 @@ class CakeAlgo
 
                 $this->syncIngredientStock($request);
 
-                $this->cake->load('variants');
+                $this->cake->load('variants'); //TODO : Hanlde variant payload
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : ' . $this->cake->id);
@@ -219,7 +219,6 @@ class CakeAlgo
         $existingIds = $this->cake->ingredients()->pluck('cake_component_ingredients.id')->toArray();
         $incomingIds = array_column($request->ingredients, 'ingredientId');
 
-
         $toAttach = array_diff($incomingIds, $existingIds);
 
         $toDetach = array_diff($existingIds, $incomingIds);
@@ -245,6 +244,7 @@ class CakeAlgo
     {
         $pivotRows = array_map(function ($id) use ($request) {
             $ingredient = $request->ingredients[array_search($id, array_column($request->ingredients, 'ingredientId'))];
+
             return [
                 'cakeId' => $this->cake->id,
                 'ingredientId' => $id,
@@ -314,7 +314,7 @@ class CakeAlgo
     {
         $totalIngredientCost = 0;
 
-        $ingredientIds = array_unique(array_column($request->ingredients, 'id'));
+        $ingredientIds = array_column($request->ingredients, 'id');
 
         $ingredients = CakeComponentIngredient::whereIn('id', $ingredientIds)->get()->keyBy('id');
         if (count($ingredients) !== count($ingredientIds)) {
