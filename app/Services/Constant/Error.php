@@ -172,7 +172,6 @@ class Error extends BaseCodeName
         ],
     ];
 
-    // TODO : Eror status setting & Cake
     const SETTING = [
         'UPDATE_FAILED' => [
             'code' => 500,
