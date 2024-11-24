@@ -21,4 +21,11 @@ class SettingFixedCost extends BaseModel
         'amount' => 'float',
     ];
 
+    /** --- FUNCTIONS --- **/
+
+    public static function getFixedCostMonthly(): float
+    {
+        return self::where('frequency', 'monthly')->sum('amount');
+    }
+
 }

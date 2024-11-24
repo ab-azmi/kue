@@ -20,8 +20,6 @@ class TransactionNumber extends BaseNumber
 
     public static function generate(): string
     {
-        // TODO : Custom NUMBER pattern
-        // TSX000001FJDOENVDS210924
         $number = '';
 
         $date = now();

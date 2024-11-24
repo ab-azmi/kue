@@ -38,13 +38,15 @@ class CakeAlgo
     {
         try {
             DB::transaction(function () use ($request) {
+                $request['ingredients'] = $this->encodeIngredientJSON($request);
+
                 $this->saveCake($request);
 
                 $this->saveCakeImages($request);
 
-                $this->syncIngredientsRelationship($request->ingredients);
+                $this->syncIngredientsRelationship($request);
 
-                $this->syncIngredientStock($request->ingredients);
+                $this->syncIngredientStock($request);
 
                 $this->cake->load('variants');
 
@@ -67,6 +69,8 @@ class CakeAlgo
 
         try {
             DB::transaction(function () use ($request) {
+                $request['ingredients'] = $this->encodeIngredientJSON($request);
+
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 $this->saveCake($request);
@@ -75,9 +79,9 @@ class CakeAlgo
 
                 $oldIngredients = $this->cake->ingredients;
 
-                $this->syncIngredientsRelationship($request->ingredients);
+                $this->syncIngredientsRelationship($request);
 
-                $this->syncIngredientStock($request->ingredients, $oldIngredients);
+                $this->syncIngredientStock($request, $oldIngredients);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : ' . $this->cake->id);
@@ -99,7 +103,7 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
                 $ids = $this->cake->ingredients()->pluck('id')->toArray();
-                $this->cake->ingredients()->updateExistingPivot($ids, ['isActive' => false]);
+                $this->detachIngredients($ids);
 
                 $deleted = $this->cake->delete();
                 if (!$deleted) {
@@ -123,11 +127,11 @@ class CakeAlgo
     public function COGS(Request $request)
     {
         try {
-            $margin = $this->getMargin($request);
+            $margin = $this->getMarginDecimal($request);
 
-            $salarySum = $this->getSalarySum();
+            $salarySum = EmployeeSalary::getTotalSalary();
 
-            $fixedCostMonthly = $this->getFixedCostMonthly();
+            $fixedCostMonthly = SettingFixedCost::getFixedCostMonthly();
 
             $totalIngredientCost = $this->calculateIngredientsCost($request);
 
@@ -210,49 +214,63 @@ class CakeAlgo
         }
     }
 
-    private function syncIngredientsRelationship($ingredients)
+    private function syncIngredientsRelationship($request)
     {
         $existingIds = $this->cake->ingredients()->pluck('cake_component_ingredients.id')->toArray();
+        $incomingIds = array_column($request->ingredients, 'ingredientId');
 
-        $this->cake->ingredients()->updateExistingPivot($existingIds, ['isActive' => false, 'quantity' => 0]);
 
+        $toAttach = array_diff($incomingIds, $existingIds);
 
-        foreach ($ingredients as $ingredient) {
-            if (is_string($ingredient)) {
-                $ingredient = json_decode($ingredient, true);
-            }
+        $toDetach = array_diff($existingIds, $incomingIds);
 
-            if (in_array($ingredient['ingredientId'], $existingIds)) {
-                $this->cake->ingredients()->updateExistingPivot($ingredient['ingredientId'], [
-                    'quantity' => $ingredient['quantity'] * $this->cake->stock,
-                    'isActive' => true
-                ]);
-            } else {
-                $this->cake->ingredients()->attach($ingredient['ingredientId'], [
-                    'quantity' => $ingredient['quantity'] * $this->cake->stock,
-                    'isActive' => true
-                ]);
-            }
+        if (count($toDetach) > 0) {
+            $this->detachIngredients($toDetach);
+        }
+
+        if (count($toAttach) > 0) {
+            $this->attachIngredients($request, $toAttach);
         }
     }
 
-    private function syncIngredientStock($ingredients, $oldIngredients = null)
+    private function detachIngredients($toDetach)
+    {
+        DB::table('cake_ingredients')
+            ->where('cakeId', $this->cake->id)
+            ->whereIn('ingredientId', $toDetach)
+            ->delete();
+    }
+
+    private function attachIngredients($request, $toAttach)
+    {
+        $pivotRows = array_map(function ($id) use ($request) {
+            $ingredient = $request->ingredients[array_search($id, array_column($request->ingredients, 'ingredientId'))];
+            return [
+                'cakeId' => $this->cake->id,
+                'ingredientId' => $id,
+                'quantity' => $ingredient->quantity,
+                'createdAt' => now(),
+                'updatedAt' => now()
+            ];
+        }, $toAttach);
+
+        DB::table('cake_ingredients')->insert($pivotRows);
+    }
+
+    private function syncIngredientStock($request, $oldIngredients = null)
     {
         if ($oldIngredients) {
             $this->incrementIngredientStock($oldIngredients);
         }
 
-        foreach ($ingredients as $ingredient) {
-            if (is_string($ingredient)) {
-                $ingredient = json_decode($ingredient, true);
-            }
+        foreach ($request->ingredients as $ingredient) {
 
-            $ingredientModel = $this->cake->ingredients()->find($ingredient['ingredientId']);
+            $ingredientModel = $this->cake->ingredients()->find($ingredient->ingredientId);
             if (!$ingredientModel) {
                 errCakeIngredientGet();
             }
 
-            $decremented = $ingredientModel->decrementStock(($ingredient['quantity'] * $this->cake->stock));
+            $decremented = $ingredientModel->decrementStock(($ingredient->quantity * $this->cake->stock));
             if (!$decremented) {
                 errCakeIngredientDecrementStock();
             }
@@ -271,12 +289,12 @@ class CakeAlgo
         }
     }
 
-    private function calculateSellingPrice(int $cogs, float $margin)
+    private function calculateSellingPrice(float $cogs, float $margin)
     {
         return $cogs * (1 + $margin);
     }
 
-    private function getMargin(Request $request): float
+    private function getMarginDecimal(Request $request): float
     {
         $default = Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value;
 
@@ -287,24 +305,13 @@ class CakeAlgo
         return $default;
     }
 
-    private function getSalarySum(): int
-    {
-        return EmployeeSalary::sum('totalSalary');
-    }
-
-    private function getFixedCostMonthly(): int
-    {
-        return SettingFixedCost::where('frequency', 'monthly')->sum('amount');
-    }
-
-    private function calculateSums(int $salarySum, int $fixedCostMonthly, int $totalIngredientCost): int
+    private function calculateSums(float $salarySum, float $fixedCostMonthly, float $totalIngredientCost): float
     {
         return $salarySum + $fixedCostMonthly + $totalIngredientCost;
     }
 
-    private function calculateIngredientsCost($request): int
+    private function calculateIngredientsCost($request): float
     {
-
         $totalIngredientCost = 0;
 
         $ingredientIds = array_unique(array_column($request->ingredients, 'id'));
@@ -334,9 +341,16 @@ class CakeAlgo
         $rand = rand(1000, 9999);
 
         $time = time();
-        
+
         $fileName = str_replace(' ', '_', $originalName);
 
         return $time . $rand . '_' . $fileName;
+    }
+
+    private function encodeIngredientJSON($request)
+    {
+        return array_map(function ($ingredient) {
+            return json_decode($ingredient);
+        }, $request->ingredients);
     }
 }

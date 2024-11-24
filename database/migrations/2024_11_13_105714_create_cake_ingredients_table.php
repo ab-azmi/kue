@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreign('ingredientId')->references('id')->on('cake_component_ingredients')->constrained()->onDelete('cascade');
             
             $table->integer('quantity');
-            $table->boolean('isActive')->default(true);
             $this->getDefaultTimestamps($table);
         });
     }
