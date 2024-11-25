@@ -26,7 +26,7 @@ class CakeComponentIngredient extends BaseModel
     public function cakes(): BelongsToMany
     {
         return $this->belongsToMany(Cake::class, 'cake_ingredients', 'ingredientId', 'cakeId')
-            ->withPivot(['quantity', 'isActive'])
+            ->withPivot(['quantity'])
             ->as('used');
     }
 
