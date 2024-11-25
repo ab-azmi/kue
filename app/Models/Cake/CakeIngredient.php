@@ -13,7 +13,6 @@ class CakeIngredient extends BaseModel
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-        self::DELETED_AT => 'datetime',
-        'isActive' => 'boolean',
+        self::DELETED_AT => 'datetime'
     ];
 }

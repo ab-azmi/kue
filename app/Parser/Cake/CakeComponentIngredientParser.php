@@ -27,6 +27,7 @@ class CakeComponentIngredientParser extends BaseParser
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'used' => $data->used,
+            'cakes' => CakeParser::briefs($data->cakes),
         ];
     }
 
