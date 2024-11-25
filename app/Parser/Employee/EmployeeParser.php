@@ -40,8 +40,7 @@ class EmployeeParser extends BaseParser
             'address' => $data->address,
             'phone' => $data->phone,
             'bankNumber' => $data->bankNumber,
-            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
-            'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
+            'user' => EmployeeUserParser::brief($data->user),
         ];
     }
 }

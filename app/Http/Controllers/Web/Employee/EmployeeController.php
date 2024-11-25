@@ -17,9 +17,9 @@ class EmployeeController extends Controller
      */
     public function get(Request $request)
     {
-        $employees = Employee::getOrPaginate($request, true);
+        $employees = Employee::filter($request)->with('user')->getOrPaginate($request, true);
 
-        return success($employees);
+        return success(EmployeeParser::briefs($employees));
     }
 
     /**
