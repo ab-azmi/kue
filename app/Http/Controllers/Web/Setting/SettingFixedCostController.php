@@ -17,9 +17,9 @@ class SettingFixedCostController extends Controller
      */
     public function get(Request $request)
     {
-        $fixedCosts = SettingFixedCost::orderBy('createdAt')->getOrPaginate($request, true);
+        $fixedCosts = SettingFixedCost::filter($request)->getOrPaginate($request, true);
 
-        return success($fixedCosts);
+        return success(SettingFixedCostParser::get($fixedCosts));
     }
 
     /**
