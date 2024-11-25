@@ -7,13 +7,11 @@ use GlobalXtreme\Parser\BaseParser;
 class CakeDiscountParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -34,7 +32,7 @@ class CakeDiscountParser extends BaseParser
 
     public static function brief($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -51,5 +49,4 @@ class CakeDiscountParser extends BaseParser
             'deletedAt' => $data->deletedAt?->format('d/m/Y H:i'),
         ];
     }
-
 }

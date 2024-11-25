@@ -3,7 +3,6 @@
 namespace App\Models\Cake;
 
 use App\Models\BaseModel;
-use App\Models\Cake\Cake;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class CakeVariant extends BaseModel
 {
     protected $table = 'cake_variants';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -22,9 +22,7 @@ class CakeVariant extends BaseModel
         'price' => 'float',
     ];
 
-
     /** --- RELATIONSHIP --- */
-
     public function cake(): BelongsTo
     {
         return $this->belongsTo(Cake::class, 'cakeId');

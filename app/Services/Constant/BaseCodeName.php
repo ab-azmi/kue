@@ -10,15 +10,8 @@ class BaseCodeName
 
     private const CAPITALS = [];
 
-
     /** --- FUNCTIONS --- */
-
-    /**
-     * @param array|null $options
-     *
-     * @return array
-     */
-    public static function get(array|null $options = null): array
+    public static function get(?array $options = null): array
     {
         if ($options) {
             return collect($options)->map(function ($option) {
@@ -34,14 +27,9 @@ class BaseCodeName
         return $data;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     public static function display(string $value): string
     {
-        $value = str_replace("_", " ", $value);
+        $value = str_replace('_', ' ', $value);
         $value = Str::title($value);
 
         foreach (self::CAPITALS as $CAPITAL) {
@@ -56,28 +44,17 @@ class BaseCodeName
         return $value;
     }
 
-    /**
-     * @param string|null $code
-     *
-     * @return array|null
-     */
-    public static function codeName(string|null $code = null): array|null
+    public static function codeName(?string $code = null): ?array
     {
-        if (!$code) {
+        if (! $code) {
             return null;
         }
 
         return ['code' => $code, 'name' => static::display($code)];
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     public static function toCamelCase(string $value): string
     {
         return Str::camel($value);
     }
-
 }

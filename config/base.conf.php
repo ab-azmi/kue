@@ -17,7 +17,6 @@ return [
 
     'service' => env('SERVICE_NAME', ''),
 
-
     /*
      |--------------------------------------------------------------------------
      | Base Prefix & Namespace
@@ -49,7 +48,7 @@ return [
     ],
 
     'dev-emails' => [
-        'yuswa98@gmail.com'
+        'yuswa98@gmail.com',
     ],
 
     'storage-link' => env('API_GATEWAY_LINK_URL', 'http://localhost/'),

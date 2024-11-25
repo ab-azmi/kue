@@ -4,7 +4,6 @@ namespace Database\Seeders\Cake;
 
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngredient;
-use App\Models\Cake\CakeVariant;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +13,6 @@ class CakeSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-
     public function run(): void
     {
         $data = $this->getData();
@@ -28,10 +26,10 @@ class CakeSeeder extends Seeder
                 'sellingPrice' => $item['sellingPrice'],
                 'images' => $item['images'],
             ]);
-            
+
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
                 $cake->ingredients()->attach($ingredient->id, [
-                    'quantity' => rand(1, 5)
+                    'quantity' => rand(1, 5),
                 ]);
             }
             $cake->variants()->createMany($item['variants']);
@@ -57,12 +55,10 @@ class CakeSeeder extends Seeder
         ]);
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'name' => 'Polar Bear Cake',
                 'profitMargin' => 0.5,
@@ -84,7 +80,7 @@ class CakeSeeder extends Seeder
                         'price' => 100000,
                         'description' => 'Polar Bear Cake - Variant 2 Description',
                     ],
-                ]
+                ],
             ],
             [
                 'name' => 'Panda Cake',
@@ -107,9 +103,8 @@ class CakeSeeder extends Seeder
                         'price' => 400000,
                         'description' => 'Panda Cake - Variant 2 Description',
                     ],
-                ]
-            ]
-        );
+                ],
+            ],
+        ];
     }
-
 }

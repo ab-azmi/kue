@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Generator;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'make:activity')]
@@ -100,7 +99,7 @@ class ActivityMakeCommand extends GeneratorCommand
         $names = preg_split('~[\\\\/]~', $name);
 
         $class = last($names);
-        $class = 'HasActivity' . $class . 'Property';
+        $class = 'HasActivity'.$class.'Property';
 
         $names[array_key_last($names)] = 'Traits';
         $names[] = $class;
@@ -143,5 +142,4 @@ class ActivityMakeCommand extends GeneratorCommand
     {
         return config('base.conf.version');
     }
-
 }

@@ -7,13 +7,11 @@ use GlobalXtreme\Parser\BaseParser;
 class SettingFixedCostParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -27,5 +25,4 @@ class SettingFixedCostParser extends BaseParser
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
-
 }

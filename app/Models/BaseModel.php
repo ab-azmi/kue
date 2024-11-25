@@ -8,21 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BaseModel extends Model
 {
-    use SoftDeletes;
     use GetOrPaginate;
+    use SoftDeletes;
 
     // Custom date times column
     const CREATED_AT = 'createdAt';
-    const UPDATED_AT = 'updatedAt';
-    const DELETED_AT = 'deletedAt';
 
+    const UPDATED_AT = 'updatedAt';
+
+    const DELETED_AT = 'deletedAt';
 
     // Var for generate number
     public $numberPrefix = 'GX';
 
-
     /** --- SCOPES --- */
-
     public function scopeOfDate($query, $key = 'date', $fromDate = null, $toDate = null)
     {
         $fromDate = $fromDate ?: now()->subMonth()->format('d/m/Y');
@@ -34,12 +33,9 @@ class BaseModel extends Model
         return $query->whereBetween($key, [$fromDate, $toDate]);
     }
 
-
     /** --- FUNCTIONS --- */
-
     public function hasSearch($request)
     {
         return $request->has('search') && strlen($request->search) >= 3;
     }
-
 }

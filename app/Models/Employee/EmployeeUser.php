@@ -2,20 +2,18 @@
 
 namespace App\Models\Employee;
 
-use App\Models\Employee\Employee;
 use App\Models\Employee\Traits\HasActivityEmployeeUserProperty;
 use App\Models\GetOrPaginate;
-use App\Observers\User\UserObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class EmployeeUser extends Authenticatable implements JWTSubject
 {
-    use HasActivityEmployeeUserProperty, GetOrPaginate;
-    
+    use GetOrPaginate, HasActivityEmployeeUserProperty;
+
     protected $table = 'employee_users';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -24,6 +22,7 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     ];
 
     const CREATED_AT = 'createdAt';
+
     const UPDATED_AT = 'updatedAt';
 
     /**
@@ -43,7 +42,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     }
 
     /** Relationship **/
-
     public function employee(): HasOne
     {
         return $this->hasOne(Employee::class, 'userId');

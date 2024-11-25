@@ -9,7 +9,6 @@ return new class extends Migration
 {
     use HasCustomMigration;
 
-
     /**
      * Run the migrations.
      */
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->foreign('cakeId')->references('id')->on('cakes')->constrained()->onDelete('cascade');
             $table->foreignId('ingredientId');
             $table->foreign('ingredientId')->references('id')->on('cake_component_ingredients')->constrained()->onDelete('cascade');
-            
+
             $table->integer('quantity');
             $this->getDefaultTimestamps($table);
         });

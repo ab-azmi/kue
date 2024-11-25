@@ -2,8 +2,8 @@
 
 use App\Services\Constant\Error;
 
-if (!function_exists("errSettingUpdate")) {
-    function errSettingUpdate($internalMsg = "", $status = null)
+if (! function_exists('errSettingUpdate')) {
+    function errSettingUpdate($internalMsg = '', $status = null)
     {
         error(
             Error::SETTING['UPDATE_FAILED']['code'],
@@ -14,7 +14,7 @@ if (!function_exists("errSettingUpdate")) {
     }
 }
 
-if (!function_exists("errSettingGet")) {
+if (! function_exists('errSettingGet')) {
     function errSettingGet($data = null, $status = null)
     {
         success(
@@ -27,9 +27,8 @@ if (!function_exists("errSettingGet")) {
 }
 
 /** --- FIXED COST --- **/
-
-if (!function_exists("errSettingFixedCostCreate")) {
-    function errSettingFixedCostCreate($internalMsg = "", $status = null)
+if (! function_exists('errSettingFixedCostCreate')) {
+    function errSettingFixedCostCreate($internalMsg = '', $status = null)
     {
         error(
             Error::SETTING['FIXEDCOST_CREATE_FAILED']['code'],
@@ -40,8 +39,8 @@ if (!function_exists("errSettingFixedCostCreate")) {
     }
 }
 
-if (!function_exists("errSettingFixedCostUpdate")) {
-    function errSettingFixedCostUpdate($internalMsg = "", $status = null)
+if (! function_exists('errSettingFixedCostUpdate')) {
+    function errSettingFixedCostUpdate($internalMsg = '', $status = null)
     {
         error(
             Error::SETTING['FIXEDCOST_UPDATE_FAILED']['code'],
@@ -52,8 +51,8 @@ if (!function_exists("errSettingFixedCostUpdate")) {
     }
 }
 
-if (!function_exists("errSettingFixedCostDelete")) {
-    function errSettingFixedCostDelete($internalMsg = "", $status = null)
+if (! function_exists('errSettingFixedCostDelete')) {
+    function errSettingFixedCostDelete($internalMsg = '', $status = null)
     {
         error(
             Error::SETTING['FIXEDCOST_DELETE_FAILED']['code'],
@@ -64,8 +63,8 @@ if (!function_exists("errSettingFixedCostDelete")) {
     }
 }
 
-if (!function_exists("errSettingFixedCostGet")) {
-    function errSettingFixedCostGet($internalMsg = "", $status = null)
+if (! function_exists('errSettingFixedCostGet')) {
+    function errSettingFixedCostGet($internalMsg = '', $status = null)
     {
         error(
             Error::SETTING['FIXEDCOST_NOT_FOUND']['code'],

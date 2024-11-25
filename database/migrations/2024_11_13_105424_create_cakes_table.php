@@ -9,14 +9,13 @@ return new class extends Migration
 {
     use HasCustomMigration;
 
-
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('cakes', function (Blueprint $table) {
-            $table->id();           
+            $table->id();
             $table->string('name');
             $table->integer('stock')->default(0);
             $table->float('profitMargin')->nullable();

@@ -18,6 +18,7 @@ class SettingFixedCostController extends Controller
     public function get(Request $request)
     {
         $fixedCosts = SettingFixedCost::orderBy('createdAt')->getOrPaginate($request, true);
+
         return success($fixedCosts);
     }
 
@@ -27,18 +28,19 @@ class SettingFixedCostController extends Controller
      */
     public function create(SettingFixedCostRequest $request)
     {
-        $algo = new SettingFixedCostAlgo();
+        $algo = new SettingFixedCostAlgo;
+
         return $algo->create($request);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
     {
         $fixedCost = SettingFixedCost::find($id);
-        if (!$fixedCost) {
+        if (! $fixedCost) {
             errSettingFixedCostGet();
         }
 
@@ -46,23 +48,25 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @param App\Http\Requests\Setting\SettingFixedCostRequest
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, SettingFixedCostRequest $request)
     {
-        $algo = new SettingFixedCostAlgo((int)$id);
+        $algo = new SettingFixedCostAlgo((int) $id);
+
         return $algo->update($request);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id)
     {
-        $algo = new SettingFixedCostAlgo((int)$id);
+        $algo = new SettingFixedCostAlgo((int) $id);
+
         return $algo->delete();
     }
 }

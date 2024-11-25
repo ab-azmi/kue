@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 class CakeController extends Controller
 {
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
@@ -26,17 +25,17 @@ class CakeController extends Controller
     }
 
     /**
-     * @param CakeRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(CakeRequest $request)
     {
-        $algo = new CakeAlgo();
+        $algo = new CakeAlgo;
+
         return $algo->create($request);
     }
 
     /**
-     * @param string $id
+     * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
@@ -44,10 +43,10 @@ class CakeController extends Controller
         $cake = Cake::with([
             'variants',
             'ingredients',
-            'discounts'
+            'discounts',
         ])->find($id);
 
-        if (!$cake) {
+        if (! $cake) {
             errCakeGet();
         }
 
@@ -55,38 +54,40 @@ class CakeController extends Controller
     }
 
     /**
-     * @param CakeRequest $request
-     * @param string $id
+     * @param  string  $id
      */
     public function update($id, CakeRequest $request)
     {
-        $algo = new CakeAlgo((int)$id);
+        $algo = new CakeAlgo((int) $id);
+
         return $algo->update($request);
     }
 
     /**
-     * @param string $id
+     * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id)
     {
-        $algo = new CakeAlgo((int)$id);
+        $algo = new CakeAlgo((int) $id);
+
         return $algo->delete();
     }
 
     /**
-     * @param CakeCOGSRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function COGS(CakeCOGSRequest $request)
     {
-        $algo = new CakeAlgo();
+        $algo = new CakeAlgo;
+
         return $algo->COGS($request);
     }
 
     public function getFile($path)
     {
         $cake = Path::STORAGE_CAKE_PUBLIC;
-        return response()->file(Path::STORAGE_PUBLIC_PATH($cake) . '/' . $path);
+
+        return response()->file(Path::STORAGE_PUBLIC_PATH($cake).'/'.$path);
     }
 }

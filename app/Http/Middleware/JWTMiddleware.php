@@ -21,17 +21,18 @@ class JWTMiddleware
             JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
             return response()->json([
-                "status" => [
-                    "code" => 401,
-                    "message" => "Unauthorized",
-                    "internalMsg" => $e->getMessage(),
-                    "attributes" => ''
+                'status' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
+                    'internalMsg' => $e->getMessage(),
+                    'attributes' => '',
                 ],
-                "result" => [
-                    "message" => "Unauthorized",
-                ]
+                'result' => [
+                    'message' => 'Unauthorized',
+                ],
             ], 401);
         }
+
         return $next($request);
     }
 }

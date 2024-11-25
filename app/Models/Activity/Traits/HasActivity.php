@@ -4,6 +4,7 @@ namespace App\Models\Activity\Traits;
 
 use App\Services\Constant\Activity\ActivityType;
 use Illuminate\Support\Str;
+
 use function activity;
 use function now;
 
@@ -24,35 +25,27 @@ trait HasActivity
      */
     protected $activityProperties = [
         'old' => null,
-        'new' => null
+        'new' => null,
     ];
 
-
-    /**
-     * @return string
-     */
     abstract public function getActivityType(): string;
 
-    /**
-     * @return string
-     */
     abstract public function getActivitySubType(): string;
-
 
     public function getActivityProperties()
     {
         return $this->activityProperties;
     }
 
-    public function saveActivity(string|null $description = null)
+    public function saveActivity(?string $description = null)
     {
         $type = ActivityType::GENERAL;
-        if (method_exists($this, "getActivityType")) {
+        if (method_exists($this, 'getActivityType')) {
             $type = $this->getActivityType();
         }
 
         $subType = '';
-        if (method_exists($this, "getActivitySubType")) {
+        if (method_exists($this, 'getActivitySubType')) {
             $subType = $this->getActivitySubType();
         }
 
@@ -65,9 +58,9 @@ trait HasActivity
             ->log($description);
     }
 
-    public function withActivityProperty(array $property, string|null $key = null)
+    public function withActivityProperty(array $property, ?string $key = null)
     {
-        if (!$key) {
+        if (! $key) {
             $this->activityProperties = array_merge($this->activityProperties, $property);
         } else {
             $this->activityProperties[$key] = $property;
@@ -76,7 +69,7 @@ trait HasActivity
         return $this;
     }
 
-    public function setActivityPropertyAttributes(string $action, string|null $customMethod = null, array|null $others = null)
+    public function setActivityPropertyAttributes(string $action, ?string $customMethod = null, ?array $others = null)
     {
         $this->activityAction = $action;
 
@@ -85,10 +78,11 @@ trait HasActivity
         }
 
         $this->withActivityProperty($this->processGettingAttributes($action, $customMethod), 'new');
+
         return $this;
     }
 
-    public function setOldActivityPropertyAttributes(string $action, string|null $customMethod = null, array|null $others = null)
+    public function setOldActivityPropertyAttributes(string $action, ?string $customMethod = null, ?array $others = null)
     {
         $this->activityAction = $action;
 
@@ -97,16 +91,15 @@ trait HasActivity
         }
 
         $this->withActivityProperty($this->processGettingAttributes($action, $customMethod), 'old');
+
         return $this;
     }
 
-
     /** --- FUNCTIONS --- */
-
-    private function processGettingAttributes(string $action, string|null $customMethod = null)
+    private function processGettingAttributes(string $action, ?string $customMethod = null)
     {
-        $method = "getActivityProperty";
-        $method .= str_replace("_", "", Str::title($action));
+        $method = 'getActivityProperty';
+        $method .= str_replace('_', '', Str::title($action));
 
         if ($customMethod) {
             $method .= Str::ucfirst($customMethod);
@@ -114,5 +107,4 @@ trait HasActivity
 
         return $this->$method();
     }
-
 }

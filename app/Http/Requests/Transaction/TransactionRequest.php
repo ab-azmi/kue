@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Transaction;
 
 use GlobalXtreme\Validation\Support\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
 
 class TransactionRequest extends FormRequest
 {

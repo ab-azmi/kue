@@ -12,14 +12,13 @@ use Illuminate\Http\Request;
 class TransactionController extends Controller
 {
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
         $transactions = Transaction::with([
             'orders',
-            'employee'
+            'employee',
         ])->orderBy('createdAt')->getOrPaginate($request, true);
 
         return success(TransactionParser::briefs($transactions));
@@ -31,12 +30,13 @@ class TransactionController extends Controller
      */
     public function create(TransactionRequest $request)
     {
-        $algo = new TransactionAlgo();
+        $algo = new TransactionAlgo;
+
         return $algo->create($request);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
@@ -44,9 +44,9 @@ class TransactionController extends Controller
         $transaction = Transaction::with([
             'orders',
             'orders.cake',
-            'employee'
+            'employee',
         ])->find($id);
-        if (!$transaction) {
+        if (! $transaction) {
             errTransactionGet();
         }
 
@@ -54,23 +54,25 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @param App\Http\Requests\Transaction\TransactionRequest;
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, TransactionRequest $request)
     {
-        $algo = new TransactionAlgo((int)$id);
+        $algo = new TransactionAlgo((int) $id);
+
         return $algo->update($request);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id)
     {
-        $algo = new TransactionAlgo((int)$id);
+        $algo = new TransactionAlgo((int) $id);
+
         return $algo->delete();
     }
 }

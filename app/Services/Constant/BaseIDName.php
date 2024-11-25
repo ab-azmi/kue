@@ -7,18 +7,11 @@ class BaseIDName
     const UNKNOWN = 'unknown';
 
     const OPTION = [
-        0 => self::UNKNOWN
+        0 => self::UNKNOWN,
     ];
 
-
     /** --- FUNCTIONS --- */
-
-    /**
-     * @param array|null $options
-     *
-     * @return array
-     */
-    public static function get(array|null $options = null): array
+    public static function get(?array $options = null): array
     {
         if ($options) {
             return collect($options)->map(function ($option) {
@@ -34,12 +27,7 @@ class BaseIDName
         return $data;
     }
 
-    /**
-     * @param int|null $id
-     *
-     * @return string
-     */
-    public static function display(int|null $id = null): string
+    public static function display(?int $id = null): string
     {
         if (isset(static::OPTION[$id])) {
             return static::OPTION[$id];
@@ -48,18 +36,12 @@ class BaseIDName
         return self::UNKNOWN;
     }
 
-    /**
-     * @param int|null $id
-     *
-     * @return array|null
-     */
-    public static function idName(int|null $id = null): array|null
+    public static function idName(?int $id = null): ?array
     {
-        if (!$id) {
+        if (! $id) {
             return null;
         }
 
         return ['id' => $id, 'name' => static::display($id)];
     }
-
 }

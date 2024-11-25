@@ -9,23 +9,15 @@ trait HasActivityEmployeeProperty
 {
     use HasActivity;
 
-
-    /**
-     * @return string
-     */
     public function getActivityType(): string
     {
         return ActivityType::GENERAL;
     }
 
-    /**
-     * @return string
-     */
     public function getActivitySubType(): string
     {
         return '';
     }
-
 
     /**
      * @return array
@@ -49,10 +41,9 @@ trait HasActivityEmployeeProperty
     public function getActivityPropertyDelete()
     {
         return $this->setActivityPropertyParser() + [
-                'deletedAt' => $this->deletedAt?->format('d/m/Y H:i')
-            ];
+            'deletedAt' => $this->deletedAt?->format('d/m/Y H:i'),
+        ];
     }
-
 
     /** --- FUNCTIONS --- */
 
@@ -65,5 +56,4 @@ trait HasActivityEmployeeProperty
 
         return [];
     }
-
 }

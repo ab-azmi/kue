@@ -2,8 +2,8 @@
 
 use App\Services\Constant\Error;
 
-if (!function_exists("errTransactionCreate")) {
-    function errTransactionCreate($internalMsg = "", $status = null)
+if (! function_exists('errTransactionCreate')) {
+    function errTransactionCreate($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['CREATE_FAILED']['code'],
@@ -14,8 +14,8 @@ if (!function_exists("errTransactionCreate")) {
     }
 }
 
-if (!function_exists("errTransactionUpdate")) {
-    function errTransactionUpdate($internalMsg = "", $status = null)
+if (! function_exists('errTransactionUpdate')) {
+    function errTransactionUpdate($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['UPDATE_FAILED']['code'],
@@ -26,8 +26,8 @@ if (!function_exists("errTransactionUpdate")) {
     }
 }
 
-if (!function_exists("errTransactionDelete")) {
-    function errTransactionDelete($internalMsg = "", $status = null)
+if (! function_exists('errTransactionDelete')) {
+    function errTransactionDelete($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['DELETE_FAILED']['code'],
@@ -38,8 +38,8 @@ if (!function_exists("errTransactionDelete")) {
     }
 }
 
-if (!function_exists("errTransactionGet")) {
-    function errTransactionGet($internalMsg = "", $status = null)
+if (! function_exists('errTransactionGet')) {
+    function errTransactionGet($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['NOT_FOUND']['code'],
@@ -50,8 +50,8 @@ if (!function_exists("errTransactionGet")) {
     }
 }
 
-if (!function_exists("errTransactionTotalPrice")) {
-    function errTransactionTotalPrice($internalMsg = "", $status = null)
+if (! function_exists('errTransactionTotalPrice')) {
+    function errTransactionTotalPrice($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['FAILED_CALCULATE_TOTAL_PRICE']['code'],
@@ -62,8 +62,8 @@ if (!function_exists("errTransactionTotalPrice")) {
     }
 }
 
-if (!function_exists("errTransactionTotalDiscount")) {
-    function errTransactionTotalDiscount($internalMsg = "", $status = null)
+if (! function_exists('errTransactionTotalDiscount')) {
+    function errTransactionTotalDiscount($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['FAILED_CALCULATE_TOTAL_DISCOUNT']['code'],
@@ -74,8 +74,8 @@ if (!function_exists("errTransactionTotalDiscount")) {
     }
 }
 
-if (!function_exists("errTransactionTax")) {
-    function errTransactionTax($internalMsg = "", $status = null)
+if (! function_exists('errTransactionTax')) {
+    function errTransactionTax($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['FAILED_CALCULATE_TAX']['code'],
@@ -87,9 +87,8 @@ if (!function_exists("errTransactionTax")) {
 }
 
 /** --- TRANSACTION ORDER --- **/
-
-if (!function_exists("errOutOfStockOrder")) {
-    function errOutOfStockOrder($internalMsg = "", $status = null)
+if (! function_exists('errOutOfStockOrder')) {
+    function errOutOfStockOrder($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['OUT_OF_STOCK_ORDER']['code'],
@@ -100,8 +99,8 @@ if (!function_exists("errOutOfStockOrder")) {
     }
 }
 
-if (!function_exists("errCreateOrder")) {
-    function errCreateOrder($internalMsg = "", $status = null)
+if (! function_exists('errCreateOrder')) {
+    function errCreateOrder($internalMsg = '', $status = null)
     {
         error(
             Error::TRANSACTION['ORDER_CREATE_FAILED']['code'],

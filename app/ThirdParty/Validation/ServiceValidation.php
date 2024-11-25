@@ -4,25 +4,20 @@ namespace App\ThirdParty\Validation;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use Illuminate\Support\Facades\Log;
 
 class ServiceValidation
 {
     const CLIENT = 'default';
 
     const URI = [
-        'BASE' => 'open-api/'
+        'BASE' => 'open-api/',
     ];
-
 
     /** --- PROTECTED FUNCTIONS --- */
 
     /**
-     * @param $url
-     * @param $payload
-     * @param $method
-     *
      * @return \Illuminate\Http\JsonResponse|void
+     *
      * @throws \ErrorException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -31,7 +26,7 @@ class ServiceValidation
         try {
 
             // Create a guzzle client
-            $client = new Client();
+            $client = new Client;
 
             // Forward the request and get the response.
             $response = $client->request($method, $url, self::prepare($payload));
@@ -61,7 +56,7 @@ class ServiceValidation
                 error(['code' => $status->code, 'msg' => $status->message], $status->internalMsg, $e->getResponse()->getStatusCode(), $status->attributes);
             }
 
-            errDefault(status:  $e->getResponse()->getStatusCode());
+            errDefault(status: $e->getResponse()->getStatusCode());
         }
     }
 
@@ -70,12 +65,10 @@ class ServiceValidation
      */
     protected static function host()
     {
-        return config('open-api.clients.' . static::CLIENT . '.host');
+        return config('open-api.clients.'.static::CLIENT.'.host');
     }
 
     /**
-     * @param array $payload
-     *
      * @return array
      */
     protected static function prepare(array $payload)
@@ -97,8 +90,8 @@ class ServiceValidation
      */
     protected static function setHeaders()
     {
-        $client = config('open-api.clients.' . static::CLIENT);
-        if (!$client) {
+        $client = config('open-api.clients.'.static::CLIENT);
+        if (! $client) {
             errThirdPartyOpenAPIClientInvalid();
         }
 
@@ -108,5 +101,4 @@ class ServiceValidation
             'Client-Secret' => $client['client-secret'],
         ];
     }
-
 }

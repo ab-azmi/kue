@@ -15,7 +15,7 @@ class ValidFrequency implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!array_key_exists($value, FrequencyConstant::OPTION)) {
+        if (! array_key_exists($value, FrequencyConstant::OPTION)) {
             $fail("The $attribute is invalid.");
         }
     }

@@ -9,7 +9,6 @@ return new class extends Migration
 {
     use HasCustomMigration;
 
-
     /**
      * Run the migrations.
      */
@@ -22,7 +21,7 @@ return new class extends Migration
 
             $table->foreignId('cakeVariantId');
             $table->foreign('cakeVariantId')->references('id')->on('cake_variants')->cascadeOnDelete();
-            
+
             $table->integer('quantity')->default(1);
             $table->float('price')->nullable();
             $table->float('discount')->nullable();

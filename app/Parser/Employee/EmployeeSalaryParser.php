@@ -2,19 +2,16 @@
 
 namespace App\Parser\Employee;
 
-use App\Parser\Employee\EmployeeParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class EmployeeSalaryParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -29,7 +26,7 @@ class EmployeeSalaryParser extends BaseParser
 
     public static function brief($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -40,5 +37,4 @@ class EmployeeSalaryParser extends BaseParser
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
-
 }

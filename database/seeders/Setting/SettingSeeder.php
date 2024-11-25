@@ -20,23 +20,20 @@ class SettingSeeder extends Seeder
         }
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'key' => SettingConstant::TAX_KEY,
                 'description' => 'Tax percentage',
-                'value' => 0.12
+                'value' => 0.12,
             ],
             [
                 'key' => SettingConstant::PROFIT_MARGIN_KEY,
                 'description' => 'Profit margin percentage',
                 'value' => 0.3,
-            ]
-        );
+            ],
+        ];
     }
-
 }

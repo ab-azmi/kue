@@ -18,7 +18,8 @@ class EmployeeController extends Controller
     public function get(Request $request)
     {
         $employees = Employee::getOrPaginate($request, true);
-        return success($employees);   
+
+        return success($employees);
     }
 
     /**
@@ -27,17 +28,18 @@ class EmployeeController extends Controller
      */
     public function create(EmployeeRequest $request)
     {
-        $algo = new EmployeeAlgo();
+        $algo = new EmployeeAlgo;
+
         return $algo->create($request);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      */
     public function detail($id)
     {
         $employee = Employee::with(['user', 'salary'])->find($id);
-        if (!$employee) {
+        if (! $employee) {
             errEmployeeGet();
         }
 
@@ -45,23 +47,24 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @param App\Http\Requests\Employee\EmployeeRequest
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, EmployeeRequest $request)
     {
-        $algo = new EmployeeAlgo((int)$id);
+        $algo = new EmployeeAlgo((int) $id);
+
         return $algo->update($request);
     }
 
     /**
-     * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(string $id)
     {
-        $algo = new EmployeeAlgo((int)$id);
+        $algo = new EmployeeAlgo((int) $id);
+
         return $algo->delete();
     }
 }

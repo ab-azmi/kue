@@ -3,7 +3,6 @@
 namespace Database\Seeders\Transaction;
 
 use App\Models\Transaction\Transaction;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -26,16 +25,14 @@ class TransactionSeeder extends Seeder
                 'quantity' => 1,
                 'discount' => null,
                 'cakeVariantId' => 3,
-            ]
+            ],
         ]);
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'quantity' => 1,
                 'number' => 'TSX34634534',
@@ -44,8 +41,7 @@ class TransactionSeeder extends Seeder
                 'totalPrice' => 17000,
                 'totalDiscount' => null,
                 'employeeId' => 1,
-            ]
-        );
+            ],
+        ];
     }
-
 }

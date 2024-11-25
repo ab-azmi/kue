@@ -13,18 +13,10 @@ class SendTelegramMessageJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     /**
-     * @param string $bootToken
-     * @param string $roomChatId
-     * @param string $message
-     *
      * @return void
      */
-    public function __construct(public string $bootToken, public string $roomChatId, public string $message)
-    {
-    }
-
+    public function __construct(public string $bootToken, public string $roomChatId, public string $message) {}
 
     public function handle()
     {

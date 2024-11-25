@@ -8,13 +8,11 @@ use GlobalXtreme\Parser\BaseParser;
 class CakeComponentIngredientParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -34,7 +32,7 @@ class CakeComponentIngredientParser extends BaseParser
 
     public static function brief($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -50,7 +48,4 @@ class CakeComponentIngredientParser extends BaseParser
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
-
-    
-
 }

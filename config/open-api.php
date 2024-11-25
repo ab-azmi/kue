@@ -6,7 +6,7 @@ return [
 
         'testing' => [
             'id' => env('OPEN_API_TESTING_ID', ''),
-            'key' => env('OPEN_API_TESTING_KEY', '')
+            'key' => env('OPEN_API_TESTING_KEY', ''),
         ],
 
     ],
@@ -20,6 +20,6 @@ return [
             'client-secret' => env('EXAMPLE_CLIENT_SECRET', ''),
         ],
 
-    ]
+    ],
 
 ];

@@ -9,7 +9,6 @@ return new class extends Migration
 {
     use HasCustomMigration;
 
-
     /**
      * Run the migrations.
      */
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employeeId')->nullable();
             $table->foreign('employeeId')->references('id')->on('employees')->cascadeOnDelete();
-            
+
             $table->float('totalSalary');
             $this->getDefaultTimestamps($table);
         });

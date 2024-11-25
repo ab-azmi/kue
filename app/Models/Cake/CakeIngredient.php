@@ -7,6 +7,7 @@ use App\Models\BaseModel;
 class CakeIngredient extends BaseModel
 {
     protected $table = 'cake_ingredients';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -15,5 +16,4 @@ class CakeIngredient extends BaseModel
         self::DELETED_AT => 'datetime',
         'isActive' => 'boolean',
     ];
-
 }

@@ -19,12 +19,10 @@ class FixedCostSeeder extends Seeder
         }
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'name' => 'Rent',
                 'description' => 'Monthly rent',
@@ -42,8 +40,7 @@ class FixedCostSeeder extends Seeder
                 'description' => 'Monthly water bill',
                 'amount' => '100000',
                 'frequency' => FrequencyConstant::MONTHLY_ID,
-            ]
-        );
+            ],
+        ];
     }
-
 }

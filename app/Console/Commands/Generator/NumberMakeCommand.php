@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Generator;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'make:number')]
@@ -60,7 +59,7 @@ class NumberMakeCommand extends GeneratorCommand
 
         $this->files->put($path, $this->sortImports($this->buildClass($name)));
 
-        $this->info($this->type . ' Generator created successfully.');
+        $this->info($this->type.' Generator created successfully.');
     }
 
     /**
@@ -76,25 +75,24 @@ class NumberMakeCommand extends GeneratorCommand
     /**
      * Resolve the fully-qualified path to the stub.
      *
-     * @param string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function resolveStubPath($stub)
     {
         return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
             ? $customPath
-            : __DIR__ . $stub;
+            : __DIR__.$stub;
     }
 
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Services\Number';
+        return $rootNamespace.'\Services\Number';
     }
-
 }

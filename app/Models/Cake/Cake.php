@@ -4,8 +4,6 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
-use App\Models\Cake\CakeComponentIngredient;
-use App\Models\Cake\CakeVariant;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -14,6 +12,7 @@ class Cake extends BaseModel
     use HasActivityCakeProperty;
 
     protected $table = 'cakes';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -27,7 +26,6 @@ class Cake extends BaseModel
     ];
 
     /** --- RELATIONSHIP --- */
-
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
@@ -44,5 +42,4 @@ class Cake extends BaseModel
     {
         return $this->hasMany(CakeVariant::class, 'cakeId');
     }
-
 }

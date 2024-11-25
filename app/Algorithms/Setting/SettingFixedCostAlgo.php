@@ -16,7 +16,7 @@ class SettingFixedCostAlgo
     {
         if (is_int($fixedCost)) {
             $this->fixedCost = SettingFixedCost::find($fixedCost);
-            if (!$this->fixedCost) {
+            if (! $this->fixedCost) {
                 errSettingFixedCostGet();
             }
         }
@@ -33,7 +33,7 @@ class SettingFixedCostAlgo
                 $this->saveFixedCost($request);
 
                 $this->fixedCost->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Fixed Cost : ' . $this->fixedCost->id);
+                    ->saveActivity('Create new Fixed Cost : '.$this->fixedCost->id);
             });
 
             return success($this->fixedCost);
@@ -55,7 +55,7 @@ class SettingFixedCostAlgo
                 $this->saveFixedCost($request);
 
                 $this->fixedCost->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Fixed Cost : ' . $this->fixedCost->id);
+                    ->saveActivity('Update Fixed Cost : '.$this->fixedCost->id);
             });
 
             return success($this->fixedCost);
@@ -74,12 +74,12 @@ class SettingFixedCostAlgo
                 $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
                 $deleted = $this->fixedCost->delete();
-                if (!$deleted) {
+                if (! $deleted) {
                     errSettingFixedCostDelete();
                 }
 
                 $this->fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Fixed Cost : ' . $this->fixedCost->id);
+                    ->saveActivity('Delete Fixed Cost : '.$this->fixedCost->id);
             });
 
             return success($this->fixedCost);
@@ -89,7 +89,6 @@ class SettingFixedCostAlgo
     }
 
     /** --- PRIVATE FUNCTIONS --- **/
-
     private function saveFixedCost($request)
     {
         $form = $request->safe()->only([
@@ -99,14 +98,14 @@ class SettingFixedCostAlgo
             'frequency',
         ]);
 
-        if($this->fixedCost) {
+        if ($this->fixedCost) {
             $updated = $this->fixedCost->update($form);
-            if (!$updated) {
+            if (! $updated) {
                 errSettingFixedCostUpdate();
             }
         } else {
             $this->fixedCost = SettingFixedCost::create($form);
-            if (!$this->fixedCost) {
+            if (! $this->fixedCost) {
                 errSettingFixedCostCreate();
             }
         }

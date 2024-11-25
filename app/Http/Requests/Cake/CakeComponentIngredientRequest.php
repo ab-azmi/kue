@@ -24,7 +24,7 @@ class CakeComponentIngredientRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'unitId' => ['required', 'numeric', new ValidUnit()],
+            'unitId' => ['required', 'numeric', new ValidUnit],
             'price' => 'required|numeric',
             'expirationDate' => 'required|date',
             'quantity' => 'required|integer',

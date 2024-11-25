@@ -4,9 +4,6 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
-use App\Models\Cake\Traits\HasActivityDiscountProperty;
-use App\Observers\Cake\DiscountObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CakeDiscount extends BaseModel
@@ -14,6 +11,7 @@ class CakeDiscount extends BaseModel
     use HasActivityCakeDiscountProperty;
 
     protected $table = 'cake_discounts';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -24,9 +22,8 @@ class CakeDiscount extends BaseModel
         'toDate' => 'datetime',
         'value' => 'float',
     ];
-    
-    /** --- RELATIONSHIP --- */
 
+    /** --- RELATIONSHIP --- */
     public function cake(): BelongsTo
     {
         return $this->belongsTo(Cake::class, 'cakeId', 'id');

@@ -6,6 +6,6 @@ trait FilteringCompanyOfficeAssigned
 {
     public static function bootFilteringCompanyOfficeAssigned()
     {
-        static::addGlobalScope(new FilteringCompanyOfficeAssignedScope());
+        static::addGlobalScope(new FilteringCompanyOfficeAssignedScope);
     }
 }

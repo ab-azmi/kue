@@ -3,15 +3,15 @@
 namespace App\Models\Cake;
 
 use App\Models\BaseModel;
-use App\Models\Cake\Cake;
 use App\Models\Cake\Traits\HasActivityCakeComponentIngredientProperty;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CakeComponentIngredient extends BaseModel
 {
     use HasActivityCakeComponentIngredientProperty;
-    
+
     protected $table = 'cake_component_ingredients';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -23,7 +23,6 @@ class CakeComponentIngredient extends BaseModel
     ];
 
     /** --- RELATIONSHIP --- */
-
     public function cakes(): BelongsToMany
     {
         return $this->belongsToMany(Cake::class, 'cake_ingredients', 'ingredientId', 'cakeId')
@@ -32,7 +31,6 @@ class CakeComponentIngredient extends BaseModel
     }
 
     /** --- FUNCTIONS --- **/
-    
     public function incrementStock(int $quantity)
     {
         return $this->increment('quantity', $quantity);

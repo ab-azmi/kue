@@ -10,24 +10,25 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     /**
-     * @param SettingAlgo $algo
+     * @param  SettingAlgo  $algo
      * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request)
     {
         $algos = Setting::getOrPaginate($request, true);
+
         return success($algos);
     }
 
     /**
-     * @param string|int $id
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
     {
         $setting = Setting::find($id);
 
-        if (!$setting) {
+        if (! $setting) {
             errSettingGet();
         }
 
@@ -35,14 +36,13 @@ class SettingController extends Controller
     }
 
     /**
-     * @param string|int $id
-     * @param Request $request
+     * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, Request $request)
     {
         $algo = new SettingAlgo($id);
+
         return $algo->update($request);
     }
-
 }

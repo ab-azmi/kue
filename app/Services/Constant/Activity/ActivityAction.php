@@ -7,7 +7,9 @@ use App\Services\Constant\BaseCodeName;
 class ActivityAction extends BaseCodeName
 {
     const CREATE = 'create';
+
     const UPDATE = 'update';
+
     const DELETE = 'delete';
 
     const OPTION = [
@@ -15,5 +17,4 @@ class ActivityAction extends BaseCodeName
         self::UPDATE,
         self::DELETE,
     ];
-
 }

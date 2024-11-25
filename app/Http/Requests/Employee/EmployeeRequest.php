@@ -27,8 +27,8 @@ class EmployeeRequest extends FormRequest
             'email' => 'required|email',
             'password' => 'required|string|min:5',
             'role' => 'nullable|string|max:10',
-            
-            'phone' => ['nullable', 'string', 'max:15'], 
+
+            'phone' => ['nullable', 'string', 'max:15'],
             'address' => ['nullable', 'string', 'max:255'],
             'bankNumber' => ['nullable', 'string', 'max:255'],
 

@@ -21,12 +21,10 @@ class CakeIngredientSeeder extends Seeder
         }
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'name' => 'Flour',
                 'unitId' => CakeIngredientUnit::KILOGRAM_ID,
@@ -58,8 +56,7 @@ class CakeIngredientSeeder extends Seeder
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 30,
                 'supplier' => 'PT. Susu',
-            ]
-        );
+            ],
+        ];
     }
-
 }

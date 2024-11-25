@@ -10,23 +10,15 @@ trait HasActivityTransactionProperty
 {
     use HasActivity;
 
-
-    /**
-     * @return string
-     */
     public function getActivityType(): string
     {
         return ActivityType::TRANSACTION;
     }
 
-    /**
-     * @return string
-     */
     public function getActivitySubType(): string
     {
         return '';
     }
-
 
     /**
      * @return array
@@ -50,10 +42,9 @@ trait HasActivityTransactionProperty
     public function getActivityPropertyDelete()
     {
         return $this->setActivityPropertyParser() + [
-                'deletedAt' => $this->deletedAt?->format('d/m/Y H:i')
-            ];
+            'deletedAt' => $this->deletedAt?->format('d/m/Y H:i'),
+        ];
     }
-
 
     /** --- FUNCTIONS --- */
 
@@ -66,5 +57,4 @@ trait HasActivityTransactionProperty
 
         return TransactionParser::first($this);
     }
-
 }

@@ -7,8 +7,6 @@ use Illuminate\Database\Schema\Blueprint;
 trait HasCustomMigration
 {
     /**
-     * @param Blueprint $table
-     *
      * @return void
      */
     public function getDefaultTimestamps(Blueprint $table)
@@ -19,8 +17,6 @@ trait HasCustomMigration
     }
 
     /**
-     * @param Blueprint $table
-     *
      * @return void
      */
     public function getDefaultCreatedBy(Blueprint $table)
@@ -28,5 +24,4 @@ trait HasCustomMigration
         $table->char('createdBy')->nullable();
         $table->string('createdByName')->nullable();
     }
-
 }

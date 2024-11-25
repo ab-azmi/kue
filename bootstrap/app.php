@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\JWTMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,19 +15,19 @@ return Application::configure(basePath: dirname(__DIR__))
 
         Route::match(['get', 'post'], 'testing', "$namespace\\Controller@testing");
 
-        Route::prefix(config('base.conf.prefix.web') . "/$version/$service")
+        Route::prefix(config('base.conf.prefix.web')."/$version/$service")
             ->middleware(['web', 'jwt'])
-            ->namespace("$namespace\\" . config('base.conf.namespace.web'))
+            ->namespace("$namespace\\".config('base.conf.namespace.web'))
             ->group(base_path('routes/web.php'));
 
-        Route::prefix(config('base.conf.prefix.mobile') . "/$version/$service")
+        Route::prefix(config('base.conf.prefix.mobile')."/$version/$service")
             ->middleware(['web'])
-            ->namespace("$namespace\\" . config('base.conf.namespace.mobile'))
+            ->namespace("$namespace\\".config('base.conf.namespace.mobile'))
             ->group(base_path('routes/mobile.php'));
 
-        Route::prefix(config('base.conf.prefix.mygx') . "/$version/$service")
+        Route::prefix(config('base.conf.prefix.mygx')."/$version/$service")
             ->middleware(['web'])
-            ->namespace("$namespace\\" . config('base.conf.namespace.mygx'))
+            ->namespace("$namespace\\".config('base.conf.namespace.mygx'))
             ->group(base_path('routes/mygx.php'));
     })
     ->withMiddleware(function (Middleware $middleware) {

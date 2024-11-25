@@ -4,6 +4,6 @@ return [
 
     'db-connection' => env('DB_RABBITMQ_CONNECTION', 'rabbitmq'),
 
-    'version' => env('VERSION', 'v1')
+    'version' => env('VERSION', 'v1'),
 
 ];

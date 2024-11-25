@@ -13,16 +13,16 @@ class Employee extends BaseModel
     use HasActivityEmployeeProperty;
 
     protected $table = 'employees';
+
     protected $guarded = ['id'];
 
     protected $casts = [
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
-        self::DELETED_AT => 'datetime'
+        self::DELETED_AT => 'datetime',
     ];
 
     /** RELATIONSHIP **/
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(EmployeeUser::class, 'userId');

@@ -73,5 +73,4 @@ class FormMakeCommand extends GeneratorCommand
     {
         return $rootNamespace.'\Services\Form';
     }
-
 }

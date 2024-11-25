@@ -18,7 +18,6 @@ Route::prefix('settings')
                 Route::delete('{id}', [SettingFixedCostController::class, 'delete']);
             });
 
-
         Route::get('', [SettingController::class, 'get']);
         Route::get('{id}', [SettingController::class, 'detail']);
         Route::put('{id}', [SettingController::class, 'update']);

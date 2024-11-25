@@ -7,13 +7,11 @@ use GlobalXtreme\Parser\BaseParser;
 class EmployeeParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -32,7 +30,7 @@ class EmployeeParser extends BaseParser
 
     public static function brief($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -46,5 +44,4 @@ class EmployeeParser extends BaseParser
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
     }
-
 }

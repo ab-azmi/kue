@@ -1,28 +1,28 @@
 <?php
- namespace App\Algorithms\Setting;
+
+namespace App\Algorithms\Setting;
 
 use App\Models\Setting\Setting;
 use App\Services\Constant\Activity\ActivityAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
- class SettingAlgo
- {
+class SettingAlgo
+{
     /**
      * @param Setting|int|null
      */
     public function __construct(public Setting|int|null $setting = null)
     {
-        if(is_int($setting)){
+        if (is_int($setting)) {
             $this->setting = Setting::find($setting);
-            if(!$this->setting){
+            if (! $this->setting) {
                 errSettingGet();
             }
         }
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
@@ -32,9 +32,9 @@ use Illuminate\Support\Facades\DB;
                 $this->setting->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 $this->saveSetting($request);
-                
+
                 $this->setting->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                ->saveActivity('Update Setting : ' . $this->setting->id);
+                    ->saveActivity('Update Setting : '.$this->setting->id);
             });
 
             return success($this->setting);
@@ -44,22 +44,20 @@ use Illuminate\Support\Facades\DB;
     }
 
     /** --- PRIVATE FUNCTIONS --- **/
-    
     private function saveSetting($request)
     {
         $request->validate([
             'description' => 'required|string|max:255',
-            'value' => 'required'
+            'value' => 'required',
         ]);
 
         $form = $request->only(['description', 'value']);
 
-        if($this->setting)
-        {
+        if ($this->setting) {
             $updated = $this->setting->update($form);
-            if(!$updated){
+            if (! $updated) {
                 errSettingUpdate();
             }
         }
     }
- }
+}

@@ -7,17 +7,24 @@ use App\Services\Constant\BaseCodeName;
 class ActivityType extends BaseCodeName
 {
     const GENERAL = 'general';
+
     const COMPONENT = 'component';
 
     const CAKE = 'cake';
+
     const INGRIDIENT = 'ingredient';
+
     const DISCOUNT = 'discount';
+
     const ORDER = 'order';
+
     const TRANSACTION = 'transaction';
+
     const USER = 'user';
+
     const SALARY = 'salary';
+
     const FIXEDCOST = 'fixedcost';
-    
 
     const OPTION = [
         self::GENERAL,
@@ -31,5 +38,4 @@ class ActivityType extends BaseCodeName
         self::SALARY,
         self::FIXEDCOST,
     ];
-
 }

@@ -22,22 +22,20 @@ class EmployeeSeeder extends Seeder
                 'address' => 'Jl Raja no 12',
                 'phone' => '08123456789',
                 'bankNumber' => '1234567890',
-            ]
+            ],
         ];
         $data = $this->getData();
-        
+
         foreach ($data as $index => $item) {
             $u = EmployeeUser::create($item);
             $u->employee()->create($employees[$index])->salary()->create(['totalSalary' => 9800000]);
         }
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function getData()
     {
-        return array(
+        return [
             [
                 'name' => 'John Doe',
                 'email' => 'john@gmail.com',
@@ -48,6 +46,6 @@ class EmployeeSeeder extends Seeder
                 'email' => 'jane@gmail.com',
                 'password' => bcrypt('password'),
             ],
-        );
+        ];
     }
 }

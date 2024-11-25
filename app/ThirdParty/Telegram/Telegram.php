@@ -7,6 +7,7 @@ use App\Services\Constant\Global\QueueType;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+
 use function config;
 
 class Telegram
@@ -14,25 +15,19 @@ class Telegram
     const BASE_URL = 'https://api.telegram.org/';
 
     const BOOT_TOKENS = [
-        'DEVELOPMENT' => '1285522820:AAEzeBi2iz-Z0_1ua55G9jHg8EMKE8nXcSk'
+        'DEVELOPMENT' => '1285522820:AAEzeBi2iz-Z0_1ua55G9jHg8EMKE8nXcSk',
     ];
 
     const ROOM_CHAT_IDS = [
-        'DEVELOPMENT' => '-485588353'
+        'DEVELOPMENT' => '-485588353',
     ];
 
-
-    /**
-     * @param string|null $bootToken
-     * @param string|null $roomChatId
-     */
-    public function __construct(public string|null $bootToken = null, public string|null $roomChatId = null)
+    public function __construct(public ?string $bootToken = null, public ?string $roomChatId = null)
     {
-        if (!$this->bootToken || !$this->roomChatId) {
+        if (! $this->bootToken || ! $this->roomChatId) {
             $this->fromDevelopment();
         }
     }
-
 
     /**
      * Set the boot and room chat from development for testing
@@ -48,8 +43,6 @@ class Telegram
     }
 
     /**
-     * @param string $messages
-     *
      * @return false|void
      */
     public function send(string $messages)
@@ -59,9 +52,9 @@ class Telegram
         }
 
         $limit = 3000;
-        $messageStrReplace = str_replace("\r\n", "<>", $messages);
-        $messageParser = explode("<=>", wordwrap($messageStrReplace, $limit, "<=>"));
-        $messageContents = str_replace("<>", "\n", $messageParser);
+        $messageStrReplace = str_replace("\r\n", '<>', $messages);
+        $messageParser = explode('<=>', wordwrap($messageStrReplace, $limit, '<=>'));
+        $messageContents = str_replace('<>', "\n", $messageParser);
 
         if (count($messageContents) == 1) {
             $this->sendContentTelegram($messageContents[0]);
@@ -73,9 +66,6 @@ class Telegram
     }
 
     /**
-     * @param string $message
-     * @param bool $now
-     *
      * @return void
      */
     public function queue(string $message, bool $now = true)
@@ -89,22 +79,20 @@ class Telegram
         }
     }
 
-
     /** --- FUNCTIONS --- */
-
     private function sendContentTelegram(string $message)
     {
         try {
-            $url = self::BASE_URL . "bot$this->bootToken/sendMessage";
+            $url = self::BASE_URL."bot$this->bootToken/sendMessage";
 
-            $client = new Client();
-            $response = $client->request("POST", $url, [
-                "form_params" => [
+            $client = new Client;
+            $response = $client->request('POST', $url, [
+                'form_params' => [
                     'chat_id' => $this->roomChatId,
                     'text' => $message,
-                    'parse_mode' => 'Markdown'
+                    'parse_mode' => 'Markdown',
                 ],
-                "timeout" => 10
+                'timeout' => 10,
             ]);
 
             if ($response->getStatusCode() == Response::HTTP_OK) {
@@ -116,8 +104,8 @@ class Telegram
             return false;
         } catch (\Exception $exception) {
             Log::error($exception);
+
             return false;
         }
     }
-
 }

@@ -17,14 +17,13 @@ class CakeDiscountAlgo
     {
         if (is_int($discount)) {
             $this->discount = CakeDiscount::find($discount);
-            if (!$this->discount) {
+            if (! $this->discount) {
                 errCakeDiscountGet();
             }
         }
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -34,7 +33,7 @@ class CakeDiscountAlgo
                 $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Discount : ' . $this->discount->id);
+                    ->saveActivity('Create new Discount : '.$this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -44,7 +43,6 @@ class CakeDiscountAlgo
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
@@ -56,7 +54,7 @@ class CakeDiscountAlgo
                 $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Discount : ' . $this->discount->id);
+                    ->saveActivity('Update Discount : '.$this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -67,6 +65,7 @@ class CakeDiscountAlgo
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function delete()
@@ -78,7 +77,7 @@ class CakeDiscountAlgo
                 $this->discount->delete();
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Discount : ' . $this->discount->id);
+                    ->saveActivity('Delete Discount : '.$this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -88,7 +87,6 @@ class CakeDiscountAlgo
     }
 
     /** --- PRIVATE FUNCTIONS --- **/
-
     private function getDates(Request $request)
     {
         $fromDate = date('Y-m-d H:i:s', strtotime($request->fromDate));
@@ -107,7 +105,7 @@ class CakeDiscountAlgo
     private function saveDiscount(Request $request)
     {
         $dates = $this->getDates($request);
-        
+
         $form = $request->safe()->only([
             'name',
             'description',
@@ -118,17 +116,17 @@ class CakeDiscountAlgo
         $form['fromDate'] = $dates['from'];
         $form['toDate'] = $dates['to'];
 
-        if($this->discount) {
+        if ($this->discount) {
             $updated = $this->discount->update($form);
-            if (!$updated) {
+            if (! $updated) {
                 errCakeUpdate();
             }
         } else {
             $this->discount = CakeDiscount::create($form);
-            if (!$this->discount) {
+            if (! $this->discount) {
                 errCakeCreate();
             }
         }
-        
+
     }
 }

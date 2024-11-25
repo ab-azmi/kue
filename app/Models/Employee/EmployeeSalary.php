@@ -4,15 +4,14 @@ namespace App\Models\Employee;
 
 use App\Models\BaseModel;
 use App\Models\Employee\Traits\HasActivityEmployeeSalaryProperty;
-use App\Observers\Salary\SalaryObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmployeeSalary extends BaseModel
 {
     use HasActivityEmployeeSalaryProperty;
-    
+
     protected $table = 'employee_salaries';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -23,7 +22,6 @@ class EmployeeSalary extends BaseModel
     ];
 
     /** --- RELATIONSHIP --- */
-
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'employeeId');
@@ -36,5 +34,4 @@ class EmployeeSalary extends BaseModel
     {
         return self::sum('totalSalary');
     }
-
 }

@@ -33,7 +33,6 @@ Route::prefix('cakes')
                 Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
             });
 
-
         Route::get('', [CakeController::class, 'get']);
         Route::post('', [CakeController::class, 'create']);
         Route::post('cogs', [CakeController::class, 'COGS']);
@@ -41,5 +40,5 @@ Route::prefix('cakes')
         Route::put('{id}', [CakeController::class, 'update']);
         Route::delete('{id}', [CakeController::class, 'delete']);
     });
-    
-    Route::get('storage/cakes/{path}', [CakeController::class, 'getFile'])->withoutMiddleware('auth:api');
+
+Route::get('storage/cakes/{path}', [CakeController::class, 'getFile'])->withoutMiddleware('auth:api');

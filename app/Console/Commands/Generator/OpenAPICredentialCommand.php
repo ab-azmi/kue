@@ -23,13 +23,14 @@ class OpenAPICredentialCommand extends Command
         try {
 
             $name = $this->argument('name');
-            if (!$name) {
-                $this->error("Please enter your credential name!");
+            if (! $name) {
+                $this->error('Please enter your credential name!');
+
                 return;
             }
 
             $credentials = config('open-api.credentials') ?: [];
-            if (isset($credentials[$name]) && !$this->option('replace')) {
+            if (isset($credentials[$name]) && ! $this->option('replace')) {
                 if ($credentials[$name]['key'] && $credentials[$name]['id']) {
                     $key = $credentials[$name]['key'];
                     $id = $credentials[$name]['id'];
@@ -44,7 +45,7 @@ class OpenAPICredentialCommand extends Command
 
             $token = $this->createKey($key, $id);
 
-            $this->alert("Please Save ID & Key to config (open-api.php) & .env file");
+            $this->alert('Please Save ID & Key to config (open-api.php) & .env file');
             $this->info("ID: $id");
             $this->info("Name: $name");
             $this->info("Key: $key");
@@ -56,16 +57,14 @@ class OpenAPICredentialCommand extends Command
         }
     }
 
-
     /** --- SUB FUNCTIONS --- */
-
     private function createID()
     {
         $credentials = config('open-api.credentials') ?: [];
 
         $number = microtime(true);
 
-        return preg_replace('/[^0-9]/', '', $number . (count($credentials) + 1));
+        return preg_replace('/[^0-9]/', '', $number.(count($credentials) + 1));
     }
 
     private function createKey(string $key, float $id)
@@ -75,11 +74,10 @@ class OpenAPICredentialCommand extends Command
         $ivlen = openssl_cipher_iv_length($cipher);
         $iv = openssl_random_pseudo_bytes($ivlen);
 
-        $encryption = openssl_encrypt(Hash::make($key), $cipher, $key . $id, 0, $iv);
+        $encryption = openssl_encrypt(Hash::make($key), $cipher, $key.$id, 0, $iv);
 
-        $encryption = base64_encode($iv . $encryption);
+        $encryption = base64_encode($iv.$encryption);
 
         return "_open:$encryption";
     }
-
 }

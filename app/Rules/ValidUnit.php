@@ -2,9 +2,9 @@
 
 namespace App\Rules;
 
+use App\Services\Constant\Cake\CakeIngredientUnit;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use App\Services\Constant\Cake\CakeIngredientUnit;
 
 class ValidUnit implements ValidationRule
 {
@@ -15,7 +15,7 @@ class ValidUnit implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!array_key_exists($value, CakeIngredientUnit::OPTION)) {
+        if (! array_key_exists($value, CakeIngredientUnit::OPTION)) {
             $fail("The $attribute is invalid.");
         }
     }

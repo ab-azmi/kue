@@ -11,6 +11,7 @@ class TransactionOrder extends BaseModel
     use HasActivityOrderProperty;
 
     protected $table = 'transaction_orders';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -23,7 +24,6 @@ class TransactionOrder extends BaseModel
     ];
 
     /** --- RELATIONSHIP --- */
-
     public function transaction()
     {
         return $this->belongsTo(Transaction::class, 'transactionId');
@@ -33,5 +33,4 @@ class TransactionOrder extends BaseModel
     {
         return $this->belongsTo(CakeVariant::class, 'cakeVariantId');
     }
-
 }

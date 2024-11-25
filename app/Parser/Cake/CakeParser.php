@@ -2,20 +2,16 @@
 
 namespace App\Parser\Cake;
 
-use App\Parser\Cake\CakeComponentIngredientParser;
-use App\Parser\Cake\CakeVariantParser;
 use GlobalXtreme\Parser\BaseParser;
 
 class CakeParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -37,7 +33,7 @@ class CakeParser extends BaseParser
 
     public static function brief($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 

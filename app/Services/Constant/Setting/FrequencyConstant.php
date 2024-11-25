@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Constant\Setting;
 
 use App\Services\Constant\BaseCodeName;
@@ -6,15 +7,19 @@ use App\Services\Constant\BaseCodeName;
 class FrequencyConstant extends BaseCodeName
 {
     const MONTHLY_ID = 1;
+
     const MONTHLY = 'monthly';
 
     const QUARTERLY_ID = 2;
+
     const QUARTERLY = 'quarterly';
 
     const YEARLY_ID = 3;
+
     const YEARLY = 'yearly';
 
     const WEEKLY_ID = 4;
+
     const WEEKLY = 'weekly';
 
     const OPTION = [

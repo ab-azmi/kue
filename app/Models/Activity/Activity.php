@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Activity extends BaseModel
 {
     protected $table = 'activities';
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -17,17 +18,13 @@ class Activity extends BaseModel
         'properties' => 'array',
     ];
 
-
     /** RELATIONSHIPS */
-
     public function referable(): MorphTo
     {
         return $this->morphTo('referable', 'referenceType', 'reference');
     }
 
-
     /** --- SCOPES --- */
-
     public function scopeFilter($query, $request)
     {
         return $query->where(function ($query) use ($request) {
@@ -49,5 +46,4 @@ class Activity extends BaseModel
 
         });
     }
-
 }

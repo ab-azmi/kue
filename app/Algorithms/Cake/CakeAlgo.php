@@ -13,7 +13,6 @@ use App\Services\Constant\Path\Path;
 use App\Services\Constant\Setting\SettingConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class CakeAlgo
 {
@@ -24,14 +23,13 @@ class CakeAlgo
     {
         if (is_int($cake)) {
             $this->cake = Cake::find($cake);
-            if (!$this->cake) {
+            if (! $this->cake) {
                 errCakeGet();
             }
         }
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function create(Request $request)
@@ -51,7 +49,7 @@ class CakeAlgo
                 $this->cake->load('variants'); //TODO : Hanlde variant payload
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Cake : ' . $this->cake->id);
+                    ->saveActivity('Create new Cake : '.$this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -61,7 +59,6 @@ class CakeAlgo
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
@@ -84,7 +81,7 @@ class CakeAlgo
                 $this->syncIngredientStock($request, $oldIngredients);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Cake : ' . $this->cake->id);
+                    ->saveActivity('Update Cake : '.$this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -106,12 +103,12 @@ class CakeAlgo
                 $this->detachIngredients($ids);
 
                 $deleted = $this->cake->delete();
-                if (!$deleted) {
+                if (! $deleted) {
                     errCakeDelete();
                 }
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Cake : ' . $this->cake->id);
+                    ->saveActivity('Delete Cake : '.$this->cake->id);
             });
 
             return success(CakeParser::first($this->cake));
@@ -121,7 +118,6 @@ class CakeAlgo
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function COGS(Request $request)
@@ -147,7 +143,7 @@ class CakeAlgo
             return success([
                 'COGS' => $cogs,
                 'sellingPrice' => $sellingPrice,
-                'profitPerItem' => $sellingPrice - $cogs
+                'profitPerItem' => $sellingPrice - $cogs,
             ]);
         } catch (\Exception $e) {
             return exception($e);
@@ -155,7 +151,6 @@ class CakeAlgo
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function saveCakeImages(Request $request)
@@ -168,15 +163,15 @@ class CakeAlgo
                     $fileName = $this->getFileName($obj['file']->getClientOriginalName());
 
                     $uploaded = $obj['file']->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
-                    if (!$uploaded) {
+                    if (! $uploaded) {
                         errCakeUploadImage();
                     }
 
                     $images[] = [
-                        'path' => $path . DIRECTORY_SEPARATOR . $fileName,
+                        'path' => $path.DIRECTORY_SEPARATOR.$fileName,
                         'mime' => $obj['file']->getClientMimeType(),
                         'file' => null,
-                        'link' => storage_link($path . DIRECTORY_SEPARATOR . $fileName)
+                        'link' => storage_link($path.DIRECTORY_SEPARATOR.$fileName),
                     ];
                 }
 
@@ -187,7 +182,6 @@ class CakeAlgo
     }
 
     /** --- PRIVATE FUNCTIONS --- */
-
     private function saveCake(Request $request)
     {
         $form = $request->safe()->only([
@@ -201,7 +195,7 @@ class CakeAlgo
 
         if ($this->cake) {
             $updated = $this->cake->update($form);
-            if (!$updated) {
+            if (! $updated) {
                 errCakeUpdate();
             }
 
@@ -209,7 +203,7 @@ class CakeAlgo
         }
 
         $this->cake = Cake::create($form);
-        if (!$this->cake) {
+        if (! $this->cake) {
             errCakeCreate();
         }
     }
@@ -250,7 +244,7 @@ class CakeAlgo
                 'ingredientId' => $id,
                 'quantity' => $ingredient->quantity,
                 'createdAt' => now(),
-                'updatedAt' => now()
+                'updatedAt' => now(),
             ];
         }, $toAttach);
 
@@ -266,12 +260,12 @@ class CakeAlgo
         foreach ($request->ingredients as $ingredient) {
 
             $ingredientModel = $this->cake->ingredients()->find($ingredient->ingredientId);
-            if (!$ingredientModel) {
+            if (! $ingredientModel) {
                 errCakeIngredientGet();
             }
 
             $decremented = $ingredientModel->decrementStock(($ingredient->quantity * $this->cake->stock));
-            if (!$decremented) {
+            if (! $decremented) {
                 errCakeIngredientDecrementStock();
             }
         }
@@ -283,7 +277,7 @@ class CakeAlgo
             $usedQuantity = $oldIngredient->used->quantity * $this->cake->stock;
 
             $incremented = $oldIngredient->incrementStock($usedQuantity);
-            if (!$incremented) {
+            if (! $incremented) {
                 errCakeIngredientDecrementStock();
             }
         }
@@ -344,7 +338,7 @@ class CakeAlgo
 
         $fileName = str_replace(' ', '_', $originalName);
 
-        return $time . $rand . '_' . $fileName;
+        return $time.$rand.'_'.$fileName;
     }
 
     private function encodeIngredientJSON($request)

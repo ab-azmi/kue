@@ -9,7 +9,6 @@ return new class extends Migration
 {
     use HasCustomMigration;
 
-
     /**
      * Run the migrations.
      */
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cakeId');
             $table->foreign('cakeId')->references('id')->on('cakes')->cascadeOnDelete();
-            
+
             $table->string('name');
             $table->date('fromDate');
             $table->date('toDate');

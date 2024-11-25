@@ -14,21 +14,18 @@ class ExampleValidation extends ServiceValidation
         'CHECK_TESTING' => 'testing/validation',
     ];
 
-
     /** --- FUNCTIONS --- */
 
     /**
-     * @param $payload
-     *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function testing($payload)
     {
         $url = static::host();
-        $url .= static::URI['BASE'] . static::URI['CHECK_TESTING'];
+        $url .= static::URI['BASE'].static::URI['CHECK_TESTING'];
 
         return static::call($url, $payload, 'post');
     }
-
 }

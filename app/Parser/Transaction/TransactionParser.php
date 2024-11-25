@@ -8,13 +8,11 @@ use GlobalXtreme\Parser\BaseParser;
 class TransactionParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -24,19 +22,20 @@ class TransactionParser extends BaseParser
             'number' => $data->number,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
-            'totalPrice' => $data->totalPrice, 
+            'totalPrice' => $data->totalPrice,
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
             'employee' => EmployeeUserParser::brief($data->employee),
-            'orders' => OrderParser::get($data->orders)
+            'orders' => OrderParser::get($data->orders),
         ];
     }
 
-    public static function brief($data){
-        if (!$data) {
+    public static function brief($data)
+    {
+        if (! $data) {
             return null;
         }
 
@@ -46,7 +45,7 @@ class TransactionParser extends BaseParser
             'number' => $data->number,
             'tax' => $data->tax,
             'orderPrice' => $data->orderPrice,
-            'totalPrice' => $data->totalPrice, 
+            'totalPrice' => $data->totalPrice,
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
@@ -54,5 +53,4 @@ class TransactionParser extends BaseParser
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
         ];
     }
-
 }

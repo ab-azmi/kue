@@ -7,13 +7,11 @@ use GlobalXtreme\Parser\BaseParser;
 class CakeVariantParser extends BaseParser
 {
     /**
-     * @param $data
-     *
      * @return array|null
      */
     public static function first($data)
     {
-        if (!$data) {
+        if (! $data) {
             return null;
         }
 
@@ -24,8 +22,7 @@ class CakeVariantParser extends BaseParser
             'price' => $data->price,
             'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
-            'cake' => CakeParser::brief($data->cake)
+            'cake' => CakeParser::brief($data->cake),
         ];
     }
-
 }
