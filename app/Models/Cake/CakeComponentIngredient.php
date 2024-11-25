@@ -30,6 +30,24 @@ class CakeComponentIngredient extends BaseModel
             ->as('used');
     }
 
+    /** --- SCOPES --- **/
+    public function scopeFilter($query, $request)
+    {
+        $searchByText = $this->hasSearch($request);
+
+        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
+            ->when(
+                $searchByText,
+                function ($query) use ($request) {
+                    return $query->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('supplier', 'like', '%' . $request->search . '%');
+                }
+            )
+            ->when($request->orderBy, function ($query) use ($request) {
+                return $query->orderBy($request->orderBy, $request->orderType);
+            });
+    }
+
     /** --- FUNCTIONS --- **/
     public function incrementStock(int $quantity)
     {
