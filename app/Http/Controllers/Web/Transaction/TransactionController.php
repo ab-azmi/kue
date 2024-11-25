@@ -43,7 +43,7 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::with([
             'orders',
-            'orders.cake',
+            'orders.cakeVariant',
             'employee',
         ])->find($id);
         if (! $transaction) {
