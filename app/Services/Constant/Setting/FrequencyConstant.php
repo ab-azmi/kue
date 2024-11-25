@@ -2,7 +2,6 @@
 
 namespace App\Services\Constant\Setting;
 
-use App\Services\Constant\BaseCodeName;
 use App\Services\Constant\BaseIDName;
 
 class FrequencyConstant extends BaseIDName

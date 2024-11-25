@@ -38,7 +38,7 @@ class CakeComponentIngredientController extends Controller
     public function detail($id)
     {
         $ingredient = CakeComponentIngredient::with('cakes')->find($id);
-        if(!$ingredient) {
+        if (! $ingredient) {
             errCakeIngredientGet();
         }
 

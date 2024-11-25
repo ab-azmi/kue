@@ -28,7 +28,7 @@ class SettingFixedCostController extends Controller
      */
     public function create(SettingFixedCostRequest $request)
     {
-        $algo = new SettingFixedCostAlgo();
+        $algo = new SettingFixedCostAlgo;
 
         return $algo->create($request);
     }

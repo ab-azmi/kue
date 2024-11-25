@@ -42,7 +42,7 @@ class Transaction extends BaseModel
 
         return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
             ->when($searchByText, function ($query) use ($request) {
-                return $query->where('number', 'like', "%".$request->search."%");
+                return $query->where('number', 'like', '%'.$request->search.'%');
             })
             ->when($request->employeeId, function ($query) use ($request) {
                 return $query->where('employeeId', $request->employeeId);
