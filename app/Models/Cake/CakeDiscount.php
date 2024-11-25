@@ -25,6 +25,12 @@ class CakeDiscount extends BaseModel
         'value' => 'float',
     ];
 
+    /** --- RELATIONSHIP --- */
+    public function cake(): BelongsTo
+    {
+        return $this->belongsTo(Cake::class, 'cakeId', 'id');
+    }
+
     /** --- SCOPES --- **/
     public function scopeFilter($query, $request)
     {
@@ -51,11 +57,5 @@ class CakeDiscount extends BaseModel
                     return $query->where('cakeId', $request->cakeId);
                 }
             );
-    }
-
-    /** --- RELATIONSHIP --- */
-    public function cake(): BelongsTo
-    {
-        return $this->belongsTo(Cake::class, 'cakeId', 'id');
     }
 }

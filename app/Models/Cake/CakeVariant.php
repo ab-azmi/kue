@@ -37,4 +37,20 @@ class CakeVariant extends BaseModel
     {
         return $this->hasManyThrough(TransactionOrder::class, Transaction::class, 'cakeVariantId', 'transactionId');
     }
+
+    /** --- SCOPES --- */
+
+    public function scopeFilter($query, $request)
+    {
+        $searchByText = $this->hasSearch($request);
+
+        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
+            ->when($searchByText, function ($query) use ($request) {
+                return $query->where('name', 'like', "%" . $request->search . "%");
+                return $query->where('description', 'like', "%" . $request->search . "%");
+            })
+            ->when($request->cakeId, function ($query) use ($request) {
+                return $query->where('cakeId', $request->cakeId);
+            });
+    }
 }
