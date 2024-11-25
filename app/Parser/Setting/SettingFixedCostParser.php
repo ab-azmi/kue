@@ -2,6 +2,7 @@
 
 namespace App\Parser\Setting;
 
+use App\Services\Constant\Setting\FrequencyConstant;
 use GlobalXtreme\Parser\BaseParser;
 
 class SettingFixedCostParser extends BaseParser
@@ -20,7 +21,7 @@ class SettingFixedCostParser extends BaseParser
             'name' => $data->name,
             'description' => $data->description,
             'amount' => $data->amount,
-            'frequency' => $data->frequency,
+            'frequency' => FrequencyConstant::idName($data->frequency),
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];

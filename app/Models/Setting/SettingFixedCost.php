@@ -20,6 +20,24 @@ class SettingFixedCost extends BaseModel
         'amount' => 'float',
     ];
 
+    /** --- SCOPES --- **/
+    public function scopeFilter($query, $request)
+    {
+        $searchBytext = $this->hasSearch($request);
+
+        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
+            ->when($searchBytext, function ($query) use ($request) {
+                return $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->has('frequency'), function ($query) use ($request) {
+                return $query->where('frequency', $request->frequency);
+            })
+            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
+                return $query->orderBy($request->orderBy, $request->orderType);
+            });
+    }
+
     /** --- FUNCTIONS --- **/
     public static function getFixedCostMonthly(): float
     {
