@@ -70,7 +70,7 @@ class CakeComponentIngredientAlgo
         try {
             DB::transaction(function () {
                 $this->ingredient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-                
+
                 $this->ingredient->cakes()->detach();
 
                 $this->ingredient->delete();
