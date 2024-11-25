@@ -5,7 +5,6 @@ namespace App\Models\Cake;
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CakeDiscount extends BaseModel
@@ -47,8 +46,8 @@ class CakeDiscount extends BaseModel
             ->when(
                 $searchBytext,
                 function ($query) use ($request) {
-                    return $query->where('name', 'like', "%" . $request->search . "%")
-                        ->orWhere('description', 'like', "%" . $request->search . "%");
+                    return $query->where('name', 'like', '%'.$request->search.'%')
+                        ->orWhere('description', 'like', '%'.$request->search.'%');
                 }
             )
             ->when(

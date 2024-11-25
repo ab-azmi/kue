@@ -42,4 +42,23 @@ class Cake extends BaseModel
     {
         return $this->hasMany(CakeVariant::class, 'cakeId');
     }
+
+    /** --- SCOPES --- */
+    public function scopeFilter($query, $request)
+    {
+        $searchByText = $this->hasSearch($request);
+
+        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
+            ->when($searchByText, function ($query) use ($request) {
+                return $query->where('name', 'like', '%'.$request->search.'%');
+            })
+            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
+                return $query->orderBy($request->orderBy, $request->orderType);
+            })
+            ->when($request->variantId, function ($query) use ($request) {
+                return $query->whereHas('variants', function ($query) use ($request) {
+                    return $query->where('id', $request->variantId);
+                });
+            });
+    }
 }

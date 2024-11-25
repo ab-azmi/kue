@@ -39,8 +39,8 @@ class CakeComponentIngredient extends BaseModel
             ->when(
                 $searchByText,
                 function ($query) use ($request) {
-                    return $query->where('name', 'like', '%' . $request->search . '%')
-                        ->orWhere('supplier', 'like', '%' . $request->search . '%');
+                    return $query->where('name', 'like', '%'.$request->search.'%')
+                        ->orWhere('supplier', 'like', '%'.$request->search.'%');
                 }
             )
             ->when($request->orderBy, function ($query) use ($request) {
