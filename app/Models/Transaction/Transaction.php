@@ -34,4 +34,21 @@ class Transaction extends BaseModel
     {
         return $this->belongsTo(Employee::class, 'employeeId');
     }
+
+    /** --- SCOPES --- */
+    public function scopeFilter($query, $request)
+    {
+        $searchByText = $this->hasSearch($request);
+
+        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
+            ->when($searchByText, function ($query) use ($request) {
+                return $query->where('number', 'like', "%".$request->search."%");
+            })
+            ->when($request->employeeId, function ($query) use ($request) {
+                return $query->where('employeeId', $request->employeeId);
+            })
+            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
+                return $query->orderBy($request->orderBy, $request->orderType);
+            });
+    }
 }

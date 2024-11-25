@@ -16,7 +16,7 @@ class TransactionController extends Controller
      */
     public function get(Request $request)
     {
-        $transactions = Transaction::with([
+        $transactions = Transaction::filter($request)->with([
             'orders',
             'employee',
         ])->orderBy('createdAt')->getOrPaginate($request, true);
