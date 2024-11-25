@@ -65,10 +65,20 @@ class CakeSeeder extends Seeder
                 'COGS' => 100000,
                 'stock' => 10,
                 'sellingPrice' => 150000,
-                'images' => json_encode([
-                    'https://via.placeholder.com/150',
-                    'https://via.placeholder.com/150',
-                ]),
+                'images' => [
+                    [
+                        'file' => null,
+                        'url' => 'https://via.placeholder.com/150',
+                        'path' => 'cakes/one.jpg',
+                        'mime' => 'image/jpeg',
+                    ],
+                    [
+                        'file' => null,
+                        'url' => 'https://via.placeholder.com/150',
+                        'path' => 'cakes/two.jpg',
+                        'mime' => 'image/jpeg',
+                    ],
+                ],
                 'variants' => [
                     [
                         'name' => 'Polar Bear Cake - Medium',
@@ -88,10 +98,20 @@ class CakeSeeder extends Seeder
                 'COGS' => 400000,
                 'stock' => 15,
                 'sellingPrice' => 600000,
-                'images' => json_encode([
-                    'https://via.placeholder.com/150',
-                    'https://via.placeholder.com/150',
-                ]),
+                'images' => [
+                    [
+                        'file' => null,
+                        'url' => 'https://via.placeholder.com/150',
+                        'path' => 'cakes/three.jpg',
+                        'mime' => 'image/jpeg',
+                    ],
+                    [
+                        'file' => null,
+                        'url' => 'https://via.placeholder.com/150',
+                        'path' => 'cakes/four.jpg',
+                        'mime' => 'image/jpeg',
+                    ],
+                ],
                 'variants' => [
                     [
                         'name' => 'Panda Cake - Chocolate',
