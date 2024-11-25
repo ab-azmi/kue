@@ -16,8 +16,7 @@ class CakeComponentIngredientController extends Controller
      */
     public function get(Request $request)
     {
-        $ingredients = CakeComponentIngredient::orderBy('createdAt', 'desc')
-            ->getOrPaginate($request, true);
+        $ingredients = CakeComponentIngredient::filter($request)->getOrPaginate($request, true);
 
         return success(CakeComponentIngredientParser::briefs($ingredients));
     }

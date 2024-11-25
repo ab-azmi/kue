@@ -13,7 +13,7 @@ class CakeVariantController extends Controller
      */
     public function get(Request $request)
     {
-        $variants = CakeVariant::getOrPaginate($request, true);
+        $variants = CakeVariant::filter($request)->getOrPaginate($request, true);
 
         return success($variants);
     }

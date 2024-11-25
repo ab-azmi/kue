@@ -18,8 +18,7 @@ class CakeController extends Controller
      */
     public function get(Request $request)
     {
-        $cakes = Cake::orderBy('createdAt', 'desc')
-            ->getOrPaginate($request, true);
+        $cakes = Cake::filter($request)->getOrPaginate($request, true);
 
         return success(CakeParser::briefs($cakes));
     }

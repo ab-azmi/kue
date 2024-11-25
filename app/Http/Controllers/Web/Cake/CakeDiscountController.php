@@ -16,7 +16,7 @@ class CakeDiscountController extends Controller
      */
     public function get(Request $request)
     {
-        $discounts = CakeDiscount::with('cake')->getOrPaginate($request, true);
+        $discounts = CakeDiscount::filter($request)->getOrPaginate($request, true);
 
         return success(CakeDiscountParser::briefs($discounts));
     }

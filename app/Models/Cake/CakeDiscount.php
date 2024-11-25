@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CakeDiscount extends BaseModel
@@ -27,5 +28,33 @@ class CakeDiscount extends BaseModel
     public function cake(): BelongsTo
     {
         return $this->belongsTo(Cake::class, 'cakeId', 'id');
+    }
+
+    /** --- SCOPES --- **/
+    public function scopeFilter($query, $request)
+    {
+        $searchBytext = $this->hasSearch($request);
+
+        return $query
+            ->when(
+                $request->fromDate && $request->toDate,
+                function ($query) use ($request) {
+                    return $query->where('fromDate', '>=', Carbon::createFromFormat('d/m/Y', $request->fromDate)->toDateString())
+                        ->where('toDate', '<=', Carbon::createFromFormat('d/m/Y', $request->toDate)->toDateString());
+                }
+            )
+            ->when(
+                $searchBytext,
+                function ($query) use ($request) {
+                    return $query->where('name', 'like', '%'.$request->search.'%')
+                        ->orWhere('description', 'like', '%'.$request->search.'%');
+                }
+            )
+            ->when(
+                $request->cakeId,
+                function ($query) use ($request) {
+                    return $query->where('cakeId', $request->cakeId);
+                }
+            );
     }
 }
