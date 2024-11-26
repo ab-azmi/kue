@@ -214,3 +214,24 @@ if(!function_exists('errCakeVariantGet')) {
         error($status, 'Cake variant not found', $internalMsg);
     }
 }
+
+if(!function_exists('errCakeVariantCreate')) {
+    function errCakeVariantCreate($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to create cake variant', $internalMsg);
+    }
+}
+
+if(!function_exists('errCakeVariantUpdate')) {
+    function errCakeVariantUpdate($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to update cake variant', $internalMsg);
+    }
+}
+
+if(!function_exists('errCakeVariantDelete')) {
+    function errCakeVariantDelete($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to delete cake variant', $internalMsg);
+    }
+}
