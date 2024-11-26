@@ -48,10 +48,10 @@ class Employee extends BaseModel
                 $searchByText,
                 function ($query) use ($request) {
                     return $query->whereHas('user', function ($query) use ($request) {
-                        return $query->where('name', 'like', '%' . $request->search . '%')
-                            ->orWhere('email', 'like', '%' . $request->search . '%');
+                        return $query->where('name', 'like', '%'.$request->search.'%')
+                            ->orWhere('email', 'like', '%'.$request->search.'%');
                     })
-                        ->orWhere('address', 'like', '%' . $request->search . '%');
+                        ->orWhere('address', 'like', '%'.$request->search.'%');
                 }
             )
             ->when(
