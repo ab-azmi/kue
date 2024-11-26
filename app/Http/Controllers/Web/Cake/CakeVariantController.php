@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Web\Cake;
 
+use App\Algorithms\Cake\CakeVariantAlgo;
 use App\Http\Controllers\Controller;
 use App\Models\Cake\CakeVariant;
+use App\Parser\Cake\CakeVariantParser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CakeVariantController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
@@ -19,34 +24,51 @@ class CakeVariantController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed|null
      */
     public function create(Request $request)
     {
-        //
+        $algo = new CakeVariantAlgo();
+        return $algo->create($request);
     }
 
     /**
-     * Display the specified resource.
+     * @param string $id
+     *
+     * @return JsonResponse|mixed
      */
     public function detail(string $id)
     {
-        //
+        $cakeVariant = CakeVariant::find($id);
+        if(!$cakeVariant) {
+            errCakeVariantGet();
+        }
+
+        return success(CakeVariantParser::first($cakeVariant));
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param string $id
+     *
+     * @return JsonResponse|mixed|null
      */
     public function update(Request $request, string $id)
     {
-        //
+        $algo = new CakeVariantAlgo($id);
+        return $algo->update($request);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param string $id
+     *
+     * @return JsonResponse|mixed|null
      */
     public function delete(string $id)
     {
-        //
+        $algo = new CakeVariantAlgo($id);
+        return $algo->delete();
     }
 }

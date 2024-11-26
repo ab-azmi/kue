@@ -3,6 +3,7 @@
 namespace App\Models\Cake;
 
 use App\Models\BaseModel;
+use App\Models\Cake\Traits\HasActivityCakeVariantProperty;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
 use App\Parser\Cake\CakeVariantParser;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class CakeVariant extends BaseModel
 {
+    use HasActivityCakeVariantProperty;
+
     protected $table = 'cake_variants';
 
     protected $guarded = ['id'];
@@ -47,7 +50,7 @@ class CakeVariant extends BaseModel
 
 
     /** --- SCOPES --- */
-    
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);

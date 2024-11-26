@@ -200,10 +200,38 @@ if (! function_exists('errCakeIngredientTotalCost')) {
     function errCakeIngredientTotalCost($internalMsg = '', $status = null)
     {
         error(
-            Error::CAKE['CALCULATING_INGRIDIENT_COST_FAILED']['code'],
-            Error::CAKE['CALCULATING_INGRIDIENT_COST_FAILED']['msg'],
-            $internalMsg,
-            $status
         );
+    }
+}
+
+
+
+/** --- CAKE VARIANT --- **/
+
+if(!function_exists('errCakeVariantGet')) {
+    function errCakeVariantGet($internalMsg = '', $status = 404)
+    {
+        error($status, 'Cake variant not found', $internalMsg);
+    }
+}
+
+if(!function_exists('errCakeVariantCreate')) {
+    function errCakeVariantCreate($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to create cake variant', $internalMsg);
+    }
+}
+
+if(!function_exists('errCakeVariantUpdate')) {
+    function errCakeVariantUpdate($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to update cake variant', $internalMsg);
+    }
+}
+
+if(!function_exists('errCakeVariantDelete')) {
+    function errCakeVariantDelete($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to delete cake variant', $internalMsg);
     }
 }
