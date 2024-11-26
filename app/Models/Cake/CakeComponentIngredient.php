@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeComponentIngredientProperty;
+use App\Parser\Cake\CakeComponentIngredientParser;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CakeComponentIngredient extends BaseModel
@@ -22,7 +23,12 @@ class CakeComponentIngredient extends BaseModel
         'expirationDate' => 'date',
     ];
 
+    public $parserClass = CakeComponentIngredientParser::class;
+
+
+
     /** --- RELATIONSHIP --- */
+
     public function cakes(): BelongsToMany
     {
         return $this->belongsToMany(Cake::class, 'cake_ingredients', 'ingredientId', 'cakeId')
@@ -30,7 +36,10 @@ class CakeComponentIngredient extends BaseModel
             ->as('used');
     }
 
+
+
     /** --- SCOPES --- **/
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
@@ -48,7 +57,10 @@ class CakeComponentIngredient extends BaseModel
             });
     }
 
+
+
     /** --- FUNCTIONS --- **/
+    
     public function incrementStock(int $quantity)
     {
         return $this->increment('quantity', $quantity);

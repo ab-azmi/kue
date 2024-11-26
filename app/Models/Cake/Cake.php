@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
+use App\Parser\Cake\CakeParser;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -25,7 +26,12 @@ class Cake extends BaseModel
         'images' => 'array',
     ];
 
+    public $parserClass = CakeParser::class;
+
+
+
     /** --- RELATIONSHIP --- */
+
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
@@ -43,7 +49,10 @@ class Cake extends BaseModel
         return $this->hasMany(CakeVariant::class, 'cakeId');
     }
 
+
+    
     /** --- SCOPES --- */
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
