@@ -9,7 +9,7 @@ use Tests\TestCase;
 class EmployeeTest extends TestCase
 {
     //set authentication
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -17,9 +17,8 @@ class EmployeeTest extends TestCase
 
         $token = JWTAuth::fromUser($user);
 
-        $this->withHeader('Authorization', 'Bearer ' . $token);
+        $this->withHeader('Authorization', 'Bearer '.$token);
     }
-    
 
     public function test_get_employee_successfully(): void
     {
@@ -32,7 +31,7 @@ class EmployeeTest extends TestCase
                 'code',
                 'message',
                 'internalMsg',
-                'attributes'
+                'attributes',
             ],
             'result' => [
                 '*' => [
@@ -44,6 +43,6 @@ class EmployeeTest extends TestCase
                     'user',
                 ],
             ],
-        ]);        
+        ]);
     }
 }
