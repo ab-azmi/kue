@@ -5,6 +5,7 @@ namespace App\Models\Cake;
 use App\Models\BaseModel;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
+use App\Parser\Cake\CakeVariantParser;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -21,6 +22,8 @@ class CakeVariant extends BaseModel
         self::DELETED_AT => 'datetime',
         'price' => 'float',
     ];
+
+    public $parserClass = CakeVariantParser::class;
 
     /** --- RELATIONSHIP --- */
     public function cake(): BelongsTo

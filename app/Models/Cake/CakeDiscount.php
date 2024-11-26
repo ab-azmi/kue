@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
+use App\Parser\Cake\CakeDiscountParser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -23,6 +24,8 @@ class CakeDiscount extends BaseModel
         'toDate' => 'datetime',
         'value' => 'float',
     ];
+
+    public $parserClass = CakeDiscountParser::class;
 
     /** --- RELATIONSHIP --- */
     public function cake(): BelongsTo

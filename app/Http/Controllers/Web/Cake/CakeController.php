@@ -20,7 +20,7 @@ class CakeController extends Controller
     {
         $cakes = Cake::filter($request)->getOrPaginate($request, true);
 
-        return success(CakeParser::briefs($cakes));
+        return success($cakes, pagination:pagination($cakes));
     }
 
     /**

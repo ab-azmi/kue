@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
+use App\Parser\Cake\CakeParser;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -24,6 +25,8 @@ class Cake extends BaseModel
         'sellingPrice' => 'float',
         'images' => 'array',
     ];
+
+    public $parserClass = CakeParser::class;
 
     /** --- RELATIONSHIP --- */
     public function ingredients(): BelongsToMany
