@@ -27,13 +27,19 @@ class CakeDiscount extends BaseModel
 
     public $parserClass = CakeDiscountParser::class;
 
+
+
     /** --- RELATIONSHIP --- */
+
     public function cake(): BelongsTo
     {
         return $this->belongsTo(Cake::class, 'cakeId', 'id');
     }
 
+
+
     /** --- SCOPES --- **/
+    
     public function scopeFilter($query, $request)
     {
         $searchBytext = $this->hasSearch($request);

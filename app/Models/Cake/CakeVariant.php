@@ -25,7 +25,10 @@ class CakeVariant extends BaseModel
 
     public $parserClass = CakeVariantParser::class;
 
+
+
     /** --- RELATIONSHIP --- */
+
     public function cake(): BelongsTo
     {
         return $this->belongsTo(Cake::class, 'cakeId');
@@ -41,7 +44,10 @@ class CakeVariant extends BaseModel
         return $this->hasManyThrough(TransactionOrder::class, Transaction::class, 'cakeVariantId', 'transactionId');
     }
 
+
+
     /** --- SCOPES --- */
+    
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);

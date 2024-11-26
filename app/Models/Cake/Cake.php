@@ -28,7 +28,10 @@ class Cake extends BaseModel
 
     public $parserClass = CakeParser::class;
 
+
+
     /** --- RELATIONSHIP --- */
+
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
@@ -46,7 +49,10 @@ class Cake extends BaseModel
         return $this->hasMany(CakeVariant::class, 'cakeId');
     }
 
+
+    
     /** --- SCOPES --- */
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
