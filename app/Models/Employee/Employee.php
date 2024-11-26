@@ -44,15 +44,21 @@ class Employee extends BaseModel
         $searchByText = $this->hasSearch($request);
 
         return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when($searchByText, function ($query) use ($request) {
-                return $query->whereHas('user', function ($query) use ($request) {
-                    return $query->where('name', 'like', '%'.$request->search.'%')
-                        ->orWhere('email', 'like', '%'.$request->search.'%');
-                })
-                    ->orWhere('address', 'like', '%'.$request->search.'%');
-            })
-            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
-                return $query->orderBy($request->orderBy, $request->orderType);
-            });
+            ->when(
+                $searchByText,
+                function ($query) use ($request) {
+                    return $query->whereHas('user', function ($query) use ($request) {
+                        return $query->where('name', 'like', '%' . $request->search . '%')
+                            ->orWhere('email', 'like', '%' . $request->search . '%');
+                    })
+                        ->orWhere('address', 'like', '%' . $request->search . '%');
+                }
+            )
+            ->when(
+                $request->orderBy && $request->orderType,
+                function ($query) use ($request) {
+                    return $query->orderBy($request->orderBy, $request->orderType);
+                }
+            );
     }
 }

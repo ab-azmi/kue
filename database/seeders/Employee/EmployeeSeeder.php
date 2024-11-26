@@ -24,6 +24,7 @@ class EmployeeSeeder extends Seeder
                 'bankNumber' => '1234567890',
             ],
         ];
+        
         $data = $this->getData();
 
         foreach ($data as $index => $item) {

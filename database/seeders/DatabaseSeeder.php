@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use Database\Seeders\Cake\CakeIngredientSeeder;
 use Database\Seeders\Cake\CakeSeeder;
 use Database\Seeders\Employee\EmployeeSeeder;
-use Database\Seeders\Setting\FixedCostSeeder;
+use Database\Seeders\Setting\SettingFixedCostSeeder;
 use Database\Seeders\Setting\SettingSeeder;
 use Database\Seeders\Transaction\TransactionSeeder;
 use Illuminate\Database\Seeder;
@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             CakeIngredientSeeder::class,
             CakeSeeder::class,
-            FixedCostSeeder::class,
             TransactionSeeder::class,
             SettingSeeder::class,
+            SettingFixedCostSeeder::class,
         ]);
     }
 }

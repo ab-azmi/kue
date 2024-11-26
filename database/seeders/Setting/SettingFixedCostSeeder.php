@@ -6,7 +6,7 @@ use App\Models\Setting\SettingFixedCost;
 use App\Services\Constant\Setting\FrequencyConstant;
 use Illuminate\Database\Seeder;
 
-class FixedCostSeeder extends Seeder
+class SettingFixedCostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
