@@ -31,6 +31,7 @@ class EmployeeSalary extends BaseModel
         return $this->belongsTo(Employee::class, 'employeeId');
     }
 
+
     /** --- FUNCTIONS --- */
 
     //function to get the sum of totalSalary of all employees

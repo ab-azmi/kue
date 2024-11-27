@@ -35,7 +35,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     }
 
 
-
     /** --- JWT --- */
 
     public function getJWTIdentifier()

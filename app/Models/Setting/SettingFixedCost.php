@@ -44,7 +44,6 @@ class SettingFixedCost extends BaseModel
     }
 
 
-
     /** --- FUNCTIONS --- **/
 
     public static function getFixedCostMonthly(): float

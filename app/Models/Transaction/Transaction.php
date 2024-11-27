@@ -41,7 +41,6 @@ class Transaction extends BaseModel
     }
 
 
-
     /** --- SCOPES --- */
 
     public function scopeFilter($query, $request)
