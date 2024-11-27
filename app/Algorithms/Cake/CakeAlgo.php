@@ -49,7 +49,7 @@ class CakeAlgo
 
                 $this->syncIngredientStock($request);
 
-                $this->cake->load('variants'); //TODO : Hanlde variant payload
+                $this->cake->load('variants');
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : '.$this->cake->id);
