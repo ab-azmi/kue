@@ -50,7 +50,7 @@ class EmployeeAlgo
                     ->saveActivity('Create new Employee : '.$this->employee->id);
             });
 
-            return success(EmployeeParser::first($this->employee));
+            return success($this->employee);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -75,7 +75,7 @@ class EmployeeAlgo
                     ->saveActivity('Update Employee : '.$this->employee->id);
             });
 
-            return success(EmployeeParser::first($this->employee));
+            return success($this->employee);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -104,7 +104,7 @@ class EmployeeAlgo
                     ->saveActivity('Delete Employee : '.$this->employee->id);
             });
 
-            return success($this->employee);
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }
@@ -118,8 +118,6 @@ class EmployeeAlgo
             'phone',
             'address',
             'bankNumber',
-            'userId',
-            'userId',
         ]);
 
         if ($this->employee) {
@@ -127,11 +125,13 @@ class EmployeeAlgo
             if (! $updated) {
                 errEmployeeUpdate();
             }
-        } else {
-            $this->employee = Employee::create($form);
-            if (! $this->employee) {
-                errEmployeeCreate();
-            }
+
+            return;
+        }
+
+        $this->employee = Employee::create($form);
+        if (! $this->employee) {
+            errEmployeeCreate();
         }
     }
 
