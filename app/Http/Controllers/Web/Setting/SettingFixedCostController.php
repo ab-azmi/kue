@@ -7,13 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingFixedCostRequest;
 use App\Models\Setting\SettingFixedCost;
 use App\Parser\Setting\SettingFixedCostParser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SettingFixedCostController extends Controller
 {
     /**
-     * @param Illuminate\Http\Request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function get(Request $request)
     {
@@ -23,8 +25,9 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param App\Http\Requests\Setting\SettingFixedCostRequest
-     * @return \Illuminate\Http\JsonResponse
+     * @param SettingFixedCostRequest $request
+     *
+     * @return JsonResponse
      */
     public function create(SettingFixedCostRequest $request)
     {
@@ -34,8 +37,9 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $id
+     *
+     * @return JsonResponse
      */
     public function detail($id)
     {
@@ -48,9 +52,10 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @param App\Http\Requests\Setting\SettingFixedCostRequest
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $id
+     * @param SettingFixedCostRequest $request
+     *
+     * @return JsonResponse
      */
     public function update($id, SettingFixedCostRequest $request)
     {
@@ -60,8 +65,9 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $id
+     *
+     * @return JsonResponse
      */
     public function delete($id)
     {

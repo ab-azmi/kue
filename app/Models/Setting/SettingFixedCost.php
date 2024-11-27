@@ -4,6 +4,7 @@ namespace App\Models\Setting;
 
 use App\Models\BaseModel;
 use App\Models\Setting\Traits\HasActivitySettingFixedCostProperty;
+use App\Parser\Setting\SettingFixedCostParser;
 
 class SettingFixedCost extends BaseModel
 {
@@ -20,7 +21,11 @@ class SettingFixedCost extends BaseModel
         'amount' => 'float',
     ];
 
+    public $parserClass = SettingFixedCostParser::class;
+
+
     /** --- SCOPES --- **/
+
     public function scopeFilter($query, $request)
     {
         $searchBytext = $this->hasSearch($request);
@@ -38,7 +43,10 @@ class SettingFixedCost extends BaseModel
             });
     }
 
+
+
     /** --- FUNCTIONS --- **/
+
     public static function getFixedCostMonthly(): float
     {
         return self::where('frequency', 'monthly')->sum('amount');
