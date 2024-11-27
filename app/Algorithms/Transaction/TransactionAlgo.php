@@ -46,7 +46,7 @@ class TransactionAlgo
                 $this->createOrders($orders);
             });
 
-            return success(TransactionParser::first($this->transaction));
+            return success($this->transaction);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -67,7 +67,7 @@ class TransactionAlgo
                 }
             });
 
-            return success(TransactionParser::first($this->transaction));
+            return success($this->transaction);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -86,7 +86,7 @@ class TransactionAlgo
                 }
             });
 
-            return success(TransactionParser::first($this->transaction));
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }

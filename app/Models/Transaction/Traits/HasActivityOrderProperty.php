@@ -3,7 +3,7 @@
 namespace App\Models\Transaction\Traits;
 
 use App\Models\Activity\Traits\HasActivity;
-use App\Parser\Transaction\OrderParser;
+use App\Parser\Transaction\TransactionOrderParser;
 use App\Services\Constant\Activity\ActivityType;
 
 trait HasActivityOrderProperty
@@ -55,6 +55,6 @@ trait HasActivityOrderProperty
     {
         $this->refresh();
 
-        return OrderParser::brief($this);
+        return TransactionOrderParser::brief($this);
     }
 }

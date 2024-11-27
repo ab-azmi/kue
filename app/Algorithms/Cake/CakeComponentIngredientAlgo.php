@@ -79,7 +79,7 @@ class CakeComponentIngredientAlgo
                     ->saveActivity('Delete Ingredient : '.$this->ingredient->id);
             });
 
-            return success($this->ingredient);
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }

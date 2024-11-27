@@ -36,7 +36,7 @@ class CakeDiscountAlgo
                     ->saveActivity('Create new Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success($this->discount);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -57,7 +57,7 @@ class CakeDiscountAlgo
                     ->saveActivity('Update Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success($this->discount);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -80,7 +80,7 @@ class CakeDiscountAlgo
                     ->saveActivity('Delete Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }

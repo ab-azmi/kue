@@ -52,7 +52,7 @@ class CakeAlgo
                     ->saveActivity('Create new Cake : '.$this->cake->id);
             });
 
-            return success(CakeParser::first($this->cake));
+            return success($this->cake);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -84,7 +84,7 @@ class CakeAlgo
                     ->saveActivity('Update Cake : '.$this->cake->id);
             });
 
-            return success(CakeParser::first($this->cake));
+            return success($this->cake);
         } catch (\Exception $e) {
             exception($e);
         }
@@ -111,7 +111,7 @@ class CakeAlgo
                     ->saveActivity('Delete Cake : '.$this->cake->id);
             });
 
-            return success(CakeParser::first($this->cake));
+            return success();
         } catch (\Exception $e) {
             return exception($e);
         }

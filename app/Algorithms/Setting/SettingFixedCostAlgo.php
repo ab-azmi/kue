@@ -91,7 +91,7 @@ class SettingFixedCostAlgo
     /** --- PRIVATE FUNCTIONS --- **/
     private function saveFixedCost($request)
     {
-        $form = $request->safe()->only([
+        $form = $request->only([
             'name',
             'description',
             'amount',
@@ -103,11 +103,14 @@ class SettingFixedCostAlgo
             if (! $updated) {
                 errSettingFixedCostUpdate();
             }
-        } else {
-            $this->fixedCost = SettingFixedCost::create($form);
-            if (! $this->fixedCost) {
-                errSettingFixedCostCreate();
-            }
+
+            return;
         }
+
+        $this->fixedCost = SettingFixedCost::create($form);
+        if (! $this->fixedCost) {
+            errSettingFixedCostCreate();
+        }
+
     }
 }
