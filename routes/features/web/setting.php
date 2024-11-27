@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('settings')
     ->group(function () {
 
-        Route::prefix('fixed_costs')
+        Route::prefix('fixed-costs')
             ->group(function () {
                 Route::get('', [SettingFixedCostController::class, 'get']);
                 Route::post('', [SettingFixedCostController::class, 'create']);
