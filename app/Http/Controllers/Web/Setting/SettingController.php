@@ -46,7 +46,6 @@ class SettingController extends Controller
     public function update($id, Request $request)
     {
         $algo = new SettingAlgo($id);
-
         return $algo->update($request);
     }
 }

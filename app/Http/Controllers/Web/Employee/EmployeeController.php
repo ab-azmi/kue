@@ -32,7 +32,6 @@ class EmployeeController extends Controller
     public function create(EmployeeRequest $request)
     {
         $algo = new EmployeeAlgo;
-
         return $algo->create($request);
     }
 
@@ -60,7 +59,6 @@ class EmployeeController extends Controller
     public function update($id, EmployeeRequest $request)
     {
         $algo = new EmployeeAlgo((int) $id);
-
         return $algo->update($request);
     }
 
@@ -72,7 +70,6 @@ class EmployeeController extends Controller
     public function delete(string $id)
     {
         $algo = new EmployeeAlgo((int) $id);
-
         return $algo->delete();
     }
 }

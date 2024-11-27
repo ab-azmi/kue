@@ -32,7 +32,6 @@ class CakeDiscountController extends Controller
     public function create(CakeDiscountRequest $request)
     {
         $algo = new CakeDiscountAlgo;
-
         return $algo->create($request);
     }
 
@@ -59,7 +58,6 @@ class CakeDiscountController extends Controller
     public function update($id, CakeDiscountRequest $request)
     {
         $algo = new CakeDiscountAlgo($id);
-
         return $algo->update($request);
     }
 
@@ -69,7 +67,6 @@ class CakeDiscountController extends Controller
     public function delete($id)
     {
         $algo = new CakeDiscountAlgo($id);
-
         return $algo->delete();
     }
 }

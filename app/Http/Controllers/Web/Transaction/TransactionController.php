@@ -35,7 +35,6 @@ class TransactionController extends Controller
     public function create(TransactionRequest $request)
     {
         $algo = new TransactionAlgo;
-
         return $algo->create($request);
     }
 
@@ -67,7 +66,6 @@ class TransactionController extends Controller
     public function update($id, TransactionRequest $request)
     {
         $algo = new TransactionAlgo((int) $id);
-
         return $algo->update($request);
     }
 
@@ -79,7 +77,6 @@ class TransactionController extends Controller
     public function delete($id)
     {
         $algo = new TransactionAlgo((int) $id);
-
         return $algo->delete();
     }
 }

@@ -34,7 +34,6 @@ class CakeController extends Controller
     public function create(CakeRequest $request)
     {
         $algo = new CakeAlgo;
-
         return $algo->create($request);
     }
 
@@ -67,7 +66,6 @@ class CakeController extends Controller
     public function update($id, CakeRequest $request)
     {
         $algo = new CakeAlgo((int) $id);
-
         return $algo->update($request);
     }
 
@@ -79,7 +77,6 @@ class CakeController extends Controller
     public function delete($id)
     {
         $algo = new CakeAlgo((int) $id);
-
         return $algo->delete();
     }
 
@@ -89,7 +86,6 @@ class CakeController extends Controller
     public function COGS(CakeCOGSRequest $request)
     {
         $algo = new CakeAlgo;
-
         return $algo->COGS($request);
     }
 }
