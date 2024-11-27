@@ -32,7 +32,6 @@ class CakeComponentIngredientController extends Controller
     public function create(CakeComponentIngredientRequest $request)
     {
         $algo = new CakeComponentIngredientAlgo;
-
         return $algo->create($request);
     }
 
@@ -60,7 +59,6 @@ class CakeComponentIngredientController extends Controller
     public function update($id, CakeComponentIngredientRequest $request)
     {
         $algo = new CakeComponentIngredientAlgo((int) $id);
-
         return $algo->update($request);
     }
 
@@ -72,7 +70,6 @@ class CakeComponentIngredientController extends Controller
     public function delete($id)
     {
         $algo = new CakeComponentIngredientAlgo((int) $id);
-
         return $algo->delete();
     }
 }
