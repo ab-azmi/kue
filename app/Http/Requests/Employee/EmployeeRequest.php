@@ -29,8 +29,7 @@ class EmployeeRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:15'],
             'address' => ['nullable', 'string'],
             'bankNumber' => ['nullable', 'string', 'max:255'],
-            'totalSalary' => ['nullable', 'numeric'],
-            'employeeId' => ['nullable', 'numeric', 'exists:employees,id'],
+            'totalSalary' => ['nullable', 'numeric']
         ];
     }
 }
