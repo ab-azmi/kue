@@ -14,7 +14,7 @@ class SettingAlgo
     /**
      * @param Setting|int|null $setting
      */
-    public function __construct(public Setting|int|null $setting = null)
+    public function __construct(public Setting|int $setting)
     {
         if (is_int($setting)) {
             $this->setting = Setting::find($setting);
@@ -59,11 +59,10 @@ class SettingAlgo
 
         $form = $request->only(['description', 'value']);
 
-        if ($this->setting) {
-            $updated = $this->setting->update($form);
-            if (! $updated) {
-                errSettingUpdate();
-            }
+        $updated = $this->setting->update($form);
+        if (! $updated) {
+            errSettingUpdate();
         }
+
     }
 }
