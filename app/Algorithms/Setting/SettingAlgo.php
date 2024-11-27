@@ -4,6 +4,7 @@ namespace App\Algorithms\Setting;
 
 use App\Models\Setting\Setting;
 use App\Services\Constant\Activity\ActivityAction;
+use GlobalXtreme\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,7 +52,7 @@ class SettingAlgo
 
     private function saveSetting($request)
     {
-        $request->validate([
+        Validator::make($request->all(), [
             'description' => 'required|string|max:255',
             'value' => 'required',
         ]);
