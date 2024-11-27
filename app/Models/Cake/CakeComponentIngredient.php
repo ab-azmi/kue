@@ -44,23 +44,24 @@ class CakeComponentIngredient extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when(
-                $searchByText,
-                function ($query) use ($request) {
-                    return $query->where('name', 'like', '%'.$request->search.'%')
-                        ->orWhere('supplier', 'like', '%'.$request->search.'%');
-                }
-            )
-            ->when($request->orderBy, function ($query) use ($request) {
-                return $query->orderBy($request->orderBy, $request->orderType);
-            });
+        return $query->where(function($query) use ($request, $searchByText){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
+            if($searchByText) {
+                $query->where('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('supplier', 'like', '%'.$request->search.'%');
+            }
+
+            if($request->has('orderBy') && $request->has('orderType')) {
+                $query->orderBy($request->orderBy, $request->orderType);
+            }
+        });
     }
 
 
 
     /** --- FUNCTIONS --- **/
-    
+
     public function incrementStock(int $quantity)
     {
         return $this->increment('quantity', $quantity);

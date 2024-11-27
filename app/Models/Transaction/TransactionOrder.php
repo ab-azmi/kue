@@ -33,9 +33,4 @@ class TransactionOrder extends BaseModel
     {
         return $this->belongsTo(Transaction::class, 'transactionId');
     }
-
-    public function cakeVariant()
-    {
-        return $this->belongsTo(CakeVariant::class, 'cakeVariantId');
-    }
 }

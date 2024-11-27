@@ -30,17 +30,18 @@ class SettingFixedCost extends BaseModel
     {
         $searchBytext = $this->hasSearch($request);
 
-        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when($searchBytext, function ($query) use ($request) {
-                return $query->where('name', 'like', '%'.$request->search.'%')
+        return $query->where(function($query) use ($request, $searchBytext){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
+            if($searchBytext){
+                $query->where('name', 'like', '%'.$request->search.'%')
                     ->orWhere('description', 'like', '%'.$request->search.'%');
-            })
-            ->when($request->has('frequency'), function ($query) use ($request) {
-                return $query->where('frequency', $request->frequency);
-            })
-            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
-                return $query->orderBy($request->orderBy, $request->orderType);
-            });
+            }
+
+            if($request->has('orderBy') && $request->has('orderType')){
+                $query->orderBy($request->orderBy, $request->orderType);
+            }
+        });
     }
 
 

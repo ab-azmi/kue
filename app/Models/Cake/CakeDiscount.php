@@ -5,6 +5,7 @@ namespace App\Models\Cake;
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeDiscountProperty;
 use App\Parser\Cake\CakeDiscountParser;
+use App\Services\Constant\Path\Path;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -28,7 +29,6 @@ class CakeDiscount extends BaseModel
     public $parserClass = CakeDiscountParser::class;
 
 
-
     /** --- RELATIONSHIP --- */
 
     public function cake(): BelongsTo
@@ -37,33 +37,26 @@ class CakeDiscount extends BaseModel
     }
 
 
-
     /** --- SCOPES --- **/
-    
+
     public function scopeFilter($query, $request)
     {
         $searchBytext = $this->hasSearch($request);
 
-        return $query
-            ->when(
-                $request->fromDate && $request->toDate,
-                function ($query) use ($request) {
-                    return $query->where('fromDate', '>=', Carbon::createFromFormat('d/m/Y', $request->fromDate)->toDateString())
-                        ->where('toDate', '<=', Carbon::createFromFormat('d/m/Y', $request->toDate)->toDateString());
-                }
-            )
-            ->when(
-                $searchBytext,
-                function ($query) use ($request) {
-                    return $query->where('name', 'like', '%'.$request->search.'%')
-                        ->orWhere('description', 'like', '%'.$request->search.'%');
-                }
-            )
-            ->when(
-                $request->cakeId,
-                function ($query) use ($request) {
-                    return $query->where('cakeId', $request->cakeId);
-                }
-            );
+        return $query->where(function($query) use ($request, $searchBytext) {
+            if($searchBytext){
+                $query->where('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('description', 'like', '%'.$request->search.'%');
+            }
+
+            if($request->has('fromDate') && $request->has('toDate')){
+                $query->where('fromDate', '>=', Carbon::createFromFormat('d/m/Y', $request->fromDate)->toDateString())
+                    ->where('toDate', '<=', Carbon::createFromFormat('d/m/Y', $request->toDate)->toDateString());
+            }
+
+            if($request->has('cakeId')){
+                $query->where('cakeId', $request->cakeId);
+            }
+        });
     }
 }
