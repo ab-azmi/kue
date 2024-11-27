@@ -5,6 +5,7 @@ namespace App\Models\Transaction;
 use App\Models\BaseModel;
 use App\Models\Cake\CakeVariant;
 use App\Models\Transaction\Traits\HasActivityOrderProperty;
+use App\Parser\Transaction\TransactionOrderParser;
 
 class TransactionOrder extends BaseModel
 {
@@ -23,7 +24,11 @@ class TransactionOrder extends BaseModel
         'totalPrice' => 'float',
     ];
 
+    public $parserClass = TransactionOrderParser::class;
+
+
     /** --- RELATIONSHIP --- */
+
     public function transaction()
     {
         return $this->belongsTo(Transaction::class, 'transactionId');

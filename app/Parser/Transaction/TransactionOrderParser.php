@@ -5,7 +5,7 @@ namespace App\Parser\Transaction;
 use App\Parser\Cake\CakeVariantParser;
 use GlobalXtreme\Parser\BaseParser;
 
-class OrderParser extends BaseParser
+class TransactionOrderParser extends BaseParser
 {
     /**
      * @return array|null

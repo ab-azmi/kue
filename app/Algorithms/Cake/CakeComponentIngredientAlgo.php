@@ -70,7 +70,7 @@ class CakeComponentIngredientAlgo
         try {
             DB::transaction(function () {
                 $this->ingredient->setOldActivityPropertyAttributes(ActivityAction::DELETE);
-                
+
                 $this->ingredient->cakes()->detach();
 
                 $this->ingredient->delete();
@@ -79,7 +79,7 @@ class CakeComponentIngredientAlgo
                     ->saveActivity('Delete Ingredient : '.$this->ingredient->id);
             });
 
-            return success($this->ingredient);
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }

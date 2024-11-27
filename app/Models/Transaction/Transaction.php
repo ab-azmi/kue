@@ -5,6 +5,7 @@ namespace App\Models\Transaction;
 use App\Models\BaseModel;
 use App\Models\Employee\Employee;
 use App\Models\Transaction\Traits\HasActivityTransactionProperty;
+use App\Parser\Transaction\TransactionParser;
 
 class Transaction extends BaseModel
 {
@@ -24,7 +25,11 @@ class Transaction extends BaseModel
         'totalPrice' => 'float',
     ];
 
+    public $parserClass = TransactionParser::class;
+
+
     /** --- RELATIONSHIP --- */
+
     public function orders()
     {
         return $this->hasMany(TransactionOrder::class, 'transactionId');
@@ -35,7 +40,10 @@ class Transaction extends BaseModel
         return $this->belongsTo(Employee::class, 'employeeId');
     }
 
+
+
     /** --- SCOPES --- */
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);

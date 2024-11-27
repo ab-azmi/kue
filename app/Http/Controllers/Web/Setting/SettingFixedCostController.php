@@ -21,7 +21,7 @@ class SettingFixedCostController extends Controller
     {
         $fixedCosts = SettingFixedCost::filter($request)->getOrPaginate($request, true);
 
-        return success(SettingFixedCostParser::get($fixedCosts));
+        return success($fixedCosts, pagination: pagination($fixedCosts));
     }
 
     /**
@@ -48,7 +48,7 @@ class SettingFixedCostController extends Controller
             errSettingFixedCostGet();
         }
 
-        return success(SettingFixedCostParser::first($fixedCost));
+        return success($fixedCost);
     }
 
     /**
