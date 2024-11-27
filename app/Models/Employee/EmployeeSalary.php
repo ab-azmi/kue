@@ -21,11 +21,16 @@ class EmployeeSalary extends BaseModel
         'totalSalary' => 'float',
     ];
 
+    public $parserClass = EmployeeSalary::class;
+
+
     /** --- RELATIONSHIP --- */
+
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'employeeId');
     }
+
 
     /** --- FUNCTIONS --- */
 

@@ -4,6 +4,7 @@ namespace App\Models\Setting;
 
 use App\Models\BaseModel;
 use App\Models\Setting\Traits\HasActivitySettingProperty;
+use App\Parser\Setting\SettingParser;
 
 class Setting extends BaseModel
 {
@@ -18,4 +19,6 @@ class Setting extends BaseModel
         self::UPDATED_AT => 'datetime',
         self::DELETED_AT => 'datetime',
     ];
+
+    public $parserClass = SettingParser::class;
 }

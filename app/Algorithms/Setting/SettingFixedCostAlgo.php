@@ -4,13 +4,14 @@ namespace App\Algorithms\Setting;
 
 use App\Models\Setting\SettingFixedCost;
 use App\Services\Constant\Activity\ActivityAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SettingFixedCostAlgo
 {
     /**
-     * @param SettingFixedCost|int|null
+     * @param SettingFixedCost|int|null $fixedCost
      */
     public function __construct(public SettingFixedCost|int|null $fixedCost = null)
     {
@@ -23,8 +24,9 @@ class SettingFixedCostAlgo
     }
 
     /**
-     * @param Illuminate\Http\Request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -43,8 +45,9 @@ class SettingFixedCostAlgo
     }
 
     /**
-     * @param Illuminate\Http\Request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -65,7 +68,7 @@ class SettingFixedCostAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -88,10 +91,12 @@ class SettingFixedCostAlgo
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function saveFixedCost($request)
     {
-        $form = $request->safe()->only([
+        $form = $request->only([
             'name',
             'description',
             'amount',
@@ -103,11 +108,14 @@ class SettingFixedCostAlgo
             if (! $updated) {
                 errSettingFixedCostUpdate();
             }
-        } else {
-            $this->fixedCost = SettingFixedCost::create($form);
-            if (! $this->fixedCost) {
-                errSettingFixedCostCreate();
-            }
+
+            return;
         }
+
+        $this->fixedCost = SettingFixedCost::create($form);
+        if (! $this->fixedCost) {
+            errSettingFixedCostCreate();
+        }
+
     }
 }

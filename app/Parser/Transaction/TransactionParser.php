@@ -29,7 +29,7 @@ class TransactionParser extends BaseParser
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
             'employee' => EmployeeUserParser::brief($data->employee),
-            'orders' => OrderParser::get($data->orders),
+            'orders' => TransactionOrderParser::get($data->orders),
         ];
     }
 

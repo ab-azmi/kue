@@ -5,13 +5,14 @@ namespace App\Algorithms\Cake;
 use App\Models\Cake\CakeDiscount;
 use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CakeDiscountAlgo
 {
     /**
-     * @param CakeDiscount|int|null
+     * @param CakeDiscount|int|null $discount
      */
     public function __construct(public CakeDiscount|int|null $discount = null)
     {
@@ -24,7 +25,9 @@ class CakeDiscountAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -36,14 +39,16 @@ class CakeDiscountAlgo
                     ->saveActivity('Create new Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success($this->discount);
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -57,16 +62,14 @@ class CakeDiscountAlgo
                     ->saveActivity('Update Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success($this->discount);
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Exception
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -80,13 +83,15 @@ class CakeDiscountAlgo
                     ->saveActivity('Delete Discount : '.$this->discount->id);
             });
 
-            return success(CakeDiscountParser::brief($this->discount));
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function getDates(Request $request)
     {
         $fromDate = date('Y-m-d H:i:s', strtotime($request->fromDate));

@@ -26,25 +26,24 @@ class EmployeeUser extends Authenticatable implements JWTSubject
 
     const UPDATED_AT = 'updatedAt';
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     */
+
+    /** --- RELATIONSHIP --- **/
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+
+    /** --- JWT --- */
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     */
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    /** Relationship **/
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class);
     }
 }
