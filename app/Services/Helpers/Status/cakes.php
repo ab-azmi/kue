@@ -3,204 +3,123 @@
 use App\Services\Constant\Error;
 
 if (! function_exists('errCakeCreate')) {
-    function errCakeCreate($internalMsg = '', $status = null)
+    function errCakeCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['CREATE_FAILED']['code'],
-            Error::CAKE['CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to create cake', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeUpdate')) {
-    function errCakeUpdate($internalMsg = '', $status = null)
+    function errCakeUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['UPDATE_FAILED']['code'],
-            Error::CAKE['UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to update cake', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeDelete')) {
-    function errCakeDelete($internalMsg = '', $status = null)
+    function errCakeDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['DELETE_FAILED']['code'],
-            Error::CAKE['DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to delete cake', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeGet')) {
-    function errCakeGet($internalMsg = '', $status = null)
+    function errCakeGet($internalMsg = '', $status = 404)
     {
-        error(
-            Error::CAKE['NOT_FOUND']['code'],
-            Error::CAKE['NOT_FOUND']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Cake not found', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeUploadImage')) {
-    function errCakeUploadImage($internalMsg = '', $status = null)
+    function errCakeUploadImage($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['UPLOAD_IMAGE_FAILED']['code'],
-            Error::CAKE['UPLOAD_IMAGE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to upload image', $internalMsg);
     }
 }
 
 /** --- CAKE DISCOUNT --- **/
 if (! function_exists('errCakeDiscountGet')) {
-    function errCakeDiscountGet($internalMsg = '', $status = null)
+    function errCakeDiscountGet($internalMsg = '', $status = 404)
     {
-        error(
-            Error::CAKE['DISCOUNT_NOT_FOUND']['code'],
-            Error::CAKE['DISCOUNT_NOT_FOUND']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to get cake discount', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeDiscountCreate')) {
-    function errCakeDiscountCreate($internalMsg = '', $status = null)
+    function errCakeDiscountCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['DISCOUNT_CREATE_FAILED']['code'],
-            Error::CAKE['DISCOUNT_CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to create cake discount', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeDiscountUpdate')) {
-    function errCakeDiscountUpdate($internalMsg = '', $status = null)
+    function errCakeDiscountUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['DISCOUNT_UPDATE_FAILED']['code'],
-            Error::CAKE['DISCOUNT_UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to update cake discount', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeDiscountDelete')) {
-    function errCakeDiscountDelete($internalMsg = '', $status = null)
+    function errCakeDiscountDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['DISCOUNT_DELETE_FAILED']['code'],
-            Error::CAKE['DISCOUNT_DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to delete cake discount', $internalMsg);
     }
 }
 
 /** --- CAKE INGREDIENT --- **/
 if (! function_exists('errCakeIngredientGet')) {
-    function errCakeIngredientGet($internalMsg = '', $status = null)
+    function errCakeIngredientGet($internalMsg = '', $status = 404)
     {
-        error(
-            Error::CAKE['INGRIDIENT_NOT_FOUND']['code'],
-            Error::CAKE['INGRIDIENT_NOT_FOUND']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to get cake ingredient', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientUpdate')) {
-    function errCakeIngredientUpdate($internalMsg = '', $status = null)
+    function errCakeIngredientUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['code'],
-            Error::CAKE['INGRIDIENT_UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to update cake ingredient', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientCreate')) {
-    function errCakeIngredientCreate($internalMsg = '', $status = null)
+    function errCakeIngredientCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['INGRIDIENT_CREATE_FAILED']['code'],
-            Error::CAKE['INGRIDIENT_CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to create cake ingredient', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientDelete')) {
-    function errCakeIngredientDelete($internalMsg = '', $status = null)
+    function errCakeIngredientDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['INGRIDIENT_DELETE_FAILED']['code'],
-            Error::CAKE['INGRIDIENT_DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to delete cake ingredient', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientSync')) {
-    function errCakeIngredientSync($internalMsg = '', $status = null)
+    function errCakeIngredientSync($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['SYNC_INGRIDIENTS_FAILED']['code'],
-            Error::CAKE['SYNC_INGRIDIENTS_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to sync cake ingredient', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientDecrementStock')) {
-    function errCakeIngredientDecrementStock($internalMsg = '', $status = null)
+    function errCakeIngredientDecrementStock($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['DECREMENT_INGRIDIENT_STOCK_FAILED']['code'],
-            Error::CAKE['DECREMENT_INGRIDIENT_STOCK_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to decrement stock', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeCOGS')) {
-    function errCakeCOGS($internalMsg = '', $status = null)
+    function errCakeCOGS($internalMsg = '', $status = 500)
     {
-        error(
-            Error::CAKE['CALCULATING_COGS_FAILED']['code'],
-            Error::CAKE['CALCULATING_COGS_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Failed to calculate COGS', $internalMsg);
     }
 }
 
 if (! function_exists('errCakeIngredientTotalCost')) {
-    function errCakeIngredientTotalCost($internalMsg = '', $status = null)
+    function errCakeIngredientTotalCost($internalMsg = '', $status = 500)
     {
-        error(
-        );
+        error($status, 'Failed to calculate total cost', $internalMsg);
     }
 }
 
