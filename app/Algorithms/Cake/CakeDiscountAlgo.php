@@ -75,14 +75,13 @@ class CakeDiscountAlgo
     public function delete()
     {
         try {
-            DB::transaction(function () {
-                $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->discount->delete();
+            $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Discount : '.$this->discount->id);
-            });
+            $this->discount->delete();
+
+            $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
+                ->saveActivity('Delete Discount : '.$this->discount->id);
 
             return success();
         } catch (\Exception $e) {

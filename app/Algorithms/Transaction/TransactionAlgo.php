@@ -92,17 +92,15 @@ class TransactionAlgo
     public function delete()
     {
         try {
-            DB::transaction(function () {
-                $this->transaction->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+            $this->transaction->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $deleted = $this->transaction->delete();
-                if (! $deleted) {
-                    errTransactionDelete();
-                }
+            $deleted = $this->transaction->delete();
+            if (! $deleted) {
+                errTransactionDelete();
+            }
 
-                $this->transaction->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Transaction : '.$this->transaction->id);
-            });
+            $this->transaction->setActivityPropertyAttributes(ActivityAction::DELETE)
+                ->saveActivity('Delete Transaction : '.$this->transaction->id);
 
             return success();
         } catch (\Exception $e) {

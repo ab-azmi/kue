@@ -73,17 +73,15 @@ class SettingFixedCostAlgo
     public function delete()
     {
         try {
-            DB::transaction(function () {
-                $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+            $this->fixedCost->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $deleted = $this->fixedCost->delete();
-                if (! $deleted) {
-                    errSettingFixedCostDelete();
-                }
+            $deleted = $this->fixedCost->delete();
+            if (! $deleted) {
+                errSettingFixedCostDelete();
+            }
 
-                $this->fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Fixed Cost : '.$this->fixedCost->id);
-            });
+            $this->fixedCost->setActivityPropertyAttributes(ActivityAction::DELETE)
+                ->saveActivity('Delete Fixed Cost : '.$this->fixedCost->id);
 
             return success($this->fixedCost);
         } catch (\Exception $e) {

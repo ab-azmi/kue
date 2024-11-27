@@ -72,14 +72,13 @@ class CakeVariantAlgo
     public function delete()
     {
         try {
-            DB::transaction(function() {
-                $this->cakeVariant->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->cakeVariant->delete();
+            $this->cakeVariant->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->cakeVariant->setActivityPropertyAttributes(ActivityAction::DELETE)
+            $this->cakeVariant->delete();
+
+            $this->cakeVariant->setActivityPropertyAttributes(ActivityAction::DELETE)
                         ->saveActivity('Delete Cake : '.$this->cakeVariant->id);
-            });
 
             return success();
         }catch(\Exception $e) {
