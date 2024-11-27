@@ -7,22 +7,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cake\CakeComponentIngredientRequest;
 use App\Models\Cake\CakeComponentIngredient;
 use App\Parser\Cake\CakeComponentIngredientParser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CakeComponentIngredientController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
         $ingredients = CakeComponentIngredient::filter($request)->getOrPaginate($request, true);
 
-        return success(CakeComponentIngredientParser::briefs($ingredients));
+        return success(CakeComponentIngredientParser::briefs($ingredients), pagination: pagination($ingredients));
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param CakeComponentIngredientRequest $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(CakeComponentIngredientRequest $request)
     {
@@ -32,8 +37,9 @@ class CakeComponentIngredientController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     *
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -46,8 +52,10 @@ class CakeComponentIngredientController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     * @param  CakeComponentIngredientRequest  $request
+     *
+     * @return JsonResponse
      */
     public function update($id, CakeComponentIngredientRequest $request)
     {
@@ -57,8 +65,9 @@ class CakeComponentIngredientController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     *
+     * @return JsonResponse
      */
     public function delete($id)
     {

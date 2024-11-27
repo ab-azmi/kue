@@ -11,13 +11,14 @@ use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Activity\ActivityAction;
 use App\Services\Constant\Path\Path;
 use App\Services\Constant\Setting\SettingConstant;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CakeAlgo
 {
     /**
-     * @param Cake|int|null
+     * @param Cake|int|null $cake
      */
     public function __construct(public Cake|int|null $cake = null)
     {
@@ -30,7 +31,9 @@ class CakeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -59,11 +62,12 @@ class CakeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
-
         try {
             DB::transaction(function () use ($request) {
                 $request['ingredients'] = $this->encodeIngredientJSON($request);
@@ -91,7 +95,7 @@ class CakeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -118,7 +122,7 @@ class CakeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed|void
      */
     public function COGS(Request $request)
     {
@@ -150,10 +154,10 @@ class CakeAlgo
         }
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function saveCakeImages(Request $request)
+
+    /** --- PRIVATE FUNCTIONS --- */
+
+    private function saveCakeImages(Request $request)
     {
         if ($request->has('images')) {
             $path = Path::STORAGE_CAKE_PUBLIC;
@@ -181,7 +185,6 @@ class CakeAlgo
         }
     }
 
-    /** --- PRIVATE FUNCTIONS --- */
     private function saveCake(Request $request)
     {
         $form = $request->safe()->only([

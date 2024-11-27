@@ -4,13 +4,14 @@ namespace App\Algorithms\Cake;
 
 use App\Models\Cake\CakeComponentIngredient;
 use App\Services\Constant\Activity\ActivityAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CakeComponentIngredientAlgo
 {
     /**
-     * @param CakeComponentIngredient|int|null
+     * @param CakeComponentIngredient|int|null $ingredient
      */
     public function __construct(public CakeComponentIngredient|int|null $ingredient = null)
     {
@@ -23,7 +24,9 @@ class CakeComponentIngredientAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -42,7 +45,9 @@ class CakeComponentIngredientAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -63,7 +68,7 @@ class CakeComponentIngredientAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -85,7 +90,9 @@ class CakeComponentIngredientAlgo
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function saveIngredient(Request $request)
     {
         $form = $request->safe()->only([

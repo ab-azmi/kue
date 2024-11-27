@@ -7,13 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\EmployeeRequest;
 use App\Models\Employee\Employee;
 use App\Parser\Employee\EmployeeParser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     /**
-     * @param Illuminate\Http\Request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
@@ -23,8 +25,9 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param App\Http\Requests\Employee\EmployeeRequest
-     * @return \Illuminate\Http\JsonResponse
+     * @param EmployeeRequest $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(EmployeeRequest $request)
     {
@@ -34,7 +37,9 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param  string|int  $id
+     * @param  string  $id
+     *
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -47,9 +52,10 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @param App\Http\Requests\Employee\EmployeeRequest
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     * @param EmployeeRequest  $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update($id, EmployeeRequest $request)
     {
@@ -59,7 +65,9 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     *
+     * @return JsonResponse|mixed
      */
     public function delete(string $id)
     {
