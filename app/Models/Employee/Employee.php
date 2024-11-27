@@ -5,6 +5,7 @@ namespace App\Models\Employee;
 use App\Models\BaseModel;
 use App\Models\Employee\Traits\HasActivityEmployeeProperty;
 use App\Models\Transaction\Transaction;
+use App\Parser\Employee\EmployeeParser;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -22,7 +23,12 @@ class Employee extends BaseModel
         self::DELETED_AT => 'datetime',
     ];
 
+    public $parserClass = EmployeeParser::class;
+
+
+
     /** RELATIONSHIP **/
+
     public function user(): HasOne
     {
         return $this->hasOne(EmployeeUser::class, 'employeeId');
@@ -37,6 +43,8 @@ class Employee extends BaseModel
     {
         return $this->hasOne(EmployeeSalary::class, 'employeeId');
     }
+
+
 
     /** --- SCOPES --- */
 
