@@ -17,9 +17,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('userId');
-            $table->foreign('userId')->references('id')->on('employee_users')->cascadeOnDelete();
-
+            $table->string('name');
             $table->string('address');
             $table->string('phone');
             $table->string('bankNumber');

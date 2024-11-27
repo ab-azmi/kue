@@ -4,6 +4,7 @@ namespace App\Models\Employee;
 
 use App\Models\Employee\Traits\HasActivityEmployeeUserProperty;
 use App\Models\GetOrPaginate;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
@@ -42,8 +43,8 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     }
 
     /** Relationship **/
-    public function employee(): HasOne
+    public function employee(): BelongsTo
     {
-        return $this->hasOne(Employee::class, 'userId');
+        return $this->belongsTo(Employee::class);
     }
 }

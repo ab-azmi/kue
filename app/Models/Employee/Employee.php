@@ -23,9 +23,9 @@ class Employee extends BaseModel
     ];
 
     /** RELATIONSHIP **/
-    public function user(): BelongsTo
+    public function user(): HasOne
     {
-        return $this->belongsTo(EmployeeUser::class, 'userId');
+        return $this->hasOne(EmployeeUser::class, 'employeeId');
     }
 
     public function transactions()

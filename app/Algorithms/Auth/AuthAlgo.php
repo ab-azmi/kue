@@ -2,8 +2,11 @@
 
 namespace App\Algorithms\Auth;
 
+use App\Models\Employee\EmployeeUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use GlobalXtreme\Validation\Validator;
 
 class AuthAlgo
 {
@@ -13,9 +16,9 @@ class AuthAlgo
     public function login(Request $request)
     {
         try {
-            $request->validate([
-                'email' => ['required', 'email', 'exists:employee_users,email', 'max:255'],
-                'password' => ['required'],
+            Validator::make($request->all(), [
+                'email' => 'required|email|exists:employee_users,email',
+                'password' => 'required',
             ]);
 
             $credentials = $request->only('email', 'password');
@@ -43,7 +46,25 @@ class AuthAlgo
         }
     }
 
-    public function register(Request $request) {}
+    public function register($credentials) {
+        try {
+            Validator::make($credentials, [
+                'email' => 'required|email|unique:employee_users,email',
+                'password' => 'required',
+                'employeeId' => 'required|exists:employees,id',
+            ]);
+
+            $user = EmployeeUser::create([
+                'email' => $credentials['email'],
+                'password' => Hash::make($credentials['password']),
+                'employeeId' => $credentials['employeeId'],
+            ]);
+
+            return $user;
+        } catch (\Exception $e) {
+            exception($e);
+        }
+    }
 
     /**
      * @return \Illuminate\Http\JsonResponse
