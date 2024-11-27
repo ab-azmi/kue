@@ -117,12 +117,15 @@ class TransactionAlgo
             if (! $updated) {
                 errTransactionUpdate();
             }
-        } else {
-            $this->transaction = Transaction::create($form);
-            if (! $this->transaction) {
-                errTransactionCreate();
-            }
+
+            return;
         }
+
+        $this->transaction = Transaction::create($form);
+        if (! $this->transaction) {
+            errTransactionCreate();
+        }
+
     }
 
     private function processOrders(Request $request): array
