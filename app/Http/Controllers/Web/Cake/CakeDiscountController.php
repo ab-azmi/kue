@@ -25,17 +25,6 @@ class CakeDiscountController extends Controller
     }
 
     /**
-     * @param CakeDiscountRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(CakeDiscountRequest $request)
-    {
-        $algo = new CakeDiscountAlgo;
-        return $algo->create($request);
-    }
-
-    /**
      * @param  string  $id
      *
      * @return JsonResponse|mixed
@@ -48,6 +37,17 @@ class CakeDiscountController extends Controller
         }
 
         return success($discount);
+    }
+
+    /**
+     * @param CakeDiscountRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(CakeDiscountRequest $request)
+    {
+        $algo = new CakeDiscountAlgo;
+        return $algo->create($request);
     }
 
     /**

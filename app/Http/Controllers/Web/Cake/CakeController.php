@@ -27,17 +27,6 @@ class CakeController extends Controller
     }
 
     /**
-     * @param CakeRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(CakeRequest $request)
-    {
-        $algo = new CakeAlgo;
-        return $algo->create($request);
-    }
-
-    /**
      * @param  string  $id
      *
      * @return JsonResponse|mixed
@@ -55,6 +44,17 @@ class CakeController extends Controller
         }
 
         return success($cake);
+    }
+
+    /**
+     * @param CakeRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(CakeRequest $request)
+    {
+        $algo = new CakeAlgo;
+        return $algo->create($request);
     }
 
     /**
