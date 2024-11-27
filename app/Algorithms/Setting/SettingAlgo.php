@@ -4,13 +4,14 @@ namespace App\Algorithms\Setting;
 
 use App\Models\Setting\Setting;
 use App\Services\Constant\Activity\ActivityAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SettingAlgo
 {
     /**
-     * @param Setting|int|null
+     * @param Setting|int|null $setting
      */
     public function __construct(public Setting|int|null $setting = null)
     {
@@ -23,7 +24,9 @@ class SettingAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -43,7 +46,9 @@ class SettingAlgo
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function saveSetting($request)
     {
         $request->validate([

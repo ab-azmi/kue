@@ -13,7 +13,7 @@ class SettingController extends Controller
     /**
      * @param  Request  $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
@@ -25,7 +25,7 @@ class SettingController extends Controller
     /**
      * @param  string  $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -41,7 +41,7 @@ class SettingController extends Controller
      * @param $id
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function update($id, Request $request)
     {

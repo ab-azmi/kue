@@ -9,14 +9,15 @@ use App\Parser\Transaction\TransactionParser;
 use App\Services\Constant\Activity\ActivityAction;
 use App\Services\Constant\Setting\SettingConstant;
 use App\Services\Number\Generator\TransactionNumber;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TransactionAlgo
 {
     /**
-     * @param Transaction|int|null
-     * @param array
+     * @param Transaction|int|null $transaction
+     * @param array $cakeVariants
      */
     public function __construct(public Transaction|int|null $transaction = null, private $cakeVariants = [])
     {
@@ -29,7 +30,9 @@ class TransactionAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -53,7 +56,9 @@ class TransactionAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -74,7 +79,7 @@ class TransactionAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -92,7 +97,9 @@ class TransactionAlgo
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- */
+
     private function saveTransaction($request)
     {
         $form = $request->only([

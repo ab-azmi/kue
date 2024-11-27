@@ -3,6 +3,8 @@
 namespace App\Algorithms\Auth;
 
 use App\Models\Employee\EmployeeUser;
+use App\Parser\Employee\EmployeeUserParser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +13,7 @@ use GlobalXtreme\Validation\Validator;
 class AuthAlgo
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|void
      */
     public function login(Request $request)
     {
@@ -30,22 +32,25 @@ class AuthAlgo
 
                 $request->session()->regenerate();
 
-                return response()->json([
+                return success([
                     'token' => $token,
                     'auth_type' => 'Bearer',
-                    'user' => $user->only(['id', 'name', 'email', 'role']),
+                    'user' => EmployeeUserParser::brief($user),
                 ]);
             }
 
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            errUnauthorized();
 
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
+    /**
+     * @param array $credentials
+     *
+     * @return JsonResponse|void|EmployeeUser
+     */
     public function register($credentials) {
         try {
             Validator::make($credentials, [
@@ -67,30 +72,30 @@ class AuthAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function logout(Request $request)
     {
         try {
             Auth::logout();
 
-            return response()->json([
-                'message' => 'Logged out',
-            ]);
+            return success(
+                message: 'Successfully logged out.'
+            );
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function refresh()
     {
         try {
             $token = Auth::refresh();
 
-            return response()->json([
+            return success([
                 'token' => $token,
                 'auth_type' => 'Bearer',
             ]);

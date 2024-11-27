@@ -8,6 +8,7 @@ use App\Models\Employee\EmployeeSalary;
 use App\Models\Employee\EmployeeUser;
 use App\Parser\Employee\EmployeeParser;
 use App\Services\Constant\Activity\ActivityAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class EmployeeAlgo
     private EmployeeUser $user;
 
     /**
-     * @param Employee|int|null
+     * @param Employee|int|null $employee
      */
     public function __construct(
         public Employee|int|null $employee = null,
@@ -34,7 +35,9 @@ class EmployeeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(Request $request)
     {
@@ -57,7 +60,9 @@ class EmployeeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update(Request $request)
     {
@@ -82,7 +87,9 @@ class EmployeeAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function delete()
     {
@@ -110,7 +117,9 @@ class EmployeeAlgo
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function saveEmployee(Request $request)
     {
         $form = $request->only([

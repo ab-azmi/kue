@@ -9,22 +9,27 @@ use App\Http\Requests\Cake\CakeRequest;
 use App\Models\Cake\Cake;
 use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Path\Path;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CakeController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
         $cakes = Cake::filter($request)->getOrPaginate($request, true);
 
-        return success($cakes, pagination:pagination($cakes));
+        return success(CakeParser::briefs($cakes), pagination:pagination($cakes));
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param CakeRequest $request
+     *
+     * @return JsonResponse|mixed
      */
     public function create(CakeRequest $request)
     {
@@ -35,7 +40,8 @@ class CakeController extends Controller
 
     /**
      * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -54,6 +60,9 @@ class CakeController extends Controller
 
     /**
      * @param  string  $id
+     * @param  CakeRequest  $request
+     *
+     * @return JsonResponse|mixed
      */
     public function update($id, CakeRequest $request)
     {
@@ -64,7 +73,8 @@ class CakeController extends Controller
 
     /**
      * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function delete($id)
     {
@@ -74,19 +84,12 @@ class CakeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|mixed
      */
     public function COGS(CakeCOGSRequest $request)
     {
         $algo = new CakeAlgo;
 
         return $algo->COGS($request);
-    }
-
-    public function getFile($path)
-    {
-        $cake = Path::STORAGE_CAKE_PUBLIC;
-
-        return response()->file(Path::STORAGE_PUBLIC_PATH($cake).'/'.$path);
     }
 }

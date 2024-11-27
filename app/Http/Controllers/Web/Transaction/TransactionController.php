@@ -15,7 +15,7 @@ class TransactionController extends Controller
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
@@ -30,7 +30,7 @@ class TransactionController extends Controller
     /**
      * @param TransactionRequest $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function create(TransactionRequest $request)
     {
@@ -42,7 +42,7 @@ class TransactionController extends Controller
     /**
      * @param string $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -62,7 +62,7 @@ class TransactionController extends Controller
      * @param string $id
      * @param TransactionRequest $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function update($id, TransactionRequest $request)
     {
@@ -74,7 +74,7 @@ class TransactionController extends Controller
     /**
      * @param  string  $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete($id)
     {

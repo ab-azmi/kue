@@ -15,19 +15,19 @@ class SettingFixedCostController extends Controller
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function get(Request $request)
     {
         $fixedCosts = SettingFixedCost::filter($request)->getOrPaginate($request, true);
 
-        return success($fixedCosts, pagination: pagination($fixedCosts));
+        return success(SettingFixedCostParser::briefs($fixedCosts), pagination: pagination($fixedCosts));
     }
 
     /**
      * @param SettingFixedCostRequest $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function create(SettingFixedCostRequest $request)
     {
@@ -39,7 +39,7 @@ class SettingFixedCostController extends Controller
     /**
      * @param string $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function detail($id)
     {
@@ -55,7 +55,7 @@ class SettingFixedCostController extends Controller
      * @param string $id
      * @param SettingFixedCostRequest $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function update($id, SettingFixedCostRequest $request)
     {
@@ -67,7 +67,7 @@ class SettingFixedCostController extends Controller
     /**
      * @param string $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|mixed
      */
     public function delete($id)
     {
