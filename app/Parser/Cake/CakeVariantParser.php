@@ -25,4 +25,20 @@ class CakeVariantParser extends BaseParser
             'cake' => CakeParser::brief($data->cake),
         ];
     }
+
+    public static function brief($data)
+    {
+        if (! $data) {
+            return null;
+        }
+
+        return [
+            'id' => $data->id,
+            'cakeId' => $data->cakeId,
+            'name' => $data->name,
+            'price' => $data->price,
+            'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i')
+        ];
+    }
 }

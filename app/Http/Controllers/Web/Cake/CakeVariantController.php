@@ -20,7 +20,7 @@ class CakeVariantController extends Controller
     {
         $variants = CakeVariant::filter($request)->getOrPaginate($request, true);
 
-        return success($variants);
+        return success(CakeVariantParser::briefs($variants), pagination: pagination($variants));
     }
 
     /**

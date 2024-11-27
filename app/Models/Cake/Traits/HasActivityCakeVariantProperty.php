@@ -2,7 +2,7 @@
 
 namespace App\Models\Cake\Traits;
 
-use App\Models\v1\Activity\Traits\HasActivity;
+use App\Models\Activity\Traits\HasActivity;
 use App\Parser\Cake\CakeVariantParser;
 use App\Services\Constant\Activity\ActivityType;
 

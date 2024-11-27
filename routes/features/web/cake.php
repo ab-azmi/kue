@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('variants')
     ->group(function () {
         Route::get('', [CakeVariantController::class, 'get']);
+        Route::post('', [CakeVariantController::class, 'create']);
+        Route::get('{id}', [CakeVariantController::class, 'detail']);
+        Route::put('{id}', [CakeVariantController::class, 'update']);
+        Route::delete('{id}', [CakeVariantController::class, 'delete']);
     });
 
 Route::prefix('discounts')
