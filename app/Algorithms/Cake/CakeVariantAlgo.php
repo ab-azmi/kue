@@ -106,8 +106,8 @@ class CakeVariantAlgo
             return;
         }
 
-        $created = CakeVariant::create($form);
-        if(!$created) {
+        $this->cakeVariant = CakeVariant::create($form);
+        if(!$this->cakeVariant) {
             errCakeVariantCreate();
         }
     }
