@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::filter($request)->with('user')->getOrPaginate($request, true);
 
-        return success(EmployeeParser::briefs($employees));
+        return success(EmployeeParser::briefs($employees), pagination: pagination($employees));
     }
 
     /**
@@ -43,7 +43,7 @@ class EmployeeController extends Controller
             errEmployeeGet();
         }
 
-        return success(EmployeeParser::first($employee));
+        return success($employee);
     }
 
     /**
