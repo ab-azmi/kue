@@ -5,29 +5,31 @@ namespace App\Http\Controllers\Web\Setting;
 use App\Algorithms\Setting\SettingAlgo;
 use App\Http\Controllers\Controller;
 use App\Models\Setting\Setting;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
     /**
-     * @param  SettingAlgo  $algo
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Request  $request
+     *
+     * @return JsonResponse
      */
     public function get(Request $request)
     {
-        $algos = Setting::getOrPaginate($request, true);
+        $settings = Setting::getOrPaginate($request, true);
 
-        return success($algos);
+        return success($settings, pagination: pagination($settings));
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param  string  $id
+     *
+     * @return JsonResponse
      */
     public function detail($id)
     {
         $setting = Setting::find($id);
-
         if (! $setting) {
             errSettingGet();
         }
@@ -36,8 +38,10 @@ class SettingController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param $id
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function update($id, Request $request)
     {
