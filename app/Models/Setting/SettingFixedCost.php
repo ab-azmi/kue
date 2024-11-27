@@ -5,6 +5,7 @@ namespace App\Models\Setting;
 use App\Models\BaseModel;
 use App\Models\Setting\Traits\HasActivitySettingFixedCostProperty;
 use App\Parser\Setting\SettingFixedCostParser;
+use App\Services\Constant\Setting\FrequencyConstant;
 
 class SettingFixedCost extends BaseModel
 {
@@ -49,6 +50,6 @@ class SettingFixedCost extends BaseModel
 
     public static function getFixedCostMonthly(): float
     {
-        return self::where('frequency', 'monthly')->sum('amount');
+        return self::where('frequency', FrequencyConstant::MONTHLY_ID)->sum('amount');
     }
 }
