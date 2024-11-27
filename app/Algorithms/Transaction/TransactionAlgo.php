@@ -47,6 +47,9 @@ class TransactionAlgo
                 $this->saveTransaction($request);
 
                 $this->createOrders($orders);
+
+                $this->transaction->setActivityPropertyAttributes(ActivityAction::CREATE)
+                    ->saveActivity('Create new Transaction : '.$this->transaction->id);
             });
 
             return success($this->transaction);
@@ -64,12 +67,17 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () use ($request) {
+                $this->transaction->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+
                 $this->saveTransaction($request);
 
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
                     $this->updateOrders($orders);
                 }
+
+                $this->transaction->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Update Transaction : '.$this->transaction->id);
             });
 
             return success($this->transaction);
@@ -85,10 +93,15 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () {
+                $this->transaction->setOldActivityPropertyAttributes(ActivityAction::DELETE);
+
                 $deleted = $this->transaction->delete();
                 if (! $deleted) {
                     errTransactionDelete();
                 }
+
+                $this->transaction->setActivityPropertyAttributes(ActivityAction::DELETE)
+                    ->saveActivity('Delete Transaction : '.$this->transaction->id);
             });
 
             return success();

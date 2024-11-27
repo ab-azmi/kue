@@ -160,7 +160,7 @@ class CakeAlgo
     private function saveCakeImages(Request $request)
     {
         if ($request->has('images')) {
-            $path = Path::STORAGE_CAKE_PUBLIC;
+            $path = Path::CAKES;
 
             foreach ($request->file('images') as $obj) {
                 if ($obj['file']) {
