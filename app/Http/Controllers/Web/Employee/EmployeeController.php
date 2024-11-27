@@ -25,17 +25,6 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param EmployeeRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(EmployeeRequest $request)
-    {
-        $algo = new EmployeeAlgo;
-        return $algo->create($request);
-    }
-
-    /**
      * @param  string  $id
      *
      * @return JsonResponse|mixed
@@ -48,6 +37,17 @@ class EmployeeController extends Controller
         }
 
         return success($employee);
+    }
+
+    /**
+     * @param EmployeeRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(EmployeeRequest $request)
+    {
+        $algo = new EmployeeAlgo;
+        return $algo->create($request);
     }
 
     /**

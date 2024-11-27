@@ -47,15 +47,20 @@ class Transaction extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when($searchByText, function ($query) use ($request) {
-                return $query->where('number', 'like', '%'.$request->search.'%');
-            })
-            ->when($request->employeeId, function ($query) use ($request) {
-                return $query->where('employeeId', $request->employeeId);
-            })
-            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
-                return $query->orderBy($request->orderBy, $request->orderType);
-            });
+        return $query->where(function($query) use ($request, $searchByText){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
+            if($searchByText){
+                $query->where('number', 'like', '%'.$request->search.'%');
+            }
+
+            if($request->has('employeeId')){
+                $query->where('employeeId', $request->employeeId);
+            }
+
+            if($request->has('orderBy') && $request->has('orderType')){
+                $query->orderBy($request->orderBy, $request->orderType);
+            }
+        });
     }
 }

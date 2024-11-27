@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('fromDate');
             $table->date('toDate');
             $table->float('value');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
 
             $this->getDefaultTimestamps($table);
         });

@@ -27,10 +27,12 @@ class CakeRequest extends FormRequest
             'profitMargin' => 'nullable|string|max:255',
             'COGS' => 'nullable|numeric|max:255',
             'sellingPrice' => 'nullable|numeric',
+
             'images' => 'array',
             'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'images.*.mimeType' => 'string|max:255',
             'images.*.url' => 'string|max:255',
+
             'ingredients' => 'array',
             'ingredients.*.ingredientId' => 'numeric|max:255',
             'ingredients.*.quantity' => 'numeric|max:255',

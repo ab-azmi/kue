@@ -25,17 +25,6 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param SettingFixedCostRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(SettingFixedCostRequest $request)
-    {
-        $algo = new SettingFixedCostAlgo();
-        return $algo->create($request);
-    }
-
-    /**
      * @param string $id
      *
      * @return JsonResponse|mixed
@@ -48,6 +37,17 @@ class SettingFixedCostController extends Controller
         }
 
         return success($fixedCost);
+    }
+
+    /**
+     * @param SettingFixedCostRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(SettingFixedCostRequest $request)
+    {
+        $algo = new SettingFixedCostAlgo();
+        return $algo->create($request);
     }
 
     /**

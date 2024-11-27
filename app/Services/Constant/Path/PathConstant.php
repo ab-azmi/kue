@@ -8,5 +8,5 @@ class PathConstant
 
     const STORAGE_PUBLIC = 'app/public';
 
-    const STORAGE_CAKE_PUBLIC = 'cakes';
+    const CAKES = 'cakes/';
 }

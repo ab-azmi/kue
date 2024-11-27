@@ -1,101 +1,61 @@
 <?php
 
-use App\Services\Constant\Error;
-
 if (! function_exists('errEmployeeCreate')) {
-    function errEmployeeCreate($internalMsg = '', $status = null)
+    function errEmployeeCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['CREATE_FAILED']['code'],
-            Error::EMPLOYEE['CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Create Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errEmployeeUpdate')) {
-    function errEmployeeUpdate($internalMsg = '', $status = null)
+    function errEmployeeUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['UPDATE_FAILED']['code'],
-            Error::EMPLOYEE['UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Update Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errEmployeeDelete')) {
-    function errEmployeeDelete($internalMsg = '', $status = null)
+    function errEmployeeDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['DELETE_FAILED']['code'],
-            Error::EMPLOYEE['DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Delete Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errEmployeeGet')) {
-    function errEmployeeGet($internalMsg = '', $status = null)
+    function errEmployeeGet($internalMsg = '', $status = 404)
     {
-        error(
-            Error::EMPLOYEE['NOT_FOUND']['code'],
-            Error::EMPLOYEE['NOT_FOUND']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Not Found', $internalMsg);
     }
 }
 
 /** --- EMPLOYEE USER --- **/
 if (! function_exists('errEmployeeUserCreate')) {
-    function errEmployeeUserCreate($internalMsg = '', $status = null)
+    function errEmployeeUserCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['USER_CREATE_FAILED']['code'],
-            Error::EMPLOYEE['USER_CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'User Create Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errEmployeeUserUpdate')) {
-    function errEmployeeUserUpdate($internalMsg = '', $status = null)
+    function errEmployeeUserUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['USER_UPDATE_FAILED']['code'],
-            Error::EMPLOYEE['USER_UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'User Update Failed', $internalMsg);
     }
 }
 
+
 /** --- EMPLOYEE SALARY --- **/
+
 if (! function_exists('errEmployeeSalaryUpdate')) {
-    function errEmployeeSalaryUpdate($internalMsg = '', $status = null)
+    function errEmployeeSalaryUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['SALARY_UPDATE_FAILED']['code'],
-            Error::EMPLOYEE['SALARY_UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Salary Update Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errEmployeeSalaryDelete')) {
-    function errEmployeeSalaryDelete($internalMsg = '', $status = null)
+    function errEmployeeSalaryDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::EMPLOYEE['SALARY_DELETE_FAILED']['code'],
-            Error::EMPLOYEE['SALARY_DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Employee Salary Delete Failed', $internalMsg);
     }
 }

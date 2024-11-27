@@ -4,6 +4,7 @@ namespace App\Algorithms\Setting;
 
 use App\Models\Setting\Setting;
 use App\Services\Constant\Activity\ActivityAction;
+use GlobalXtreme\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ class SettingAlgo
     /**
      * @param Setting|int|null $setting
      */
-    public function __construct(public Setting|int|null $setting = null)
+    public function __construct(public Setting|int $setting)
     {
         if (is_int($setting)) {
             $this->setting = Setting::find($setting);
@@ -51,18 +52,17 @@ class SettingAlgo
 
     private function saveSetting($request)
     {
-        $request->validate([
+        Validator::make($request->all(), [
             'description' => 'required|string|max:255',
             'value' => 'required',
         ]);
 
         $form = $request->only(['description', 'value']);
 
-        if ($this->setting) {
-            $updated = $this->setting->update($form);
-            if (! $updated) {
-                errSettingUpdate();
-            }
+        $updated = $this->setting->update($form);
+        if (! $updated) {
+            errSettingUpdate();
         }
+
     }
 }

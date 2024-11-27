@@ -34,7 +34,6 @@ class EmployeeSalary extends BaseModel
 
     /** --- FUNCTIONS --- */
 
-    //function to get the sum of totalSalary of all employees
     public static function getTotalSalary(): float
     {
         return self::sum('totalSalary');

@@ -50,24 +50,30 @@ class Cake extends BaseModel
     }
 
 
-    
+
     /** --- SCOPES --- */
 
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when($searchByText, function ($query) use ($request) {
-                return $query->where('name', 'like', '%'.$request->search.'%');
-            })
-            ->when($request->orderBy && $request->orderType, function ($query) use ($request) {
-                return $query->orderBy($request->orderBy, $request->orderType);
-            })
-            ->when($request->variantId, function ($query) use ($request) {
-                return $query->whereHas('variants', function ($query) use ($request) {
+        return $query->where(function($query) use ($request, $searchByText) {
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
+            if($searchByText) {
+                $query->where('name', 'like', '%'.$request->search.'%');
+            }
+
+            if($request->has('variantId')){
+                $query->whereHas('variants', function ($query) use ($request) {
                     return $query->where('id', $request->variantId);
                 });
-            });
+            }
+
+            if($request->has('orderBy') && $request->has('orderType')){
+                $query->orderBy($request->orderBy, $request->orderType);
+            }
+        });
+
     }
 }

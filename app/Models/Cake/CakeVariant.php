@@ -55,14 +55,17 @@ class CakeVariant extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->ofDate('createdAt', $request->fromDate, $request->toDate)
-            ->when($searchByText, function ($query) use ($request) {
-                return $query->where('name', 'like', '%'.$request->search.'%');
+        return $query->where(function($query) use ($request, $searchByText){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
-                return $query->where('description', 'like', '%'.$request->search.'%');
-            })
-            ->when($request->cakeId, function ($query) use ($request) {
-                return $query->where('cakeId', $request->cakeId);
-            });
+            if($searchByText){
+                $query->where('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('description', 'like', '%'.$request->search.'%');
+            }
+
+            if($request->has('cakeId')){
+                $query->where('cakeId', $request->cakeId);
+            }
+        });
     }
 }

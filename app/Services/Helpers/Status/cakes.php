@@ -1,7 +1,5 @@
 <?php
 
-use App\Services\Constant\Error;
-
 if (! function_exists('errCakeCreate')) {
     function errCakeCreate($internalMsg = '', $status = 500)
     {

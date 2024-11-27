@@ -28,17 +28,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param TransactionRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(TransactionRequest $request)
-    {
-        $algo = new TransactionAlgo;
-        return $algo->create($request);
-    }
-
-    /**
      * @param string $id
      *
      * @return JsonResponse|mixed
@@ -55,6 +44,17 @@ class TransactionController extends Controller
         }
 
         return success($transaction);
+    }
+
+    /**
+     * @param TransactionRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(TransactionRequest $request)
+    {
+        $algo = new TransactionAlgo;
+        return $algo->create($request);
     }
 
     /**

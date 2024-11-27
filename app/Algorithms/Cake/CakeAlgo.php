@@ -49,7 +49,7 @@ class CakeAlgo
 
                 $this->syncIngredientStock($request);
 
-                $this->cake->load('variants'); //TODO : Hanlde variant payload
+                $this->cake->load('variants');
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : '.$this->cake->id);
@@ -160,7 +160,7 @@ class CakeAlgo
     private function saveCakeImages(Request $request)
     {
         if ($request->has('images')) {
-            $path = Path::STORAGE_CAKE_PUBLIC;
+            $path = Path::CAKES;
 
             foreach ($request->file('images') as $obj) {
                 if ($obj['file']) {

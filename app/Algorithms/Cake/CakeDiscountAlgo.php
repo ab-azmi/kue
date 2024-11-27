@@ -5,6 +5,7 @@ namespace App\Algorithms\Cake;
 use App\Models\Cake\CakeDiscount;
 use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityAction;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -74,14 +75,13 @@ class CakeDiscountAlgo
     public function delete()
     {
         try {
-            DB::transaction(function () {
-                $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->discount->delete();
+            $this->discount->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Discount : '.$this->discount->id);
-            });
+            $this->discount->delete();
+
+            $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
+                ->saveActivity('Delete Discount : '.$this->discount->id);
 
             return success();
         } catch (\Exception $e) {
@@ -92,46 +92,30 @@ class CakeDiscountAlgo
 
     /** --- PRIVATE FUNCTIONS --- **/
 
-    private function getDates(Request $request)
-    {
-        $fromDate = date('Y-m-d H:i:s', strtotime($request->fromDate));
-        $toDate = date('Y-m-d H:i:s', strtotime($request->toDate));
-
-        if ($fromDate > $toDate) {
-            errCakeCreate('From date must be less than to date');
-        }
-
-        return [
-            'from' => $fromDate,
-            'to' => $toDate,
-        ];
-    }
-
     private function saveDiscount(Request $request)
     {
-        $dates = $this->getDates($request);
-
-        $form = $request->safe()->only([
+        $form = $request->only([
             'name',
             'description',
             'value',
             'cakeId',
         ]);
 
-        $form['fromDate'] = $dates['from'];
-        $form['toDate'] = $dates['to'];
+        $form['fromDate'] = Carbon::createFromFormat('d/m/Y', $request->fromDate)->startOfDay();
+        $form['toDate'] = Carbon::createFromFormat('d/m/Y', $request->toDate)->endOfDay();
 
         if ($this->discount) {
             $updated = $this->discount->update($form);
             if (! $updated) {
                 errCakeUpdate();
             }
-        } else {
-            $this->discount = CakeDiscount::create($form);
-            if (! $this->discount) {
-                errCakeCreate();
-            }
+
+            return;
         }
 
+        $this->discount = CakeDiscount::create($form);
+        if (! $this->discount) {
+            errCakeCreate();
+        }
     }
 }

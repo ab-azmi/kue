@@ -1,76 +1,44 @@
 <?php
 
-use App\Services\Constant\Error;
-
 if (! function_exists('errSettingUpdate')) {
-    function errSettingUpdate($internalMsg = '', $status = null)
+    function errSettingUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::SETTING['UPDATE_FAILED']['code'],
-            Error::SETTING['UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Setting Update Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errSettingGet')) {
-    function errSettingGet($data = null, $status = null)
+    function errSettingGet($data = null, $status = 404)
     {
-        success(
-            Error::SETTING['NOT_FOUND']['code'],
-            Error::SETTING['UPDATE_FAILED']['msg'],
-            $data,
-            $status
-        );
+        success($status, 'Setting Not Found', $data);
     }
 }
 
 /** --- FIXED COST --- **/
 if (! function_exists('errSettingFixedCostCreate')) {
-    function errSettingFixedCostCreate($internalMsg = '', $status = null)
+    function errSettingFixedCostCreate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::SETTING['FIXEDCOST_CREATE_FAILED']['code'],
-            Error::SETTING['FIXEDCOST_CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Fixed Cost Create Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errSettingFixedCostUpdate')) {
-    function errSettingFixedCostUpdate($internalMsg = '', $status = null)
+    function errSettingFixedCostUpdate($internalMsg = '', $status = 500)
     {
-        error(
-            Error::SETTING['FIXEDCOST_UPDATE_FAILED']['code'],
-            Error::SETTING['FIXEDCOST_UPDATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Fixed Cost Update Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errSettingFixedCostDelete')) {
-    function errSettingFixedCostDelete($internalMsg = '', $status = null)
+    function errSettingFixedCostDelete($internalMsg = '', $status = 500)
     {
-        error(
-            Error::SETTING['FIXEDCOST_DELETE_FAILED']['code'],
-            Error::SETTING['FIXEDCOST_DELETE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Fixed Cost Delete Failed', $internalMsg);
     }
 }
 
 if (! function_exists('errSettingFixedCostGet')) {
-    function errSettingFixedCostGet($internalMsg = '', $status = null)
+    function errSettingFixedCostGet($internalMsg = '', $status = 404)
     {
-        error(
-            Error::SETTING['FIXEDCOST_NOT_FOUND']['code'],
-            Error::SETTING['FIXEDCOST_NOT_FOUND']['msg'],
-            $internalMsg,
-            $status
-        );
+        error($status, 'Fixed Cost Not Found', $internalMsg);
     }
 }

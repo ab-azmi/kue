@@ -24,17 +24,6 @@ class CakeVariantController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
-     * @return JsonResponse|mixed|null
-     */
-    public function create(Request $request)
-    {
-        $algo = new CakeVariantAlgo();
-        return $algo->create($request);
-    }
-
-    /**
      * @param string $id
      *
      * @return JsonResponse|mixed
@@ -47,6 +36,17 @@ class CakeVariantController extends Controller
         }
 
         return success(CakeVariantParser::first($cakeVariant));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed|null
+     */
+    public function create(Request $request)
+    {
+        $algo = new CakeVariantAlgo();
+        return $algo->create($request);
     }
 
     /**

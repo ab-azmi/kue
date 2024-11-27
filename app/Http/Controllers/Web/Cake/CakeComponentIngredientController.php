@@ -25,17 +25,6 @@ class CakeComponentIngredientController extends Controller
     }
 
     /**
-     * @param CakeComponentIngredientRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function create(CakeComponentIngredientRequest $request)
-    {
-        $algo = new CakeComponentIngredientAlgo;
-        return $algo->create($request);
-    }
-
-    /**
      * @param  string  $id
      *
      * @return JsonResponse|mixed
@@ -48,6 +37,17 @@ class CakeComponentIngredientController extends Controller
         }
 
         return success(CakeComponentIngredientParser::first($ingredient));
+    }
+
+    /**
+     * @param CakeComponentIngredientRequest $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function create(CakeComponentIngredientRequest $request)
+    {
+        $algo = new CakeComponentIngredientAlgo;
+        return $algo->create($request);
     }
 
     /**
