@@ -8,20 +8,21 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(public $algo = new AuthAlgo) {}
-
     public function login(Request $request)
     {
-        return $this->algo->login($request);
+        $algo = new AuthAlgo();
+        return $algo->login($request);
     }
 
     public function logout(Request $request)
     {
-        return $this->algo->logout($request);
+        $algo = new AuthAlgo();
+        return $algo->logout($request);
     }
 
     public function refresh()
     {
-        return $this->algo->refresh();
+        $algo = new AuthAlgo();
+        return $algo->refresh();
     }
 }

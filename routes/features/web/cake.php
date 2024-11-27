@@ -27,14 +27,18 @@ Route::prefix('discounts')
         Route::delete('{id}', [CakeDiscountController::class, 'delete']);
     });
 
-Route::prefix('ingredients')
-    ->group(function () {
-        Route::get('', [CakeComponentIngredientController::class, 'get']);
-        Route::post('', [CakeComponentIngredientController::class, 'create']);
-        Route::get('{id}', [CakeComponentIngredientController::class, 'detail']);
-        Route::put('{id}', [CakeComponentIngredientController::class, 'update']);
-        Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
-    });
+Route::prefix('components')
+        ->group(function(){
+            Route::prefix('ingredients')
+                ->group(function () {
+                    Route::get('', [CakeComponentIngredientController::class, 'get']);
+                    Route::post('', [CakeComponentIngredientController::class, 'create']);
+                    Route::get('{id}', [CakeComponentIngredientController::class, 'detail']);
+                    Route::put('{id}', [CakeComponentIngredientController::class, 'update']);
+                    Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
+                });
+
+        });
 
 Route::get('', [CakeController::class, 'get']);
 Route::post('', [CakeController::class, 'create']);

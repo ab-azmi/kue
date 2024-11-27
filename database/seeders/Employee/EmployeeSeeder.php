@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Employee;
 
+use App\Models\Employee\Employee;
 use App\Models\Employee\EmployeeUser;
 use Illuminate\Database\Seeder;
 
@@ -12,24 +13,23 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
-        $employees = [
+        $user = [
             [
-                'address' => 'Jl Busung lapar 3',
-                'phone' => '08123456789',
-                'bankNumber' => '1234567890',
+                'email' => 'john@gmail.com',
+                'password' => bcrypt('password'),
             ],
             [
-                'address' => 'Jl Raja no 12',
-                'phone' => '08123456789',
-                'bankNumber' => '1234567890',
+                'email' => 'jane@gmail.com',
+                'password' => bcrypt('password'),
             ],
         ];
 
         $data = $this->getData();
 
-        foreach ($data as $index => $item) {
-            $u = EmployeeUser::create($item);
-            $u->employee()->create($employees[$index])->salary()->create(['totalSalary' => 9800000]);
+        foreach ($data as $index => $employee) {
+            $emp = Employee::create($employee);
+            $emp->user()->create($user[$index]);
+            $emp->salary()->create(['totalSalary' => 1000000]);
         }
     }
 
@@ -39,13 +39,15 @@ class EmployeeSeeder extends Seeder
         return [
             [
                 'name' => 'John Doe',
-                'email' => 'john@gmail.com',
-                'password' => bcrypt('password'),
+                'address' => 'Jl Busung lapar 3',
+                'phone' => '08123456789',
+                'bankNumber' => '1234567890',
             ],
             [
                 'name' => 'Jane Doe',
-                'email' => 'jane@gmail.com',
-                'password' => bcrypt('password'),
+                'address' => 'Jl Raja no 12',
+                'phone' => '08123456789',
+                'bankNumber' => '1234567890',
             ],
         ];
     }
