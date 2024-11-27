@@ -23,15 +23,12 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:2',
-            //ignore existing own email
             'email' => 'required|email',
             'password' => 'required|string|min:5',
             'role' => 'nullable|string|max:10',
-
             'phone' => ['nullable', 'string', 'max:15'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string'],
             'bankNumber' => ['nullable', 'string', 'max:255'],
-
             'totalSalary' => ['nullable', 'numeric'],
             'employeeId' => ['nullable', 'numeric', 'exists:employees,id'],
         ];

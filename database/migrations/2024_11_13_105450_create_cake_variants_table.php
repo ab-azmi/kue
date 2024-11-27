@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->float('price');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }

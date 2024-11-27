@@ -23,7 +23,7 @@ class CakeDiscountRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'fromDate' => 'required|string|max:255',
             'toDate' => 'required|string|max:255',
             'value' => 'required|integer|min:1',

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('address');
+            $table->text('address');
             $table->string('phone');
             $table->string('bankNumber');
             $this->getDefaultTimestamps($table);
