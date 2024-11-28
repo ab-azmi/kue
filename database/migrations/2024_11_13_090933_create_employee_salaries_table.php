@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('employeeId')->nullable();
             $table->foreign('employeeId')->references('id')->on('employees')->cascadeOnDelete();
 
-            $table->float('totalSalary');
+            $table->float('hourlySalary');
             $this->getDefaultTimestamps($table);
         });
     }

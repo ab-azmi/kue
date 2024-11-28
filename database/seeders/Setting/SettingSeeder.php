@@ -33,7 +33,7 @@ class SettingSeeder extends Seeder
                 'key' => SettingConstant::PROFIT_MARGIN_KEY,
                 'description' => 'Profit margin percentage',
                 'value' => 0.3,
-            ],
+            ]
         ];
     }
 }

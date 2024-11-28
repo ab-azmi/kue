@@ -36,6 +36,6 @@ class EmployeeSalary extends BaseModel
 
     public static function getTotalSalary(): float
     {
-        return self::sum('totalSalary');
+        return self::sum('hourlySalary');
     }
 }

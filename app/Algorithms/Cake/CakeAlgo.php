@@ -129,20 +129,20 @@ class CakeAlgo
 
             $salarySum = EmployeeSalary::getTotalSalary();
 
-            $fixedCostMonthly = SettingFixedCost::getFixedCostMonthly();
+            $overheadCost = SettingFixedCost::getFixedCostMonthly() / now()->daysInMonth;
 
             $totalIngredientCost = $this->calculateIngredientsCost($request);
 
-            $sums = $salarySum + $fixedCostMonthly + $totalIngredientCost;
-
-            $sellingPrice = $sums * (1 + $margin) / $request->volume;
-
-            $cogs = $sums / $request->volume;
+            $cogs = $salarySum + $overheadCost + $totalIngredientCost;
             if ($cogs <= 0) {
                 errCakeCOGS();
             }
 
+            $sellingPrice = $cogs * (1 + $margin);
+
             return success([
+                'overhead' => $overheadCost,
+                'ingredientCost' => $totalIngredientCost,
                 'COGS' => $cogs,
                 'sellingPrice' => $sellingPrice,
                 'profitPerItem' => $sellingPrice - $cogs,
@@ -257,7 +257,7 @@ class CakeAlgo
         $default = Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value;
 
         if ($request->has('margin') && $request->margin) {
-            $default = (float) $request->margin;
+            $default = (float) $request->margin / 100;
         }
 
         return $default;
@@ -279,7 +279,7 @@ class CakeAlgo
 
             $quantity = $ingredient['quantity'];
 
-            $totalIngredientCost += ($pricePerUnit * $quantity) * $request->volume;
+            $totalIngredientCost += ($pricePerUnit * $quantity);
         }
 
         if ($totalIngredientCost <= 0) {
