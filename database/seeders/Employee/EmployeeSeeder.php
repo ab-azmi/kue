@@ -29,7 +29,7 @@ class EmployeeSeeder extends Seeder
         foreach ($data as $index => $employee) {
             $emp = Employee::create($employee);
             $emp->user()->create($user[$index]);
-            $emp->salary()->create(['totalSalary' => 1000000]);
+            $emp->salary()->create(['hourlySalary' => 5000]);
         }
     }
 

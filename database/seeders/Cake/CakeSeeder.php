@@ -28,7 +28,8 @@ class CakeSeeder extends Seeder
             ]);
 
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
-                $cake->componentIngredients()->attach($ingredient, [
+                $cake->cakeIngredients()->create([
+                    'ingredientId' => $ingredient->id,
                     'quantity' => rand(1, 10),
                 ]);
             }
@@ -66,18 +67,8 @@ class CakeSeeder extends Seeder
                 'stock' => 10,
                 'sellingPrice' => 150000,
                 'images' => [
-                    [
-                        'file' => null,
-                        'url' => 'https://via.placeholder.com/150',
-                        'path' => 'cakes/one.jpg',
-                        'mime' => 'image/jpeg',
-                    ],
-                    [
-                        'file' => null,
-                        'url' => 'https://via.placeholder.com/150',
-                        'path' => 'cakes/two.jpg',
-                        'mime' => 'image/jpeg',
-                    ],
+                    "cakes/one.jpg",
+                    "cakes/two.jpg",
                 ],
                 'variants' => [
                     [
@@ -99,18 +90,8 @@ class CakeSeeder extends Seeder
                 'stock' => 15,
                 'sellingPrice' => 600000,
                 'images' => [
-                    [
-                        'file' => null,
-                        'url' => 'https://via.placeholder.com/150',
-                        'path' => 'cakes/three.jpg',
-                        'mime' => 'image/jpeg',
-                    ],
-                    [
-                        'file' => null,
-                        'url' => 'https://via.placeholder.com/150',
-                        'path' => 'cakes/four.jpg',
-                        'mime' => 'image/jpeg',
-                    ],
+                    "cakes/three.jpg",
+                    "cakes/four.jpg",
                 ],
                 'variants' => [
                     [

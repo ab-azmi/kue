@@ -22,8 +22,7 @@ class CakeCOGSRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'volume' => 'required|numeric',
-            'margin' => 'nullable|string',
+            'margin' => 'nullable|numeric',
 
             'ingredients' => 'required|array',
             'ingredients.*.id' => 'required|exists:cake_component_ingredients,id',

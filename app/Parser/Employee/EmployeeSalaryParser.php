@@ -17,7 +17,7 @@ class EmployeeSalaryParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'totalSalary' => $data->totalSalary,
+            'hourlySalary' => $data->hourlySalary,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'employee' => EmployeeParser::brief($data->employee),
@@ -32,7 +32,7 @@ class EmployeeSalaryParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'totalSalary' => $data->totalSalary,
+            'hourlySalary' => $data->hourlySalary,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];

@@ -44,13 +44,9 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $this->saveCake($request);
 
-                $this->saveCakeImages($request);
-
                 $this->syncIngredientsRelationship($request);
 
-                $this->syncIngredientStock($request);
-
-                $this->cake->load('variants');
+                $this->saveCakeImages($request);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : '.$this->cake->id);
@@ -75,13 +71,9 @@ class CakeAlgo
 
                 $this->saveCake($request);
 
-                $this->saveCakeImages($request);
-
-                $oldIngredients = $this->cake->ingredients;
-
                 $this->syncIngredientsRelationship($request);
 
-                $this->syncIngredientStock($request, $oldIngredients);
+                $this->saveCakeImages($request);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : '.$this->cake->id);
@@ -103,6 +95,8 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
                 $this->cake->cakeIngredients()->delete();
+
+                $this->deletedImages = $this->cake->images;
 
                 $deleted = $this->cake->delete();
                 if (! $deleted) {
@@ -129,20 +123,20 @@ class CakeAlgo
 
             $salarySum = EmployeeSalary::getTotalSalary();
 
-            $fixedCostMonthly = SettingFixedCost::getFixedCostMonthly();
+            $overheadCost = SettingFixedCost::getFixedCostMonthly() / now()->daysInMonth;
 
             $totalIngredientCost = $this->calculateIngredientsCost($request);
 
-            $sums = $salarySum + $fixedCostMonthly + $totalIngredientCost;
-
-            $sellingPrice = $sums * (1 + $margin) / $request->volume;
-
-            $cogs = $sums / $request->volume;
+            $cogs = $salarySum + $overheadCost + $totalIngredientCost;
             if ($cogs <= 0) {
                 errCakeCOGS();
             }
 
+            $sellingPrice = $cogs * (1 + $margin);
+
             return success([
+                'overhead' => $overheadCost,
+                'ingredientCost' => $totalIngredientCost,
                 'COGS' => $cogs,
                 'sellingPrice' => $sellingPrice,
                 'profitPerItem' => $sellingPrice - $cogs,
@@ -181,86 +175,37 @@ class CakeAlgo
         }
     }
 
-    private function saveCakeImages(Request $request)
-    {
-        if (!$request->has('images')) {
-            return;
-        }
-
-        $path = Path::CAKES;
-        $fileNames = [];
-
-        foreach ($request->images ?: [] as $key => $reqImage) {
-            if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
-                $filename = filename($reqImage['file'], 'cake_'.$this->cake->id);
-
-                $reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename);
-
-                $fileNames[] = $path.$filename;
-            }else if(!empty($reqImage['path'])){
-                $fileNames[] = $reqImage['path'];
-            }else{
-                errCakeUploadImage();
-            }
-        }
-
-        if($this->cake->images) {
-            $this->deletedImages = array_diff($this->cake->images, $fileNames);
-        }
-
-        $this->cake->update(['images' => $fileNames]);
-    }
-
     private function syncIngredientsRelationship($request)
     {
-        if(!isset($request->ingredients)) {
-            return;
-        }
-
-        $toKeepIds = [];
+        $pivotIds = [];
         foreach($request->ingredients ?: [] as $ingredient) {
+            $componentIngredient = CakeComponentIngredient::find($ingredient['ingredientId']);
+
             $this->cake->cakeIngredients()->updateOrCreate([
-                'ingredientId' => $ingredient['ingredientId'],
-                'cakeId' => $this->cake->id,
+                'ingredientId' => $ingredient['ingredientId']
             ], [
                 'quantity' => $ingredient['quantity'],
             ]);
 
-            $toKeepIds[] = $ingredient['ingredientId'];
+            $pivotIds[] = $ingredient['ingredientId'];
+
+            if($request->stock > 0){
+                $componentIngredient->adjustStock($ingredient['quantity'] * $request->stock);
+            }
         }
 
-        CakeIngredient::where('cakeId', $this->cake->id)
-            ->whereNotIn('ingredientId', $toKeepIds)
+        $this->cake->cakeIngredients()
+            ->whereNotIn('ingredientId', $pivotIds)
             ->delete();
-
-        $this->cake->componentIngredients()->sync($toKeepIds);
     }
 
-    private function syncIngredientStock($request)
+    private function getMarginDecimal(Request $request): int
     {
-        $ingredientIds = array_column($request->ingredients, 'ingredientId');
-
-        $ingredients = CakeComponentIngredient::whereIn('id', $ingredientIds)->get()->keyBy('id');
-        if (count($ingredients) !== count($ingredientIds)) {
-            errCakeIngredientAdjustStock();
+        if ($request->has('margin') && is_int($request->margin)) {
+            return (float) $request->margin / 100;
         }
 
-        foreach ($request->ingredients as $ingredient) {
-            $quantity = $ingredient['quantity'];
-
-            $ingredients[$ingredient['ingredientId']]->adjustStock((-1) * $quantity * $request->stock);
-        }
-    }
-
-    private function getMarginDecimal(Request $request): float
-    {
-        $default = Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value;
-
-        if ($request->has('margin') && $request->margin) {
-            $default = (float) $request->margin;
-        }
-
-        return $default;
+        return Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value / 100;
     }
 
     private function calculateIngredientsCost($request): float
@@ -279,7 +224,7 @@ class CakeAlgo
 
             $quantity = $ingredient['quantity'];
 
-            $totalIngredientCost += ($pricePerUnit * $quantity) * $request->volume;
+            $totalIngredientCost += ($pricePerUnit * $quantity);
         }
 
         if ($totalIngredientCost <= 0) {
@@ -287,6 +232,32 @@ class CakeAlgo
         }
 
         return $totalIngredientCost;
+    }
+
+    private function saveCakeImages(Request $request)
+    {
+        $path = Path::CAKES;
+        $images = [];
+
+        foreach ($request->images ?: [] as $key => $reqImage) {
+            if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
+                $filename = filename($reqImage['file'], $this->cake->name);
+
+                if(!$reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename)){
+                    errCakeUploadImage();
+                }
+
+                $images[] = $path.$filename;
+            }else if(!empty($reqImage['path']) && is_string($reqImage['path'])){
+                $images[] = $reqImage['path'];
+            }else{
+                errCakeUploadImage(internalMsg: 'Invalid image format');
+            }
+        }
+
+        $this->deletedImages = array_diff($this->cake->images ?: [], $images);
+
+        $this->cake->update(['images' => $images]);
     }
 
     public function __destruct()

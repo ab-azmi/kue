@@ -9,6 +9,6 @@ class SettingConstant
 
     const OPTION = [
         self::TAX_KEY,
-        self::PROFIT_MARGIN_KEY,
+        self::PROFIT_MARGIN_KEY
     ];
 }
