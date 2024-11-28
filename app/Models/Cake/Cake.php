@@ -32,7 +32,12 @@ class Cake extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
-    public function ingredients(): BelongsToMany
+    public function cakeIngredients(): HasMany
+    {
+        return $this->hasMany(CakeIngredient::class, 'cakeId');
+    }
+
+    public function componentIngredients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
             ->withPivot(['quantity'])

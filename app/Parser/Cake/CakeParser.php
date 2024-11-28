@@ -25,7 +25,7 @@ class CakeParser extends BaseParser
             'images' => $data->images,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
-            'ingredients' => CakeComponentIngredientParser::briefs($data->ingredients),
+            'ingredients' => CakeComponentIngredientParser::briefs($data->componentIngredients),
             'variants' => CakeVariantParser::briefs($data->variants),
             'discounts' => CakeDiscountParser::get($data->discount),
         ];

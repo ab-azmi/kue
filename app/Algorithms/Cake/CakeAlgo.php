@@ -4,6 +4,7 @@ namespace App\Algorithms\Cake;
 
 use App\Models\Cake\Cake;
 use App\Models\Cake\CakeComponentIngredient;
+use App\Models\Cake\CakeIngredient;
 use App\Models\Employee\EmployeeSalary;
 use App\Models\Setting\Setting;
 use App\Models\Setting\SettingFixedCost;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 
 class CakeAlgo
 {
+    private array $deletedImages = [];
+
     /**
      * @param Cake|int|null $cake
      */
@@ -39,8 +42,6 @@ class CakeAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $request['ingredients'] = $this->encodeIngredientJSON($request);
-
                 $this->saveCake($request);
 
                 $this->saveCakeImages($request);
@@ -70,8 +71,6 @@ class CakeAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $request['ingredients'] = $this->encodeIngredientJSON($request);
-
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 $this->saveCake($request);
@@ -103,8 +102,7 @@ class CakeAlgo
             DB::transaction(function () {
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $ids = $this->cake->ingredients()->pluck('id')->toArray();
-                $this->detachIngredients($ids);
+                $this->cake->cakeIngredients()->delete();
 
                 $deleted = $this->cake->delete();
                 if (! $deleted) {
@@ -157,6 +155,32 @@ class CakeAlgo
 
     /** --- PRIVATE FUNCTIONS --- */
 
+    private function saveCake(Request $request)
+    {
+        $form = $request->safe()->only([
+            'name',
+            'stock',
+            'cakeVariantId',
+            'profitMargin',
+            'COGS',
+            'sellingPrice',
+        ]);
+
+        if ($this->cake) {
+            $updated = $this->cake->update($form);
+            if (! $updated) {
+                errCakeUpdate();
+            }
+
+            return;
+        }
+
+        $this->cake = Cake::create($form);
+        if (! $this->cake) {
+            errCakeCreate();
+        }
+    }
+
     private function saveCakeImages(Request $request)
     {
         if ($request->has('images')) {
@@ -185,105 +209,30 @@ class CakeAlgo
         }
     }
 
-    private function saveCake(Request $request)
-    {
-        $form = $request->safe()->only([
-            'name',
-            'stock',
-            'cakeVariantId',
-            'profitMargin',
-            'COGS',
-            'sellingPrice',
-        ]);
-
-        if ($this->cake) {
-            $updated = $this->cake->update($form);
-            if (! $updated) {
-                errCakeUpdate();
-            }
-
-            return;
-        }
-
-        $this->cake = Cake::create($form);
-        if (! $this->cake) {
-            errCakeCreate();
-        }
-    }
-
     private function syncIngredientsRelationship($request)
     {
-        $existingIds = $this->cake->ingredients()->pluck('cake_component_ingredients.id')->toArray();
-        $incomingIds = array_column($request->ingredients, 'ingredientId');
-
-        $toAttach = array_diff($incomingIds, $existingIds);
-
-        $toDetach = array_diff($existingIds, $incomingIds);
-
-        if (count($toDetach) > 0) {
-            $this->detachIngredients($toDetach);
-        }
-
-        if (count($toAttach) > 0) {
-            $this->attachIngredients($request, $toAttach);
-        }
-    }
-
-    private function detachIngredients($toDetach)
-    {
-        DB::table('cake_ingredients')
-            ->where('cakeId', $this->cake->id)
-            ->whereIn('ingredientId', $toDetach)
-            ->delete();
-    }
-
-    private function attachIngredients($request, $toAttach)
-    {
-        $pivotRows = array_map(function ($id) use ($request) {
-            $ingredient = $request->ingredients[array_search($id, array_column($request->ingredients, 'ingredientId'))];
-
-            return [
+        $toKeepIds = [];
+        foreach($request->ingredients ?: [] as $ingredient) {
+            $this->cake->cakeIngredients()->updateOrCreate([
+                'ingredientId' => $ingredient['ingredientId'],
                 'cakeId' => $this->cake->id,
-                'ingredientId' => $id,
-                'quantity' => $ingredient->quantity,
-                'createdAt' => now(),
-                'updatedAt' => now(),
-            ];
-        }, $toAttach);
+            ], [
+                'quantity' => $ingredient['quantity'],
+            ]);
 
-        DB::table('cake_ingredients')->insert($pivotRows);
+            $toKeepIds[] = $ingredient['ingredientId'];
+        }
+
+        CakeIngredient::where('cakeId', $this->cake->id)
+            ->whereNotIn('ingredientId', $toKeepIds)
+            ->delete();
+
+        $this->cake->componentIngredients()->sync($toKeepIds);
     }
 
     private function syncIngredientStock($request, $oldIngredients = null)
     {
-        if ($oldIngredients) {
-            $this->incrementIngredientStock($oldIngredients);
-        }
 
-        foreach ($request->ingredients as $ingredient) {
-
-            $ingredientModel = $this->cake->ingredients()->find($ingredient->ingredientId);
-            if (! $ingredientModel) {
-                errCakeIngredientGet();
-            }
-
-            $decremented = $ingredientModel->decrementStock(($ingredient->quantity * $this->cake->stock));
-            if (! $decremented) {
-                errCakeIngredientDecrementStock();
-            }
-        }
-    }
-
-    private function incrementIngredientStock($oldIngredients)
-    {
-        foreach ($oldIngredients as $oldIngredient) {
-            $usedQuantity = $oldIngredient->used->quantity * $this->cake->stock;
-
-            $incremented = $oldIngredient->incrementStock($usedQuantity);
-            if (! $incremented) {
-                errCakeIngredientDecrementStock();
-            }
-        }
     }
 
     private function calculateSellingPrice(float $cogs, float $margin)
@@ -342,12 +291,5 @@ class CakeAlgo
         $fileName = str_replace(' ', '_', $originalName);
 
         return $time.$rand.'_'.$fileName;
-    }
-
-    private function encodeIngredientJSON($request)
-    {
-        return array_map(function ($ingredient) {
-            return json_decode($ingredient);
-        }, $request->ingredients);
     }
 }
