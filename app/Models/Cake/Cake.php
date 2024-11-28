@@ -4,6 +4,7 @@ namespace App\Models\Cake;
 
 use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeProperty;
+use App\Parser\Cake\CakeParser;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -25,8 +26,17 @@ class Cake extends BaseModel
         'images' => 'array',
     ];
 
+    public $parserClass = CakeParser::class;
+
+
     /** --- RELATIONSHIP --- */
-    public function ingredients(): BelongsToMany
+
+    public function ingredients(): HasMany
+    {
+        return $this->hasMany(CakeIngredient::class, 'cakeId');
+    }
+
+    public function componentingredients(): BelongsToMany
     {
         return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
             ->withPivot(['quantity'])
@@ -44,6 +54,7 @@ class Cake extends BaseModel
     }
 
     /** --- SCOPES --- */
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
@@ -61,4 +72,18 @@ class Cake extends BaseModel
                 });
             });
     }
+
+
+    /** --- FUNCTIONS --- */
+
+    public function imageLinks()
+    {
+        $results = [];
+        foreach ($this->images as $image) {
+            $results[] = storage_link($image);
+        }
+
+        return $results;
+    }
+
 }

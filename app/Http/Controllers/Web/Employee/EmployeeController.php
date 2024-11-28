@@ -12,8 +12,9 @@ use Illuminate\Http\Request;
 class EmployeeController extends Controller
 {
     /**
-     * @param Illuminate\Http\Request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function get(Request $request)
     {
@@ -34,12 +35,12 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param  string|int  $id
+     * @param string|int $id
      */
     public function detail($id)
     {
         $employee = Employee::with(['user', 'salary'])->find($id);
-        if (! $employee) {
+        if (!$employee) {
             errEmployeeGet();
         }
 
@@ -47,13 +48,13 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @param  string|int  $id
-     * @param App\Http\Requests\Employee\EmployeeRequest
+     * @param int $id
+     * @param App\Http\Requests\Employee\EmployeeRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, EmployeeRequest $request)
     {
-        $algo = new EmployeeAlgo((int) $id);
+        $algo = new EmployeeAlgo((int)$id);
 
         return $algo->update($request);
     }
@@ -63,7 +64,7 @@ class EmployeeController extends Controller
      */
     public function delete(string $id)
     {
-        $algo = new EmployeeAlgo((int) $id);
+        $algo = new EmployeeAlgo((int)$id);
 
         return $algo->delete();
     }

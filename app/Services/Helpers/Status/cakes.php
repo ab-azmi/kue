@@ -3,14 +3,9 @@
 use App\Services\Constant\Error;
 
 if (! function_exists('errCakeCreate')) {
-    function errCakeCreate($internalMsg = '', $status = null)
+    function errCakeCreate($internalMsg = '')
     {
-        error(
-            Error::CAKE['CREATE_FAILED']['code'],
-            Error::CAKE['CREATE_FAILED']['msg'],
-            $internalMsg,
-            $status
-        );
+        error(500, "Unable to create cake", $internalMsg);
     }
 }
 

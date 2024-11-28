@@ -2,6 +2,7 @@
 
 namespace App\Algorithms\Auth;
 
+use GlobalXtreme\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,7 @@ class AuthAlgo
     public function login(Request $request)
     {
         try {
-            $request->validate([
+            Validator::make($request->all(), [
                 'email' => ['required', 'email', 'exists:employee_users,email', 'max:255'],
                 'password' => ['required'],
             ]);
@@ -27,16 +28,14 @@ class AuthAlgo
 
                 $request->session()->regenerate();
 
-                return response()->json([
+                return success([
                     'token' => $token,
                     'auth_type' => 'Bearer',
                     'user' => $user->only(['id', 'name', 'email', 'role']),
                 ]);
             }
 
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            errUnauthenticated();
 
         } catch (\Exception $e) {
             exception($e);

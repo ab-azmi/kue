@@ -16,7 +16,7 @@ class CakeComponentIngredientController extends Controller
      */
     public function get(Request $request)
     {
-        $ingredients = CakeComponentIngredient::filter($request)->getOrPaginate($request, true);
+        $ingredients = CakeComponentIngredient::filter($request)->getOrPaginate($request, false);
 
         return success(CakeComponentIngredientParser::briefs($ingredients));
     }
@@ -42,7 +42,7 @@ class CakeComponentIngredientController extends Controller
             errCakeIngredientGet();
         }
 
-        return success(CakeComponentIngredientParser::first($ingredient));
+        return success($ingredient);
     }
 
     /**

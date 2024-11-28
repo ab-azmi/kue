@@ -8,8 +8,7 @@ use App\Http\Controllers\Web\Cake\CakeDiscountController;
 use App\Http\Controllers\Web\Cake\CakeVariantController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('cakes')
-    ->group(function () {
+Route::group(function () {
         Route::prefix('variants')
             ->group(function () {
                 Route::get('', [CakeVariantController::class, 'get']);
@@ -24,13 +23,18 @@ Route::prefix('cakes')
                 Route::delete('{id}', [CakeDiscountController::class, 'delete']);
             });
 
-        Route::prefix('ingredients')
+        Route::prefix('components')
             ->group(function () {
-                Route::get('', [CakeComponentIngredientController::class, 'get']);
-                Route::post('', [CakeComponentIngredientController::class, 'create']);
-                Route::get('{id}', [CakeComponentIngredientController::class, 'detail']);
-                Route::put('{id}', [CakeComponentIngredientController::class, 'update']);
-                Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
+
+                Route::prefix('ingredients')
+                    ->group(function () {
+                        Route::get('', [CakeComponentIngredientController::class, 'get']);
+                        Route::post('', [CakeComponentIngredientController::class, 'create']);
+                        Route::get('{id}', [CakeComponentIngredientController::class, 'detail']);
+                        Route::put('{id}', [CakeComponentIngredientController::class, 'update']);
+                        Route::delete('{id}', [CakeComponentIngredientController::class, 'delete']);
+                    });
+
             });
 
         Route::get('', [CakeController::class, 'get']);

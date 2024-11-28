@@ -34,7 +34,8 @@ class CakeController extends Controller
     }
 
     /**
-     * @param  string  $id
+     * @param string $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function detail($id)
@@ -44,8 +45,7 @@ class CakeController extends Controller
             'ingredients',
             'discounts',
         ])->find($id);
-
-        if (! $cake) {
+        if (!$cake) {
             errCakeGet();
         }
 
@@ -53,23 +53,22 @@ class CakeController extends Controller
     }
 
     /**
-     * @param  string  $id
+     * @param string $id
      */
     public function update($id, CakeRequest $request)
     {
-        $algo = new CakeAlgo((int) $id);
-
+        $algo = new CakeAlgo((int)$id);
         return $algo->update($request);
     }
 
     /**
-     * @param  string  $id
+     * @param $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id)
     {
-        $algo = new CakeAlgo((int) $id);
-
+        $algo = new CakeAlgo((int)$id);
         return $algo->delete();
     }
 
@@ -78,15 +77,14 @@ class CakeController extends Controller
      */
     public function COGS(CakeCOGSRequest $request)
     {
-        $algo = new CakeAlgo;
-
+        $algo = new CakeAlgo();
         return $algo->COGS($request);
     }
 
     public function getFile($path)
     {
-        $cake = Path::STORAGE_CAKE_PUBLIC;
+        $cake = Path::CAKE;
 
-        return response()->file(Path::STORAGE_PUBLIC_PATH($cake).'/'.$path);
+        return response()->file(Path::STORAGE_PUBLIC_PATH($cake) . '/' . $path);
     }
 }

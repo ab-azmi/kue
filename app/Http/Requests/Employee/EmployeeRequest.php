@@ -23,7 +23,6 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:2',
-            //ignore existing own email
             'email' => 'required|email',
             'password' => 'required|string|min:5',
             'role' => 'nullable|string|max:10',

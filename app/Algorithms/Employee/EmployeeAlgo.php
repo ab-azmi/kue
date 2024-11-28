@@ -21,7 +21,7 @@ class EmployeeAlgo
                 'user',
                 'salary',
             ])->find($employee);
-            if (! $this->employee) {
+            if (!$this->employee) {
                 errEmployeeGet();
             }
         }
@@ -34,12 +34,12 @@ class EmployeeAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $request = $this->saveUser($request);
                 $this->saveEmployee($request);
+                $request = $this->saveUser($request);
                 $this->saveSalary($request);
 
                 $this->employee->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Employee : '.$this->employee->id);
+                    ->saveActivity('Create new Employee : ' . $this->employee->id);
             });
 
             return success(EmployeeParser::first($this->employee));
@@ -62,7 +62,7 @@ class EmployeeAlgo
                 $this->saveSalary($request);
 
                 $this->employee->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Employee : '.$this->employee->id);
+                    ->saveActivity('Update Employee : ' . $this->employee->id);
             });
 
             return success(EmployeeParser::first($this->employee));
@@ -78,21 +78,33 @@ class EmployeeAlgo
     {
         try {
             DB::transaction(function () {
+
                 $this->employee->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-                $this->deleteEmployeeData();
+                $deleteEmployee = $this->employee->delete();
+                if (!$deleteEmployee) {
+                    errEmployeeDelete();
+                }
+
+                $deleteSalary = $this->employee->salary->delete();
+                if (!$deleteSalary) {
+                    errEmployeeSalaryDelete();
+                }
 
                 $this->employee->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Employee : '.$this->employee->id);
+                    ->saveActivity('Delete Employee : ' . $this->employee->id);
+
             });
 
-            return success($this->employee);
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
+
     /** --- PRIVATE FUNCTIONS --- **/
+
     private function saveEmployee(Request $request)
     {
         $form = $request->only([
@@ -105,12 +117,12 @@ class EmployeeAlgo
 
         if ($this->employee) {
             $updated = $this->employee->update($form);
-            if (! $updated) {
+            if (!$updated) {
                 errEmployeeUpdate();
             }
         } else {
             $this->employee = Employee::create($form);
-            if (! $this->employee) {
+            if (!$this->employee) {
                 errEmployeeCreate();
             }
         }
@@ -118,7 +130,7 @@ class EmployeeAlgo
 
     private function saveUser(Request $request)
     {
-        $form = $request->safe()->only([
+        $form = $request->safe([
             'name',
             'email',
             'password',
@@ -127,12 +139,12 @@ class EmployeeAlgo
 
         if ($this->employee) {
             $updated = $this->employee->user->update($form);
-            if (! $updated) {
+            if (!$updated) {
                 errEmployeeUserUpdate();
             }
         } else {
             $user = EmployeeUser::create($form);
-            if (! $user) {
+            if (!$user) {
                 errEmployeeUserCreate();
             }
 
@@ -154,22 +166,10 @@ class EmployeeAlgo
             $this->employee->salary()->delete();
 
             $updated = $this->employee->salary()->create($form);
-            if (! $updated) {
+            if (!$updated) {
                 errEmployeeSalaryUpdate();
             }
         }
     }
 
-    private function deleteEmployeeData()
-    {
-        $deleteEmployee = $this->employee->delete();
-        if (! $deleteEmployee) {
-            errEmployeeDelete();
-        }
-
-        $deleteSalary = $this->employee->salary->delete();
-        if (! $deleteSalary) {
-            errEmployeeSalaryDelete();
-        }
-    }
 }

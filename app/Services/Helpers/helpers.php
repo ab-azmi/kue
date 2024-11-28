@@ -2,20 +2,20 @@
 
 use Illuminate\Support\Str;
 
-if (! function_exists('filename')) {
+if (!function_exists('filename')) {
 
     function filename($file, $text, $keyId = null, ?string $extension = null): string
     {
-        return ($keyId ? "$keyId-" : '').Str::random(20).str_shuffle(str_replace(' ', '', $text)).'.'.($extension ?: $file->getClientOriginalExtension());
+        return ($keyId ? "$keyId-" : '') . Str::random(20) . str_shuffle(str_replace(' ', '', $text)) . '.' . ($extension ?: $file->getClientOriginalExtension());
     }
 
 }
 
-if (! function_exists('convert_string_to_array')) {
+if (!function_exists('convert_string_to_array')) {
 
     function convert_string_to_array(string|array|null $values = null): array
     {
-        if (! $values) {
+        if (!$values) {
             return [];
         }
 
@@ -35,7 +35,7 @@ if (! function_exists('convert_string_to_array')) {
 
 }
 
-if (! function_exists('snake_to_camel_case')) {
+if (!function_exists('snake_to_camel_case')) {
 
     /**
      * @return string
@@ -47,10 +47,10 @@ if (! function_exists('snake_to_camel_case')) {
 
 }
 
-if (! function_exists('alphabet_from_number')) {
+if (!function_exists('alphabet_from_number')) {
 
     /**
-     * @param  float|int|string  $number
+     * @param float|int|string $number
      * @return bool `true` if $long is valid, `false` if not
      */
     function alphabet_from_number($number, $less = 0)
@@ -71,18 +71,21 @@ if (! function_exists('alphabet_from_number')) {
 
 }
 
-if (! function_exists('storage_link')) {
+if (!function_exists('storage_link')) {
 
     /**
-     * @return string
+     * @return array
      */
     function storage_link(string $path)
     {
-        if (! $path) {
+        if (!$path) {
             return null;
         }
 
-        return config('base.conf.storage-link').$path;
+        return [
+            'path' => $path,
+            'link' => config('base.conf.storage-link') . $path
+        ];
     }
 
 }

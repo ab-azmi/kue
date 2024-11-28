@@ -7,23 +7,14 @@ use App\Services\Constant\BaseIDName;
 class CakeIngredientUnit extends BaseIDName
 {
     const GRAM_ID = 1;
-
     const GRAM = 'gram';
-
     const KILOGRAM_ID = 2;
-
     const KILOGRAM = 'kilogram';
-
     const LITER_ID = 3;
-
     const LITER = 'liter';
-
     const PIECE_ID = 4;
-
     const PIECE = 'piece';
-
     const PACK_ID = 5;
-
     const PACK = 'pack';
 
     const OPTION = [

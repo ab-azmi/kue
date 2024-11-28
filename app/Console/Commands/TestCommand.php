@@ -10,5 +10,7 @@ class TestCommand extends Command
 
     protected $description = '';
 
-    public function handle() {}
+    public function handle()
+    {
+    }
 }

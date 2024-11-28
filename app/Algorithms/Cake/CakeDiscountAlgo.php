@@ -5,19 +5,20 @@ namespace App\Algorithms\Cake;
 use App\Models\Cake\CakeDiscount;
 use App\Parser\Cake\CakeDiscountParser;
 use App\Services\Constant\Activity\ActivityAction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CakeDiscountAlgo
 {
     /**
-     * @param CakeDiscount|int|null
+     * @param CakeDiscount|int|null $discount
      */
     public function __construct(public CakeDiscount|int|null $discount = null)
     {
         if (is_int($discount)) {
             $this->discount = CakeDiscount::find($discount);
-            if (! $this->discount) {
+            if (!$this->discount) {
                 errCakeDiscountGet();
             }
         }
@@ -33,7 +34,7 @@ class CakeDiscountAlgo
                 $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::CREATE)
-                    ->saveActivity('Create new Discount : '.$this->discount->id);
+                    ->saveActivity('Create new Discount : ' . $this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -54,7 +55,7 @@ class CakeDiscountAlgo
                 $this->saveDiscount($request);
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::UPDATE)
-                    ->saveActivity('Update Discount : '.$this->discount->id);
+                    ->saveActivity('Update Discount : ' . $this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -64,9 +65,7 @@ class CakeDiscountAlgo
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Exception
+     * @return \Illuminate\Http\JsonResponse|mixed|void
      */
     public function delete()
     {
@@ -77,7 +76,7 @@ class CakeDiscountAlgo
                 $this->discount->delete();
 
                 $this->discount->setActivityPropertyAttributes(ActivityAction::DELETE)
-                    ->saveActivity('Delete Discount : '.$this->discount->id);
+                    ->saveActivity('Delete Discount : ' . $this->discount->id);
             });
 
             return success(CakeDiscountParser::brief($this->discount));
@@ -87,6 +86,31 @@ class CakeDiscountAlgo
     }
 
     /** --- PRIVATE FUNCTIONS --- **/
+
+    private function saveDiscount(Request $request)
+    {
+        $form = $request->safe()->only([
+            'name',
+            'description',
+            'value',
+            'cakeId',
+        ]);
+
+        $form['fromDate'] = Carbon::createFromFormat('d/m/Y', $request->fromDate);
+        $form['toDate'] = Carbon::createFromFormat('d/m/Y', $request->toDate);
+
+        if ($this->discount) {
+            $this->discount->update($form);
+            $this->discount->refresh();
+            return;
+        }
+
+        $this->discount = CakeDiscount::create($form);
+        if (!$this->discount) {
+            errCakeCreate();
+        }
+    }
+
     private function getDates(Request $request)
     {
         $fromDate = date('Y-m-d H:i:s', strtotime($request->fromDate));
@@ -102,31 +126,4 @@ class CakeDiscountAlgo
         ];
     }
 
-    private function saveDiscount(Request $request)
-    {
-        $dates = $this->getDates($request);
-
-        $form = $request->safe()->only([
-            'name',
-            'description',
-            'value',
-            'cakeId',
-        ]);
-
-        $form['fromDate'] = $dates['from'];
-        $form['toDate'] = $dates['to'];
-
-        if ($this->discount) {
-            $updated = $this->discount->update($form);
-            if (! $updated) {
-                errCakeUpdate();
-            }
-        } else {
-            $this->discount = CakeDiscount::create($form);
-            if (! $this->discount) {
-                errCakeCreate();
-            }
-        }
-
-    }
 }

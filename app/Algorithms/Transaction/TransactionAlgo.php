@@ -11,18 +11,19 @@ use App\Services\Constant\Setting\SettingConstant;
 use App\Services\Number\Generator\TransactionNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionAlgo
 {
     /**
-     * @param Transaction|int|null
-     * @param array
+     * @param Transaction|int|null $transaction
+     * @param array $cakeVariants
      */
-    public function __construct(public Transaction|int|null $transaction = null, private $cakeVariants = [])
+    public function __construct(public Transaction|int|null $transaction = null, private array $cakeVariants = [])
     {
         if (is_int($transaction)) {
             $this->transaction = Transaction::find($transaction);
-            if (! $this->transaction) {
+            if (!$this->transaction) {
                 errTransactionGet();
             }
         }
@@ -35,15 +36,17 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () use ($request) {
-                $orders = $this->processOrders($request);
-
-                $request->merge([
-                    'number' => TransactionNumber::generate(),
-                ]);
 
                 $this->saveTransaction($request);
 
-                $this->createOrders($orders);
+                $orders = $this->processOrders($request);
+                foreach ($orders as $order) {
+                    $this->createOrders($order);
+
+                    $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
+                        ->saveActivity('Create new Order : ' . $orderModel->id . ' in Transaction : ' . $this->transaction->id);
+                }
+
             });
 
             return success(TransactionParser::first($this->transaction));
@@ -59,12 +62,14 @@ class TransactionAlgo
     {
         try {
             DB::transaction(function () use ($request) {
+
                 $this->saveTransaction($request);
 
                 if ($request->has('orders')) {
                     $orders = $this->implementCakesDiscountToOrders($request->orders);
                     $this->updateOrders($orders);
                 }
+
             });
 
             return success(TransactionParser::first($this->transaction));
@@ -79,20 +84,22 @@ class TransactionAlgo
     public function delete()
     {
         try {
+
             DB::transaction(function () {
                 $deleted = $this->transaction->delete();
-                if (! $deleted) {
+                if (!$deleted) {
                     errTransactionDelete();
                 }
             });
 
-            return success(TransactionParser::first($this->transaction));
+            return success();
         } catch (\Exception $e) {
             exception($e);
         }
     }
 
     /** --- PRIVATE FUNCTIONS --- */
+
     private function saveTransaction($request)
     {
         $form = $request->only([
@@ -101,20 +108,21 @@ class TransactionAlgo
             'totalPrice',
             'totalDiscount',
             'tax',
-            'employeeId',
-            'number',
+            'employeeId'
         ]);
 
         if ($this->transaction) {
             $updated = $this->transaction->update($form);
-            if (! $updated) {
+            if (!$updated) {
                 errTransactionUpdate();
             }
-        } else {
-            $this->transaction = Transaction::create($form);
-            if (! $this->transaction) {
-                errTransactionCreate();
-            }
+        }
+
+        $this->transaction = Transaction::create($form + [
+                'number' => TransactionNumber::generate(),
+            ]);
+        if (!$this->transaction) {
+            errTransactionCreate();
         }
     }
 
@@ -126,13 +134,13 @@ class TransactionAlgo
             $this->syncCakeStock($orders);
 
             extract($this->setTotalPrices($orders));
-            if (! $totalPrice) {
+            if (!$totalPrice) {
                 errTransactionTotalPrice();
             }
-            if (! $totalDiscount) {
+            if (!$totalDiscount) {
                 errTransactionTotalDiscount();
             }
-            if (! $tax) {
+            if (!$tax) {
                 errTransactionTax();
             }
 
@@ -153,12 +161,12 @@ class TransactionAlgo
     {
         foreach ($orders as $order) {
             $orderModel = $this->transaction->orders()->create($order);
-            if (! $orderModel) {
+            if (!$orderModel) {
                 errCreateOrder();
             }
 
             $orderModel->setActivityPropertyAttributes(ActivityAction::CREATE)
-                ->saveActivity('Create new Order : '.$orderModel->id.' in Transaction : '.$this->transaction->id);
+                ->saveActivity('Create new Order : ' . $orderModel->id . ' in Transaction : ' . $this->transaction->id);
         }
     }
 
@@ -172,7 +180,7 @@ class TransactionAlgo
     {
         foreach ($orders as $key => $order) {
             $cakeVariant = CakeVariant::with('cake')->find($order['cakeVariantId']);
-            if (! $cakeVariant) {
+            if (!$cakeVariant) {
                 errCakeGet();
             }
 
@@ -225,8 +233,8 @@ class TransactionAlgo
         }
 
         $totalPrice = $sumOrderPrice - $totalDiscount;
-        $tax = $totalPrice * (float) $tax;
-        $totalPrice += (float) $tax;
+        $tax = $totalPrice * (float)$tax;
+        $totalPrice += (float)$tax;
 
         return [
             'orderPrice' => $sumOrderPrice,

@@ -50,7 +50,7 @@ class TransactionController extends Controller
             errTransactionGet();
         }
 
-        return success(TransactionParser::first($transaction));
+        return success($transaction);
     }
 
     /**
@@ -61,7 +61,6 @@ class TransactionController extends Controller
     public function update($id, TransactionRequest $request)
     {
         $algo = new TransactionAlgo((int) $id);
-
         return $algo->update($request);
     }
 
@@ -72,7 +71,6 @@ class TransactionController extends Controller
     public function delete($id)
     {
         $algo = new TransactionAlgo((int) $id);
-
         return $algo->delete();
     }
 }

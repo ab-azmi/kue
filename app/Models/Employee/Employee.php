@@ -22,10 +22,12 @@ class Employee extends BaseModel
         self::DELETED_AT => 'datetime',
     ];
 
-    /** RELATIONSHIP **/
+
+    /** --- RELATIONSHIPS --- **/
+
     public function user(): BelongsTo
     {
-        return $this->belongsTo(EmployeeUser::class, 'userId');
+        return $this->belongsTo(EmployeeUser::class, 'employeeId');
     }
 
     public function transactions()
@@ -38,7 +40,9 @@ class Employee extends BaseModel
         return $this->hasOne(EmployeeSalary::class, 'employeeId');
     }
 
+
     /** --- SCOPES --- */
+
     public function scopeFilter($query, $request)
     {
         $searchByText = $this->hasSearch($request);
@@ -48,10 +52,10 @@ class Employee extends BaseModel
                 $searchByText,
                 function ($query) use ($request) {
                     return $query->whereHas('user', function ($query) use ($request) {
-                        return $query->where('name', 'like', '%'.$request->search.'%')
-                            ->orWhere('email', 'like', '%'.$request->search.'%');
+                        return $query->where('name', 'like', '%' . $request->search . '%')
+                            ->orWhere('email', 'like', '%' . $request->search . '%');
                     })
-                        ->orWhere('address', 'like', '%'.$request->search.'%');
+                        ->orWhere('address', 'like', '%' . $request->search . '%');
                 }
             )
             ->when(

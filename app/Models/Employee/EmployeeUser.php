@@ -13,7 +13,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     use GetOrPaginate, HasActivityEmployeeUserProperty;
 
     protected $table = 'employee_users';
-
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -22,7 +21,6 @@ class EmployeeUser extends Authenticatable implements JWTSubject
     ];
 
     const CREATED_AT = 'createdAt';
-
     const UPDATED_AT = 'updatedAt';
 
     /**

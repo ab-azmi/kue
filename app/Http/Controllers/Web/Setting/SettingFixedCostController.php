@@ -23,17 +23,6 @@ class SettingFixedCostController extends Controller
     }
 
     /**
-     * @param App\Http\Requests\Setting\SettingFixedCostRequest
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create(SettingFixedCostRequest $request)
-    {
-        $algo = new SettingFixedCostAlgo;
-
-        return $algo->create($request);
-    }
-
-    /**
      * @param  string|int  $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -45,6 +34,17 @@ class SettingFixedCostController extends Controller
         }
 
         return success(SettingFixedCostParser::first($fixedCost));
+    }
+
+    /**
+     * @param App\Http\Requests\Setting\SettingFixedCostRequest
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function create(SettingFixedCostRequest $request)
+    {
+        $algo = new SettingFixedCostAlgo;
+
+        return $algo->create($request);
     }
 
     /**
@@ -69,4 +69,12 @@ class SettingFixedCostController extends Controller
 
         return $algo->delete();
     }
+
+
+    /** --- FIXED COST SUB --- */
+
+    public function getSub()
+    {
+    }
+
 }
