@@ -30,8 +30,8 @@ class CakeRequest extends FormRequest
 
             'images' => 'array',
             'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
-            'images.*.mimeType' => 'string|max:255',
-            'images.*.url' => 'string|max:255',
+            'images.*.mime' => 'string|max:255',
+            'images.*.path' => 'string|max:255',
 
             'ingredients' => 'array',
             'ingredients.*.ingredientId' => 'numeric|max:255',

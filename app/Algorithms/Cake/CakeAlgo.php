@@ -44,11 +44,9 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $this->saveCake($request);
 
-                $this->saveCakeImages($request);
-
                 $this->syncIngredientsRelationship($request);
 
-                $this->cake->load('variants');
+                $this->saveCakeImages($request);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Cake : '.$this->cake->id);
@@ -73,9 +71,9 @@ class CakeAlgo
 
                 $this->saveCake($request);
 
-                $this->saveCakeImages($request);
-
                 $this->syncIngredientsRelationship($request);
+
+                $this->saveCakeImages($request);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : '.$this->cake->id);
@@ -97,6 +95,8 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
                 $this->cake->cakeIngredients()->delete();
+
+                $this->deletedImages = $this->cake->images;
 
                 $deleted = $this->cake->delete();
                 if (! $deleted) {
@@ -175,32 +175,6 @@ class CakeAlgo
         }
     }
 
-    private function saveCakeImages(Request $request)
-    {
-        $path = Path::CAKES;
-        $images = [];
-
-        foreach ($request->images ?: [] as $key => $reqImage) {
-            if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
-                $filename = filename($reqImage['file'], $this->cake->name);
-
-                if(!$reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename)){
-                    errCakeUploadImage();
-                }
-
-                $images[] = $path.$filename;
-            }else if(!empty($reqImage['path']) && is_string($reqImage['path'])){
-                $images[] = $reqImage['path'];
-            }else{
-                errCakeUploadImage(internalMsg: 'Invalid image format');
-            }
-        }
-
-        $this->deletedImages = array_diff($this->cake->images ?: [], $images);
-
-        $this->cake->update(['images' => $images]);
-    }
-
     private function syncIngredientsRelationship($request)
     {
         $pivotIds = [];
@@ -258,6 +232,32 @@ class CakeAlgo
         }
 
         return $totalIngredientCost;
+    }
+
+    private function saveCakeImages(Request $request)
+    {
+        $path = Path::CAKES;
+        $images = [];
+
+        foreach ($request->images ?: [] as $key => $reqImage) {
+            if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
+                $filename = filename($reqImage['file'], $this->cake->name);
+
+                if(!$reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename)){
+                    errCakeUploadImage();
+                }
+
+                $images[] = $path.$filename;
+            }else if(!empty($reqImage['path']) && is_string($reqImage['path'])){
+                $images[] = $reqImage['path'];
+            }else{
+                errCakeUploadImage(internalMsg: 'Invalid image format');
+            }
+        }
+
+        $this->deletedImages = array_diff($this->cake->images ?: [], $images);
+
+        $this->cake->update(['images' => $images]);
     }
 
     public function __destruct()
