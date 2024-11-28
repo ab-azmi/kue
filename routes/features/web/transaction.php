@@ -10,6 +10,5 @@ Route::prefix('transactions')
         Route::get('', [TransactionController::class, 'get']);
         Route::post('', [TransactionController::class, 'create']);
         Route::get('{id}', [TransactionController::class, 'detail']);
-        Route::put('{id}', [TransactionController::class, 'update']);
         Route::delete('{id}', [TransactionController::class, 'delete']);
     });

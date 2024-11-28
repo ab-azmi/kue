@@ -57,17 +57,6 @@ class TransactionController extends Controller
         return $algo->create($request);
     }
 
-    /**
-     * @param string $id
-     * @param TransactionRequest $request
-     *
-     * @return JsonResponse|mixed
-     */
-    public function update($id, TransactionRequest $request)
-    {
-        $algo = new TransactionAlgo((int) $id);
-        return $algo->update($request);
-    }
 
     /**
      * @param  string  $id

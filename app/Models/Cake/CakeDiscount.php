@@ -33,7 +33,7 @@ class CakeDiscount extends BaseModel
 
     public function cake(): BelongsTo
     {
-        return $this->belongsTo(Cake::class, 'cakeId', 'id');
+        return $this->belongsTo(Cake::class, 'cakeId');
     }
 
 
