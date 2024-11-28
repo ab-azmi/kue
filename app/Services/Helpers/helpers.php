@@ -74,7 +74,7 @@ if (! function_exists('alphabet_from_number')) {
 if (! function_exists('storage_link')) {
 
     /**
-     * @return string
+     * @return array|null
      */
     function storage_link(string $path)
     {
@@ -82,7 +82,10 @@ if (! function_exists('storage_link')) {
             return null;
         }
 
-        return config('base.conf.storage-link').$path;
+        return [
+            'link' => config('base.conf.storage-link').$path,
+            'path' => $path,
+        ];
     }
 
 }

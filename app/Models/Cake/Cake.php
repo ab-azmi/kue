@@ -79,6 +79,12 @@ class Cake extends BaseModel
                 $query->orderBy($request->orderBy, $request->orderType);
             }
         });
+    }
 
+    public static function getImages($images)
+    {
+        return array_map(function($image) {
+            return storage_link($image);
+        }, $images);
     }
 }

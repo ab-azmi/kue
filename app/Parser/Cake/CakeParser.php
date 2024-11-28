@@ -2,6 +2,7 @@
 
 namespace App\Parser\Cake;
 
+use App\Models\Cake\Cake;
 use GlobalXtreme\Parser\BaseParser;
 
 class CakeParser extends BaseParser
@@ -22,7 +23,7 @@ class CakeParser extends BaseParser
             'COGS' => $data->cogs,
             'sellingPrice' => $data->sellingPrice,
             'stock' => $data->stock,
-            'images' => $data->images,
+            'images' => Cake::getImages($data->images),
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'ingredients' => CakeComponentIngredientParser::briefs($data->componentIngredients),

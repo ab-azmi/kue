@@ -183,30 +183,32 @@ class CakeAlgo
 
     private function saveCakeImages(Request $request)
     {
-        if ($request->has('images')) {
-            $path = Path::CAKES;
+        if (!$request->has('images')) {
+            return;
+        }
 
-            foreach ($request->file('images') as $obj) {
-                if ($obj['file']) {
-                    $fileName = $this->getFileName($obj['file']->getClientOriginalName());
+        $path = Path::CAKES;
+        $fileNames = [];
 
-                    $uploaded = $obj['file']->move(Path::STORAGE_PUBLIC_PATH($path), $fileName);
-                    if (! $uploaded) {
-                        errCakeUploadImage();
-                    }
+        foreach ($request->images ?: [] as $key => $reqImage) {
+            if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
+                $filename = filename($reqImage['file'], 'cake_'.$this->cake->id);
 
-                    $images[] = [
-                        'path' => $path.DIRECTORY_SEPARATOR.$fileName,
-                        'mime' => $obj['file']->getClientMimeType(),
-                        'file' => null,
-                        'link' => storage_link($path.DIRECTORY_SEPARATOR.$fileName),
-                    ];
-                }
+                $reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename);
 
-                $this->cake->images = $images;
-                $this->cake->save();
+                $fileNames[] = $path.$filename;
+            }else if(!empty($reqImage['path'])){
+                $fileNames[] = $reqImage['path'];
+            }else{
+                errCakeUploadImage();
             }
         }
+
+        if($this->cake->images) {
+            $this->deletedImages = array_diff($this->cake->images, $fileNames);
+        }
+
+        $this->cake->update(['images' => $fileNames]);
     }
 
     private function syncIngredientsRelationship($request)
@@ -287,14 +289,12 @@ class CakeAlgo
         return $totalIngredientCost;
     }
 
-    private function getFileName($originalName): string
+    public function __destruct()
     {
-        $rand = rand(1000, 9999);
-
-        $time = time();
-
-        $fileName = str_replace(' ', '_', $originalName);
-
-        return $time.$rand.'_'.$fileName;
+        foreach ($this->deletedImages as $image) {
+            if (file_exists(Path::STORAGE_PUBLIC_PATH($image))) {
+                unlink(Path::STORAGE_PUBLIC_PATH($image));
+            }
+        }
     }
 }
