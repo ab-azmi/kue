@@ -35,7 +35,6 @@ class CakeController extends Controller
     {
         $cake = Cake::with([
             'variants',
-            'ingredients',
             'discounts',
         ])->find($id);
 

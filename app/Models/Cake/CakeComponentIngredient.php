@@ -6,6 +6,7 @@ use App\Models\BaseModel;
 use App\Models\Cake\Traits\HasActivityCakeComponentIngredientProperty;
 use App\Parser\Cake\CakeComponentIngredientParser;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CakeComponentIngredient extends BaseModel
 {
@@ -29,14 +30,17 @@ class CakeComponentIngredient extends BaseModel
 
     /** --- RELATIONSHIP --- */
 
+    public function cakeIngredients(): HasMany
+    {
+        return $this->hasMany(CakeIngredient::class, 'ingredientId');
+    }
+
     public function cakes(): BelongsToMany
     {
         return $this->belongsToMany(Cake::class, 'cake_ingredients', 'ingredientId', 'cakeId')
             ->withPivot(['quantity'])
             ->as('used');
     }
-
-
 
     /** --- SCOPES --- **/
 
@@ -62,13 +66,9 @@ class CakeComponentIngredient extends BaseModel
 
     /** --- FUNCTIONS --- **/
 
-    public function incrementStock(int $quantity)
+    public function adjustStock(int $quantity)
     {
-        return $this->increment('quantity', $quantity);
-    }
-
-    public function decrementStock(int $quantity)
-    {
-        return $this->decrement('quantity', $quantity);
+        $this->quantity += $quantity;
+        $this->save();
     }
 }
