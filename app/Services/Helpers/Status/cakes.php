@@ -100,10 +100,10 @@ if (! function_exists('errCakeIngredientSync')) {
     }
 }
 
-if (! function_exists('errCakeIngredientDecrementStock')) {
-    function errCakeIngredientDecrementStock($internalMsg = '', $status = 500)
+if (! function_exists('errCakeIngredientAdjustStock')) {
+    function errCakeIngredientAdjustStock($internalMsg = '', $status = 500)
     {
-        error($status, 'Failed to decrement stock', $internalMsg);
+        error($status, 'Failed to adjust stock', $internalMsg);
     }
 }
 

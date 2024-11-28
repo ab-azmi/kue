@@ -133,9 +133,9 @@ class CakeAlgo
 
             $totalIngredientCost = $this->calculateIngredientsCost($request);
 
-            $sums = $this->calculateSums($salarySum, $fixedCostMonthly, $totalIngredientCost);
+            $sums = $salarySum + $fixedCostMonthly + $totalIngredientCost;
 
-            $sellingPrice = $this->calculateSellingPrice($sums, $margin) / $request->volume;
+            $sellingPrice = $sums * (1 + $margin) / $request->volume;
 
             $cogs = $sums / $request->volume;
             if ($cogs <= 0) {
@@ -211,6 +211,10 @@ class CakeAlgo
 
     private function syncIngredientsRelationship($request)
     {
+        if(!isset($request->ingredients)) {
+            return;
+        }
+
         $toKeepIds = [];
         foreach($request->ingredients ?: [] as $ingredient) {
             $this->cake->cakeIngredients()->updateOrCreate([
@@ -230,14 +234,20 @@ class CakeAlgo
         $this->cake->componentIngredients()->sync($toKeepIds);
     }
 
-    private function syncIngredientStock($request, $oldIngredients = null)
+    private function syncIngredientStock($request)
     {
+        $ingredientIds = array_column($request->ingredients, 'ingredientId');
 
-    }
+        $ingredients = CakeComponentIngredient::whereIn('id', $ingredientIds)->get()->keyBy('id');
+        if (count($ingredients) !== count($ingredientIds)) {
+            errCakeIngredientAdjustStock();
+        }
 
-    private function calculateSellingPrice(float $cogs, float $margin)
-    {
-        return $cogs * (1 + $margin);
+        foreach ($request->ingredients as $ingredient) {
+            $quantity = $ingredient['quantity'];
+
+            $ingredients[$ingredient['ingredientId']]->adjustStock((-1) * $quantity * $request->stock);
+        }
     }
 
     private function getMarginDecimal(Request $request): float
@@ -249,11 +259,6 @@ class CakeAlgo
         }
 
         return $default;
-    }
-
-    private function calculateSums(float $salarySum, float $fixedCostMonthly, float $totalIngredientCost): float
-    {
-        return $salarySum + $fixedCostMonthly + $totalIngredientCost;
     }
 
     private function calculateIngredientsCost($request): float

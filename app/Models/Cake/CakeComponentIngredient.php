@@ -66,13 +66,9 @@ class CakeComponentIngredient extends BaseModel
 
     /** --- FUNCTIONS --- **/
 
-    public function incrementStock(int $quantity)
+    public function adjustStock(int $quantity)
     {
-        return $this->increment('quantity', $quantity);
-    }
-
-    public function decrementStock(int $quantity)
-    {
-        return $this->decrement('quantity', $quantity);
+        $this->quantity += $quantity;
+        $this->save();
     }
 }
