@@ -48,8 +48,6 @@ class CakeAlgo
 
                 $this->syncIngredientsRelationship($request);
 
-                $this->syncIngredientStock($request);
-
                 $this->cake->load('variants');
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::CREATE)
@@ -77,11 +75,7 @@ class CakeAlgo
 
                 $this->saveCakeImages($request);
 
-                $oldIngredients = $this->cake->ingredients;
-
                 $this->syncIngredientsRelationship($request);
-
-                $this->syncIngredientStock($request, $oldIngredients);
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Cake : '.$this->cake->id);
@@ -183,84 +177,61 @@ class CakeAlgo
 
     private function saveCakeImages(Request $request)
     {
-        if (!$request->has('images')) {
-            return;
-        }
-
         $path = Path::CAKES;
-        $fileNames = [];
+        $images = [];
 
         foreach ($request->images ?: [] as $key => $reqImage) {
             if ($request->hasFile('images.'.$key.'.file') && $reqImage['file']->isValid()) {
-                $filename = filename($reqImage['file'], 'cake_'.$this->cake->id);
+                $filename = filename($reqImage['file'], $this->cake->name);
 
-                $reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename);
+                if(!$reqImage['file']->move(Path::STORAGE_PUBLIC_PATH($path), $filename)){
+                    errCakeUploadImage();
+                }
 
-                $fileNames[] = $path.$filename;
-            }else if(!empty($reqImage['path'])){
-                $fileNames[] = $reqImage['path'];
+                $images[] = $path.$filename;
+            }else if(!empty($reqImage['path']) && is_string($reqImage['path'])){
+                $images[] = $reqImage['path'];
             }else{
-                errCakeUploadImage();
+                errCakeUploadImage(internalMsg: 'Invalid image format');
             }
         }
 
-        if($this->cake->images) {
-            $this->deletedImages = array_diff($this->cake->images, $fileNames);
-        }
+        $this->deletedImages = array_diff($this->cake->images ?: [], $images);
 
-        $this->cake->update(['images' => $fileNames]);
+        $this->cake->update(['images' => $images]);
     }
 
     private function syncIngredientsRelationship($request)
     {
-        if(!isset($request->ingredients)) {
-            return;
-        }
-
-        $toKeepIds = [];
+        $pivotIds = [];
         foreach($request->ingredients ?: [] as $ingredient) {
+            $componentIngredient = CakeComponentIngredient::find($ingredient['ingredientId']);
+
             $this->cake->cakeIngredients()->updateOrCreate([
-                'ingredientId' => $ingredient['ingredientId'],
-                'cakeId' => $this->cake->id,
+                'ingredientId' => $ingredient['ingredientId']
             ], [
                 'quantity' => $ingredient['quantity'],
             ]);
 
-            $toKeepIds[] = $ingredient['ingredientId'];
+            $pivotIds[] = $ingredient['ingredientId'];
+
+            if($request->stock > 0){
+                $componentIngredient->adjustStock($ingredient['quantity'] * $request->stock);
+            }
         }
 
-        CakeIngredient::where('cakeId', $this->cake->id)
-            ->whereNotIn('ingredientId', $toKeepIds)
+        $this->cake->cakeIngredients()
+            ->whereNotIn('ingredientId', $pivotIds)
             ->delete();
-
-        $this->cake->componentIngredients()->sync($toKeepIds);
     }
 
-    private function syncIngredientStock($request)
+    private function getMarginDecimal(Request $request): int
     {
-        $ingredientIds = array_column($request->ingredients, 'ingredientId');
-
-        $ingredients = CakeComponentIngredient::whereIn('id', $ingredientIds)->get()->keyBy('id');
-        if (count($ingredients) !== count($ingredientIds)) {
-            errCakeIngredientAdjustStock();
+        if ($request->has('margin') && is_int($request->margin)) {
+            return (float) $request->margin / 100;
         }
 
-        foreach ($request->ingredients as $ingredient) {
-            $quantity = $ingredient['quantity'];
-
-            $ingredients[$ingredient['ingredientId']]->adjustStock((-1) * $quantity * $request->stock);
-        }
-    }
-
-    private function getMarginDecimal(Request $request): float
-    {
-        $default = Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value;
-
-        if ($request->has('margin') && $request->margin) {
-            $default = (float) $request->margin / 100;
-        }
-
-        return $default;
+        return Setting::where('key', SettingConstant::PROFIT_MARGIN_KEY)->first()->value / 100;
     }
 
     private function calculateIngredientsCost($request): float

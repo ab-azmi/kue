@@ -28,7 +28,8 @@ class CakeSeeder extends Seeder
             ]);
 
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
-                $cake->componentIngredients()->attach($ingredient, [
+                $cake->cakeIngredients()->create([
+                    'ingredientId' => $ingredient->id,
                     'quantity' => rand(1, 10),
                 ]);
             }

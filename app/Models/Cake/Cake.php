@@ -37,13 +37,6 @@ class Cake extends BaseModel
         return $this->hasMany(CakeIngredient::class, 'cakeId');
     }
 
-    public function componentIngredients(): BelongsToMany
-    {
-        return $this->belongsToMany(CakeComponentIngredient::class, 'cake_ingredients', 'cakeId', 'ingredientId')
-            ->withPivot(['quantity'])
-            ->as('used');
-    }
-
     public function discounts(): HasMany
     {
         return $this->hasMany(CakeDiscount::class, 'cakeId');
@@ -81,10 +74,18 @@ class Cake extends BaseModel
         });
     }
 
-    public static function getImages($images)
+
+    /** --- FUNCTIONS --- */
+
+    public function getImageLinks()
     {
         return array_map(function($image) {
             return storage_link($image);
-        }, $images);
+        }, $this->images);
+    }
+
+    public function getComponentIngredients()
+    {
+        return CakeComponentIngredient::whereIn('id', $this->cakeIngredients->pluck('ingredientId'))->get();
     }
 }

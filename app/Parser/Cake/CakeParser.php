@@ -23,10 +23,10 @@ class CakeParser extends BaseParser
             'COGS' => $data->cogs,
             'sellingPrice' => $data->sellingPrice,
             'stock' => $data->stock,
-            'images' => Cake::getImages($data->images),
+            'images' => $data->getImageLinks(),
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
-            'ingredients' => CakeComponentIngredientParser::briefs($data->componentIngredients),
+            'ingredients' => CakeComponentIngredientParser::briefs($data->getComponentIngredients()),
             'variants' => CakeVariantParser::briefs($data->variants),
             'discounts' => CakeDiscountParser::get($data->discount),
         ];
