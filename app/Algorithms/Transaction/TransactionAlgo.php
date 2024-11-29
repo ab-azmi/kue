@@ -135,7 +135,10 @@ class TransactionAlgo
 
             $sellingPrice = $this->calculateCakeVariantsPrice($cakeVariant);
 
-            $totalDiscount = $cakeVariant->cake?->discounts->sum('value') * $order['quantity'];
+            $totalDiscount = $cakeVariant->cake?->discounts
+                        ->where('fromDate', '<=', $this->transaction->createdAt)
+                        ->where('toDate', '>=', $this->transaction->createdAt)
+                        ->sum('value') * $order['quantity'];
 
             $order->update([
                 'price' => $sellingPrice,

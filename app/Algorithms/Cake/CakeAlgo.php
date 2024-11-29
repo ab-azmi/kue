@@ -161,6 +161,8 @@ class CakeAlgo
         ]);
 
         if ($this->cake) {
+            $form['stock'] = $this->cake->stock + $request->stock;
+
             $updated = $this->cake->update($form);
             if (! $updated) {
                 errCakeUpdate();
@@ -257,7 +259,8 @@ class CakeAlgo
 
         $this->deletedImages = array_diff($this->cake->images ?: [], $images);
 
-        $this->cake->update(['images' => $images]);
+        $this->cake->images = $images;
+        $this->cake->save();
     }
 
     public function __destruct()
