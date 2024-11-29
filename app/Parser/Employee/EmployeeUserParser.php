@@ -17,7 +17,6 @@ class EmployeeUserParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'name' => $data->name,
             'email' => $data->email,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
@@ -32,7 +31,6 @@ class EmployeeUserParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'name' => $data->name,
             'email' => $data->email,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),

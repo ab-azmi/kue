@@ -2,6 +2,7 @@
 
 namespace App\Parser\Transaction;
 
+use App\Parser\Employee\EmployeeParser;
 use App\Parser\Employee\EmployeeUserParser;
 use GlobalXtreme\Parser\BaseParser;
 
@@ -48,6 +49,7 @@ class TransactionParser extends BaseParser
             'totalPrice' => $data->totalPrice,
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
+            'employee' => EmployeeParser::brief($data->employee),
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),

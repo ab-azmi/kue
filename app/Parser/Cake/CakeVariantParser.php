@@ -38,7 +38,8 @@ class CakeVariantParser extends BaseParser
             'name' => $data->name,
             'price' => $data->price,
             'createdAt' => $data->createdAt?->format('d/m/Y H:i'),
-            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i')
+            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
+            'cake' => CakeParser::brief($data->cake)
         ];
     }
 }
