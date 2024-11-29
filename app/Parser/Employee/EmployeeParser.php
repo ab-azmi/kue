@@ -25,6 +25,7 @@ class EmployeeParser extends BaseParser
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
             'user' => EmployeeUserParser::brief($data->user),
             'salary' => EmployeeSalaryParser::brief($data->salary),
+            'profile' => $data->getProfileLink(),
         ];
     }
 
@@ -41,6 +42,7 @@ class EmployeeParser extends BaseParser
             'phone' => $data->phone,
             'bankNumber' => $data->bankNumber,
             'user' => EmployeeUserParser::brief($data->user),
+            'profile' => $data->getProfileLink(),
         ];
     }
 }

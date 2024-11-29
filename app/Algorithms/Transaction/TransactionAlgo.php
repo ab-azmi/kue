@@ -61,10 +61,7 @@ class TransactionAlgo
         try {
             $this->transaction->setOldActivityPropertyAttributes(ActivityAction::DELETE);
 
-            $deleted = $this->transaction->delete();
-            if (! $deleted) {
-                errTransactionDelete();
-            }
+            $this->transaction->delete();
 
             $this->transaction->setActivityPropertyAttributes(ActivityAction::DELETE)
                 ->saveActivity('Delete Transaction : '.$this->transaction->id);
@@ -101,9 +98,7 @@ class TransactionAlgo
     private function createOrders($request)
     {
         foreach ($request->orders as $order) {
-            $orderModel = TransactionOrder::create(
-                $order + ['transactionId' => $this->transaction->id]
-            );
+            $orderModel = TransactionOrder::create($order + ['transactionId' => $this->transaction->id]);
             if (! $orderModel) {
                 errCreateOrder();
             }

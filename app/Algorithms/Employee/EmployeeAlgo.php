@@ -8,6 +8,8 @@ use App\Models\Employee\EmployeeSalary;
 use App\Models\Employee\EmployeeUser;
 use App\Parser\Employee\EmployeeParser;
 use App\Services\Constant\Activity\ActivityAction;
+use App\Services\Constant\Path\Path;
+use App\Services\Constant\Path\PathConstant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +51,8 @@ class EmployeeAlgo
 
                 $this->saveSalary($request);
 
+                $this->saveProfile($request);
+
                 $this->employee->setActivityPropertyAttributes(ActivityAction::CREATE)
                     ->saveActivity('Create new Employee : '.$this->employee->id);
             });
@@ -75,6 +79,8 @@ class EmployeeAlgo
                 $this->saveUser($request);
 
                 $this->saveSalary($request);
+
+                $this->saveProfile($request);
 
                 $this->employee->setActivityPropertyAttributes(ActivityAction::UPDATE)
                     ->saveActivity('Update Employee : '.$this->employee->id);
@@ -168,7 +174,7 @@ class EmployeeAlgo
 
     private function saveSalary(Request $request)
     {
-        $form = $request->only(['totalSalary']);
+        $form = $request->only(['hourlySalary']);
 
         if ($this->employee) {
             $this->employee->salary()->delete();
@@ -178,5 +184,21 @@ class EmployeeAlgo
                 errEmployeeSalaryUpdate();
             }
         }
+    }
+
+    private function saveProfile(Request $request)
+    {
+        $path = PathConstant::EMPLOYEES;
+
+        if($request->hasFile('profile') && $request->file('profile')->isValid()){
+            $filename = filename($request->file('profile'), $this->employee->name);
+
+            if(!$request->file('profile')->move(Path::STORAGE_PUBLIC_PATH($path), $filename)){
+                errEmployeeUploadProfile();
+            }
+
+            $this->employee->update(['profile' => $path.$filename]);
+        }
+
     }
 }

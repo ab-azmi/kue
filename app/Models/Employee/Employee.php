@@ -66,4 +66,16 @@ class Employee extends BaseModel
             }
         });
     }
+
+
+    /** --- FUNCTIONS --- */
+
+    public function getProfileLink()
+    {
+        if(!$this->profile){
+            return null;
+        }
+
+        return storage_link($this->profile);
+    }
 }

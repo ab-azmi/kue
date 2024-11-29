@@ -83,7 +83,7 @@ if (! function_exists('storage_link')) {
         }
 
         return [
-            'link' => config('base.conf.storage-link').$path,
+            'link' => config('base.conf.storage-link').'/'.$path,
             'path' => $path,
         ];
     }

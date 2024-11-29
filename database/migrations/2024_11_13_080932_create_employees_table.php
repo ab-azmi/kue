@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone');
             $table->string('bankNumber');
+            $table->string('profile')->nullable();
             $this->getDefaultTimestamps($table);
         });
     }
