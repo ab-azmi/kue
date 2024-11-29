@@ -17,7 +17,7 @@ class EmployeeParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'userId' => $data->userId,
+            'name' => $data->name,
             'address' => $data->address,
             'phone' => $data->phone,
             'bankNumber' => $data->bankNumber,
@@ -37,7 +37,7 @@ class EmployeeParser extends BaseParser
 
         return [
             'id' => $data->id,
-            'userId' => $data->userId,
+            'name' => $data->name,
             'address' => $data->address,
             'phone' => $data->phone,
             'bankNumber' => $data->bankNumber,

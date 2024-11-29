@@ -36,7 +36,7 @@ class TransactionSeeder extends Seeder
             [
                 'quantity' => 1,
                 'number' => 'TSX34634534',
-                'tax' => 0.3,
+                'tax' => 6000,
                 'orderPrice' => 14000,
                 'totalPrice' => 17000,
                 'totalDiscount' => null,
