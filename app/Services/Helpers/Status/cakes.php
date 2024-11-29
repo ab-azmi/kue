@@ -1,34 +1,34 @@
 <?php
 
-if (! function_exists('errCakeCreate')) {
+if (!function_exists('errCakeCreate')) {
     function errCakeCreate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to create cake', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeUpdate')) {
+if (!function_exists('errCakeUpdate')) {
     function errCakeUpdate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to update cake', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeDelete')) {
+if (!function_exists('errCakeDelete')) {
     function errCakeDelete($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to delete cake', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeGet')) {
+if (!function_exists('errCakeGet')) {
     function errCakeGet($internalMsg = '', $status = 404)
     {
         error($status, 'Cake not found', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeUploadImage')) {
+if (!function_exists('errCakeUploadImage')) {
     function errCakeUploadImage($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to upload image', $internalMsg);
@@ -36,28 +36,28 @@ if (! function_exists('errCakeUploadImage')) {
 }
 
 /** --- CAKE DISCOUNT --- **/
-if (! function_exists('errCakeDiscountGet')) {
+if (!function_exists('errCakeDiscountGet')) {
     function errCakeDiscountGet($internalMsg = '', $status = 404)
     {
         error($status, 'Failed to get cake discount', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeDiscountCreate')) {
+if (!function_exists('errCakeDiscountCreate')) {
     function errCakeDiscountCreate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to create cake discount', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeDiscountUpdate')) {
+if (!function_exists('errCakeDiscountUpdate')) {
     function errCakeDiscountUpdate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to update cake discount', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeDiscountDelete')) {
+if (!function_exists('errCakeDiscountDelete')) {
     function errCakeDiscountDelete($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to delete cake discount', $internalMsg);
@@ -65,56 +65,56 @@ if (! function_exists('errCakeDiscountDelete')) {
 }
 
 /** --- CAKE INGREDIENT --- **/
-if (! function_exists('errCakeIngredientGet')) {
+if (!function_exists('errCakeIngredientGet')) {
     function errCakeIngredientGet($internalMsg = '', $status = 404)
     {
         error($status, 'Failed to get cake ingredient', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientUpdate')) {
+if (!function_exists('errCakeIngredientUpdate')) {
     function errCakeIngredientUpdate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to update cake ingredient', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientCreate')) {
+if (!function_exists('errCakeIngredientCreate')) {
     function errCakeIngredientCreate($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to create cake ingredient', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientDelete')) {
+if (!function_exists('errCakeIngredientDelete')) {
     function errCakeIngredientDelete($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to delete cake ingredient', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientSync')) {
+if (!function_exists('errCakeIngredientSync')) {
     function errCakeIngredientSync($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to sync cake ingredient', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientAdjustStock')) {
+if (!function_exists('errCakeIngredientAdjustStock')) {
     function errCakeIngredientAdjustStock($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to adjust stock', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeCOGS')) {
+if (!function_exists('errCakeCOGS')) {
     function errCakeCOGS($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to calculate COGS', $internalMsg);
     }
 }
 
-if (! function_exists('errCakeIngredientTotalCost')) {
+if (!function_exists('errCakeIngredientTotalCost')) {
     function errCakeIngredientTotalCost($internalMsg = '', $status = 500)
     {
         error($status, 'Failed to calculate total cost', $internalMsg);
