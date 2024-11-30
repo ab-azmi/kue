@@ -47,7 +47,7 @@ class Transaction extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->where(function($query) use ($request, $searchByText){
+        $query->where(function($query) use ($request, $searchByText){
             $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
             if($searchByText){
@@ -57,10 +57,12 @@ class Transaction extends BaseModel
             if($request->has('employeeId')){
                 $query->where('employeeId', $request->employeeId);
             }
-
-            if($request->has('orderBy') && $request->has('orderType')){
-                $query->orderBy($request->orderBy, $request->orderType);
-            }
         });
+
+        if($request->has('orderBy') && $request->has('orderType')){
+            $query->orderBy($request->orderBy, $request->orderType);
+        }
+
+        return $query;
     }
 }

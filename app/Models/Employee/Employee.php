@@ -51,7 +51,7 @@ class Employee extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->where(function($query) use ($request, $searchByText){
+        $query->where(function($query) use ($request, $searchByText){
             $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
             if($searchByText){
@@ -60,11 +60,13 @@ class Employee extends BaseModel
                 })->orWhere('name', 'like', '%'.$request->search.'%')
                     ->orWhere('address', 'like', '%'.$request->search.'%');
             }
-
-            if($request->has('orderBy') && $request->has('orderType')){
-                $query->orderBy($request->orderBy, $request->orderType);
-            }
         });
+
+        if($request->has('orderBy') && $request->has('orderType')){
+            return $query->orderBy($request->orderBy, $request->orderType);
+        }
+
+        return $query;
     }
 
 

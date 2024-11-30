@@ -7,6 +7,7 @@ use App\Models\Cake\Traits\HasActivityCakeVariantProperty;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
 use App\Parser\Cake\CakeVariantParser;
+use http\Env\Response;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -55,9 +56,7 @@ class CakeVariant extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->where(function($query) use ($request, $searchByText){
-            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
-
+        $query->where(function($query) use ($request, $searchByText){
             if($searchByText){
                 $query->where('name', 'like', '%'.$request->search.'%')
                     ->orWhere('description', 'like', '%'.$request->search.'%');
@@ -67,5 +66,15 @@ class CakeVariant extends BaseModel
                 $query->where('cakeId', $request->cakeId);
             }
         });
+
+        $query->whereHas('cake', function($query){
+            $query->where('stock', '>', 0);
+        });
+
+        if($request->has('orderBy') && $request->has('orderType')){
+            return $query->orderBy($request->orderBy, $request->orderType);
+        }
+
+        return $query;
     }
 }
