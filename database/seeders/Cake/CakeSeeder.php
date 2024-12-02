@@ -62,7 +62,7 @@ class CakeSeeder extends Seeder
         return [
             [
                 'name' => 'Polar Bear Cake',
-                'profitMargin' => 0.5,
+                'profitMargin' => 5,
                 'COGS' => 100000,
                 'stock' => 10,
                 'sellingPrice' => 150000,

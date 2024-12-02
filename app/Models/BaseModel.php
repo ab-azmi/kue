@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GlobalXtreme\Parser\Trait\HasParser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class BaseModel extends Model
 {

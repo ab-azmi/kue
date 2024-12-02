@@ -27,18 +27,18 @@ class CakeIngredientSeeder extends Seeder
         return [
             [
                 'name' => 'Flour',
-                'unitId' => CakeIngredientUnit::KILOGRAM_ID,
-                'price' => 10000,
+                'unitId' => CakeIngredientUnit::GRAM_ID,
+                'price' => 14,
                 'expirationDate' => Carbon::parse('2025-11-13'),
-                'quantity' => 100,
+                'quantity' => 100000,
                 'supplier' => 'PT. Tepung',
             ],
             [
                 'name' => 'Sugar',
-                'unitId' => CakeIngredientUnit::KILOGRAM_ID,
-                'price' => 15000,
+                'unitId' => CakeIngredientUnit::GRAM_ID,
+                'price' => 10,
                 'expirationDate' => Carbon::parse('2025-11-13'),
-                'quantity' => 70,
+                'quantity' => 30000,
                 'supplier' => 'PT. Gula',
             ],
             [
@@ -52,7 +52,7 @@ class CakeIngredientSeeder extends Seeder
             [
                 'name' => 'Milk',
                 'unitId' => CakeIngredientUnit::LITER_ID,
-                'price' => 20000,
+                'price' => 6000,
                 'expirationDate' => Carbon::parse('2025-11-13'),
                 'quantity' => 30,
                 'supplier' => 'PT. Susu',

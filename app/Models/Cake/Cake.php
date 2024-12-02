@@ -55,23 +55,19 @@ class Cake extends BaseModel
     {
         $searchByText = $this->hasSearch($request);
 
-        return $query->where(function($query) use ($request, $searchByText) {
+        $query->where(function($query) use ($request, $searchByText) {
             $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
             if($searchByText) {
                 $query->where('name', 'like', '%'.$request->search.'%');
             }
-
-            if($request->has('variantId')){
-                $query->whereHas('variants', function ($query) use ($request) {
-                    return $query->where('id', $request->variantId);
-                });
-            }
-
-            if($request->has('orderBy') && $request->has('orderType')){
-                $query->orderBy($request->orderBy, $request->orderType);
-            }
         });
+
+        if($request->has('orderBy') && $request->has('orderType')){
+            return $query->orderBy($request->orderBy, $request->orderType);
+        }
+
+        return $query;
     }
 
 
@@ -86,6 +82,12 @@ class Cake extends BaseModel
 
     public function getComponentIngredients()
     {
-        return CakeComponentIngredient::whereIn('id', $this->cakeIngredients->pluck('ingredientId'))->get();
+        return CakeComponentIngredient::whereIn('id', $this->cakeIngredients->pluck('ingredientId'))
+            ->get()->map(function($ingredient) {
+                $ingredient->pivot = [
+                    'quantity' => $this->cakeIngredients->where('ingredientId', $ingredient->id)->first()->quantity
+                ];
+                return $ingredient;
+            });
     }
 }

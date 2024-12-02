@@ -17,7 +17,7 @@ class SettingController extends Controller
      */
     public function get(Request $request)
     {
-        $settings = Setting::getOrPaginate($request, true);
+        $settings = Setting::filter($request)->getOrPaginate($request, true);
 
         return success($settings, pagination: pagination($settings));
     }
