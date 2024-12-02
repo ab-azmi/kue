@@ -26,8 +26,8 @@ class CakeComponentIngredientParser extends BaseParser
             'supplier' => $data->supplier,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
-            'used' => $data->used,
             'cakes' => CakeParser::briefs($data->cakes),
+            'pivot' => $data->pivot,
         ];
     }
 
@@ -47,6 +47,7 @@ class CakeComponentIngredientParser extends BaseParser
             'supplier' => $data->supplier,
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
+            'pivot' => $data->pivot,
         ];
     }
 }

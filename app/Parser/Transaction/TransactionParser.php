@@ -29,7 +29,7 @@ class TransactionParser extends BaseParser
             'createdAt' => $data->createdAt->format('m/d/Y H:i'),
             'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
             'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
-            'employee' => EmployeeUserParser::brief($data->employee),
+            'employee' => EmployeeParser::brief($data->employee),
             'orders' => TransactionOrderParser::get($data->orders),
         ];
     }
@@ -50,9 +50,9 @@ class TransactionParser extends BaseParser
             'totalDiscount' => $data->totalDiscount,
             'employeeId' => $data->employeeId,
             'employee' => EmployeeParser::brief($data->employee),
-            'createdAt' => $data->createdAt->format('m/d/Y H:i'),
-            'updatedAt' => $data->updatedAt?->format('m/d/Y H:i'),
-            'deletedAt' => $data->deletedAt?->format('m/d/Y H:i'),
+            'createdAt' => $data->createdAt->format('d/m/Y H:i'),
+            'updatedAt' => $data->updatedAt?->format('d/m/Y H:i'),
+            'deletedAt' => $data->deletedAt?->format('d/m/Y H:i'),
         ];
     }
 }
