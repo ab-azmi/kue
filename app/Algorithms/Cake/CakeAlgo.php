@@ -181,15 +181,15 @@ class CakeAlgo
     {
         $pivotIds = [];
         foreach($request->ingredients ?: [] as $ingredient) {
-            $componentIngredient = CakeComponentIngredient::find($ingredient['ingredientId']);
+            $componentIngredient = CakeComponentIngredient::find($ingredient['id']);
 
             $this->cake->cakeIngredients()->updateOrCreate([
-                'ingredientId' => $ingredient['ingredientId']
+                'ingredientId' => $ingredient['id']
             ], [
                 'quantity' => $ingredient['quantity'],
             ]);
 
-            $pivotIds[] = $ingredient['ingredientId'];
+            $pivotIds[] = $ingredient['id'];
 
             if($request->stock > 0){
                 $componentIngredient->adjustStock($ingredient['quantity'] * $request->stock);

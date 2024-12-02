@@ -23,9 +23,9 @@ class CakeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'stock' => 'nullable|numeric|max:255',
-            'profitMargin' => 'nullable|string|max:255',
-            'COGS' => 'nullable|numeric|max:255',
+            'stock' => 'nullable|numeric',
+            'profitMargin' => 'nullable|numeric',
+            'COGS' => 'nullable|numeric',
             'sellingPrice' => 'nullable|numeric',
 
             'images' => 'array',
@@ -34,7 +34,7 @@ class CakeRequest extends FormRequest
             'images.*.path' => 'string|max:255',
 
             'ingredients' => 'array',
-            'ingredients.*.ingredientId' => 'numeric|max:255',
+            'ingredients.*.id' => 'numeric|max:255',
             'ingredients.*.quantity' => 'numeric|max:255',
         ];
     }
