@@ -135,11 +135,11 @@ class CakeAlgo
             $sellingPrice = $cogs * (1 + $margin);
 
             return success([
-                'overhead' => $overheadCost,
-                'ingredientCost' => $totalIngredientCost,
-                'COGS' => $cogs,
-                'sellingPrice' => $sellingPrice,
-                'profitPerItem' => $sellingPrice - $cogs,
+                'overhead' => round(num: $overheadCost),
+                'ingredientCost' => round(num: $totalIngredientCost),
+                'COGS' => round(num: $cogs),
+                'sellingPrice' => round(num: $sellingPrice),
+                'profitPerItem' => round(num: $sellingPrice - $cogs),
             ]);
         } catch (\Exception $e) {
             return exception($e);
@@ -201,9 +201,9 @@ class CakeAlgo
             ->delete();
     }
 
-    private function getMarginDecimal(Request $request): int
+    private function getMarginDecimal(Request $request): float
     {
-        if ($request->has('margin') && is_int($request->margin)) {
+        if ($request->has('margin')) {
             return (float) $request->margin / 100;
         }
 
