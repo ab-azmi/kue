@@ -203,7 +203,7 @@ class CakeAlgo
 
     private function getMarginDecimal(Request $request): float
     {
-        if ($request->has('margin')) {
+        if ($request->has('margin') && $request->margin > 0) {
             return (float) $request->margin / 100;
         }
 

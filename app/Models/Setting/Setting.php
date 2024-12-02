@@ -21,4 +21,16 @@ class Setting extends BaseModel
     ];
 
     public $parserClass = SettingParser::class;
+
+
+    /** --- SCOPES --- **/
+
+    public function scopeFilter($query, $request)
+    {
+        if($request->has('key') && $request->key) {
+            $query->where('key', $request->key);
+        }
+
+        return $query;
+    }
 }
