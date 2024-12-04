@@ -50,8 +50,38 @@ class Transaction extends BaseModel
         $query->where(function($query) use ($request, $searchByText){
             $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
-            if($searchByText){
-                $query->where('number', 'like', '%'.$request->search.'%');
+            if($searchByText && $request->has('searchIn')){
+                switch ($request->searchIn) {
+                    case 'employee':
+                        $query->whereHas('employee', function ($query) use ($request) {
+                            $query->where('name', 'like', "%$request->search%");
+                        });
+                        break;
+                    case 'cakeVariant':
+                        $query->whereHas('orders', function ($query) use ($request) {
+                            $query->whereHas('cakeVariant', function ($query) use ($request) {
+                                $query->where('name', 'like', "%$request->search%");
+                            });
+                        });
+                        break;
+                    case 'number':
+                        $query->where('number', 'like', "%$request->search%");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if($request->has('totalPriceFrom') && $request->has('totalPriceTo')){
+                $query->whereBetween('totalPrice', [$request->totalPriceFrom, $request->totalPriceTo]);
+            }
+
+            if($request->has('orderPriceFrom') && $request->has('orderPriceTo')){
+                $query->whereBetween('orderPrice', [$request->orderPriceFrom, $request->orderPriceTo]);
+            }
+
+            if($request->has('quantityFrom') && $request->has('quantityTo')){
+                $query->whereBetween('quantity', [$request->quantityFrom, $request->quantityTo]);
             }
 
             if($request->has('employeeId')){
