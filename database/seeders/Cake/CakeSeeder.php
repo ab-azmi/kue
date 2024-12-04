@@ -22,7 +22,8 @@ class CakeSeeder extends Seeder
                 'name' => $item['name'],
                 'profitMargin' => $item['profitMargin'],
                 'COGS' => $item['COGS'],
-                'stock' => $item['stock'],
+                'stockNonSell' => $item['stockNonSell'],
+                'stockSell' => $item['stockSell'],
                 'sellingPrice' => $item['sellingPrice'],
                 'images' => $item['images'],
             ]);
@@ -56,7 +57,9 @@ class CakeSeeder extends Seeder
         ]);
     }
 
+
     /** --- FUNCTIONS --- */
+
     private function getData()
     {
         return [
@@ -64,8 +67,9 @@ class CakeSeeder extends Seeder
                 'name' => 'Polar Bear Cake',
                 'profitMargin' => 5,
                 'COGS' => 100000,
-                'stock' => 10,
-                'sellingPrice' => 150000,
+                'stockNonSell' => 4,
+                'stockSell' => 10,
+                'sellingPrice' => 50000,
                 'images' => [
                     "cakes/one.jpg",
                     "cakes/two.jpg",
@@ -73,12 +77,12 @@ class CakeSeeder extends Seeder
                 'variants' => [
                     [
                         'name' => 'Polar Bear Cake - Medium',
-                        'price' => 50000,
+                        'price' => 5000,
                         'description' => 'Polar Bear Cake - Variant 1 Description',
                     ],
                     [
                         'name' => 'Polar Bear Cake - Party',
-                        'price' => 100000,
+                        'price' => 10000,
                         'description' => 'Polar Bear Cake - Variant 2 Description',
                     ],
                 ],
@@ -87,7 +91,8 @@ class CakeSeeder extends Seeder
                 'name' => 'Panda Cake',
                 'profitMargin' => null,
                 'COGS' => 400000,
-                'stock' => 15,
+                'stockNonSell' => 8,
+                'stockSell' => 12,
                 'sellingPrice' => 600000,
                 'images' => [
                     "cakes/three.jpg",

@@ -35,6 +35,13 @@ if (!function_exists('errCakeUploadImage')) {
     }
 }
 
+if (!function_exists('errCakeReStock')) {
+    function errCakeReStock($internalMsg = '', $status = 500)
+    {
+        error($status, 'Failed to Restock Cake', $internalMsg);
+    }
+}
+
 /** --- CAKE DISCOUNT --- **/
 if (!function_exists('errCakeDiscountGet')) {
     function errCakeDiscountGet($internalMsg = '', $status = 404)

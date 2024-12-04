@@ -12,6 +12,7 @@ use App\Parser\Cake\CakeParser;
 use App\Services\Constant\Activity\ActivityAction;
 use App\Services\Constant\Path\Path;
 use App\Services\Constant\Setting\SettingConstant;
+use GlobalXtreme\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -146,6 +147,53 @@ class CakeAlgo
         }
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse|mixed
+     */
+    public function Restock(Request $request){
+        try{
+            Validator::make($request->all(), [
+                'addStockSell' => 'required|numeric',
+                'addStockNonSell' => 'required|numeric|min:0',
+            ]);
+
+            if($request->addStockSell < 0 && abs($request->addStockSell) > $this->cake->stockSell){
+                errCakeReStock();
+            }
+
+            DB::transaction(function() use ($request){
+                $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
+
+                if($request->addStockSell < 0){
+                    $this->cake->adjustStockNonSell($request->addStockSell);
+                }
+
+                $this->cake->adjustStockSell($request->addStockSell);
+
+                $this->cake->adjustStockNonSell($request->addStockNonSell);
+
+                $this->cake->save();
+
+                $cakeIngredients = $this->cake->cakeIngredients()->get();
+                foreach($cakeIngredients as $pivot){
+                    $ingredient = CakeComponentIngredient::find($pivot->ingredientId);
+
+                    $ingredient->adjustStock((-1) * $request->addStockSell * $pivot->quantity);
+
+                    $ingredient->adjustStock((-1) * $request->addStockNonSell * $pivot->quantity);
+                }
+
+                $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)
+                    ->saveActivity('Restock Cake : '.$this->cake->id);
+            });
+
+            return success($this->cake);
+        }catch (\Exception $e) {
+            return exception($e);
+        }
+    }
 
     /** --- PRIVATE FUNCTIONS --- */
 
@@ -181,8 +229,6 @@ class CakeAlgo
     {
         $pivotIds = [];
         foreach($request->ingredients ?: [] as $ingredient) {
-            $componentIngredient = CakeComponentIngredient::find($ingredient['id']);
-
             $this->cake->cakeIngredients()->updateOrCreate([
                 'ingredientId' => $ingredient['id']
             ], [
@@ -190,10 +236,6 @@ class CakeAlgo
             ]);
 
             $pivotIds[] = $ingredient['id'];
-
-            if($request->stock > 0){
-                $componentIngredient->adjustStock($ingredient['quantity'] * $request->stock);
-            }
         }
 
         $this->cake->cakeIngredients()

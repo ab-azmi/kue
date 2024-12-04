@@ -46,3 +46,4 @@ Route::post('cogs', [CakeController::class, 'COGS']);
 Route::get('{id}', [CakeController::class, 'detail']);
 Route::put('{id}', [CakeController::class, 'update']);
 Route::delete('{id}', [CakeController::class, 'delete']);
+Route::post('restock/{id}', [CakeController::class, 'restock']);
