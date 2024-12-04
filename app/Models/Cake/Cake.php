@@ -134,6 +134,10 @@ class Cake extends BaseModel
 
     public function getImageLinks()
     {
+        if(empty($this->images)) {
+            return [];
+        }
+
         return array_map(function($image) {
             return storage_link($image);
         }, $this->images);
