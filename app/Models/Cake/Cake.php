@@ -59,7 +59,57 @@ class Cake extends BaseModel
             $query->ofDate('createdAt', $request->fromDate, $request->toDate);
 
             if($searchByText) {
-                $query->where('name', 'like', '%'.$request->search.'%');
+                switch($request->searchIn) {
+                    case 'cakeVariant':
+                        $query->whereHas('variants', function($query) use ($request) {
+                            $query->where('name', 'like', '%'.$request->search.'%');
+                        });
+                        break;
+                    case 'ingredient':
+                        $query->whereHas('cakeIngredients', function($query) use ($request) {
+                            $query->whereHas('ingredient', function($query) use ($request) {
+                                $query->where('name', 'like', '%'.$request->search.'%')
+                                    ->orWhere('supplier', 'like', '%'.$request->search.'%');
+                            });
+                        });
+                        break;
+                    case 'discount':
+                        $query->whereHas('discounts', function($query) use ($request) {
+                            $query->where('name', 'like', '%'.$request->search.'%');
+                        });
+                        break;
+                    default:
+                        $query->where('name', 'like', '%'.$request->search.'%');
+                        break;
+                }
+
+            }
+
+            if($request->has('fromCOGS') && $request->has('toCOGS')) {
+                $query->whereBetween('COGS', [$request->fromCOGS, $request->toCOGS]);
+            }
+
+            if($request->has('fromSellingPrice') && $request->has('toSellingPrice')) {
+                $query->whereBetween('sellingPrice', [$request->fromSellingPrice, $request->toSellingPrice]);
+            }
+
+            if($request->has('fromTotalDiscount') && $request->has('toTotalDiscount')) {
+                $query->whereBetween('totalDiscount', [$request->fromTotalDiscount, $request->toTotalDiscount]);
+            }
+
+            if($request->has('fromStockSell') && $request->has('toStockSell')){
+                $query->whereBetween('stockSell', [$request->fromStockSell, $request->toStockSell]);
+            }
+
+            if($request->has('fromStockNonSell') && $request->has('toStockNonSell')){
+                $query->whereBetween('stockNonSell', [$request->fromStockNonSell, $request->toStockNonSell]);
+            }
+
+            if($request->has('hasDiscount')){
+                $query->whereHas('discounts', function($query) use ($request){
+                    $query->where('fromDate', '<=', now())
+                        ->where('toDate', '>=', now());
+                });
             }
 
             if($request->has('isSell')) {

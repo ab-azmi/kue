@@ -7,7 +7,6 @@ use App\Models\Cake\Traits\HasActivityCakeVariantProperty;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
 use App\Parser\Cake\CakeVariantParser;
-use http\Env\Response;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -57,18 +56,40 @@ class CakeVariant extends BaseModel
         $searchByText = $this->hasSearch($request);
 
         $query->where(function($query) use ($request, $searchByText){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
             if($searchByText){
-                $query->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+                switch($request->searchIn){
+                    case 'cake':
+                        $query->whereHas('cake', function($query) use ($request){
+                            $query->where('name', 'like', "%$request->searchText%");
+                        });
+                        break;
+                    default:
+                        $query->where('name', 'like', '%'.$request->search.'%');
+                        break;
+                }
             }
 
             if($request->has('cakeId')){
                 $query->where('cakeId', $request->cakeId);
             }
-        });
 
-        $query->whereHas('cake', function($query){
-            $query->where('stock', '>', 0);
+            if($request->has('fromPrice') && $request->has('toPrice')){
+                $query->whereBetween('price', [$request->fromPrice, $request->toPrice]);
+            }
+
+            if($request->has('fromCakePrice') && $request->has('toCakePrice')){
+                $query->whereHas('cake', function($query) use ($request){
+                    $query->whereBetween('sellingPrice', [$request->fromCakePrice, $request->toCakePrice]);
+                });
+            }
+
+            if($request->has('hasDiscount')){
+                $query->whereHas('cake', function($query){
+                    $query->whereHas('discounts');
+                });
+            }
         });
 
         if($request->has('orderBy') && $request->has('orderType')){
