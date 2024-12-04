@@ -173,7 +173,7 @@ class TransactionAlgo
 
     private function setTotalPrices(): array
     {
-        $tax = Setting::where('key', SettingConstant::TAX_KEY)->first()->value;
+        $tax = Setting::where('key', SettingConstant::TAX_KEY)->first()->value / 100;
         $sumOrderPrice = 0;
         $totalDiscount = 0;
 
@@ -183,14 +183,14 @@ class TransactionAlgo
         }
 
         $totalPrice = $sumOrderPrice - $totalDiscount;
-        $tax = $totalPrice * (float) $tax;
-        $totalPrice += $tax;
+        $taxInRP = $totalPrice * $tax;
+        $totalPrice += $taxInRP;
 
         return [
             'orderPrice' => $sumOrderPrice,
             'totalPrice' => $totalPrice,
             'totalDiscount' => $totalDiscount,
-            'tax' => $tax,
+            'tax' => $taxInRP,
         ];
     }
 }

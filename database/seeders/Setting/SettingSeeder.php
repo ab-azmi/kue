@@ -27,13 +27,23 @@ class SettingSeeder extends Seeder
             [
                 'key' => SettingConstant::TAX_KEY,
                 'description' => 'Tax percentage',
-                'value' => 0.12,
+                'value' => 12,
             ],
             [
                 'key' => SettingConstant::PROFIT_MARGIN_KEY,
                 'description' => 'Profit margin percentage',
                 'value' => 3,
-            ]
+            ],
+            [
+                'key' => SettingConstant::SALARY_TO_CAKE_PERCENTAGE_KEY,
+                'description' => 'Salary to cake price percentage',
+                'value' => 10,
+            ],
+            [
+                'key' => SettingConstant::FIXED_COST_TO_CAKE_PERCENTAGE_KEY,
+                'description' => 'Fixed cost to cake price percentage',
+                'value' => 1.2,
+            ],
         ];
     }
 }

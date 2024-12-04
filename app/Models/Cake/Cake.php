@@ -101,6 +101,14 @@ class Cake extends BaseModel
         $this->save();
     }
 
+    public function getTotalDiscount()
+    {
+        return $this->discounts()
+            ->where('fromDate', '<=', now())
+            ->where('toDate', '>=', now())
+            ->sum('value');
+    }
+
     public function getComponentIngredients()
     {
         return CakeComponentIngredient::whereIn('id', $this->cakeIngredients->pluck('ingredientId'))
