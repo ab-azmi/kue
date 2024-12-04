@@ -3,6 +3,7 @@
 namespace Database\Seeders\Transaction;
 
 use App\Models\Transaction\Transaction;
+use App\Services\Constant\Transaction\TransactionStatusConstant;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -36,6 +37,7 @@ class TransactionSeeder extends Seeder
             [
                 'quantity' => 1,
                 'number' => 'TSX34634534',
+                'statusId' => TransactionStatusConstant::SUCCESS_ID,
                 'tax' => 6000,
                 'orderPrice' => 14000,
                 'totalPrice' => 17000,

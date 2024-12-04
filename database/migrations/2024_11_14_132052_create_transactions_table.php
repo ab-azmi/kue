@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('employeeId')->references('id')->on('employees')->cascadeOnDelete();
 
             $table->string('number')->nullable();
+            $table->integer('statusId')->nullable();
             $table->integer('quantity')->nullable();
             $table->float('orderPrice')->nullable();
             $table->float('totalDiscount')->nullable();
