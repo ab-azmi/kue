@@ -105,6 +105,13 @@ class Cake extends BaseModel
                 $query->whereBetween('stockNonSell', [$request->fromStockNonSell, $request->toStockNonSell]);
             }
 
+            if($request->has('hasDiscount')){
+                $query->whereHas('discounts', function($query) use ($request){
+                    $query->where('fromDate', '<=', now())
+                        ->where('toDate', '>=', now());
+                });
+            }
+
             if($request->has('isSell')) {
                 $query->isSell($request->isSell);
             }

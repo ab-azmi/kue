@@ -58,17 +58,37 @@ class CakeVariant extends BaseModel
 
         $query->where(function($query) use ($request, $searchByText){
             if($searchByText){
-                $query->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+                switch($request->searchIn){
+                    case 'cake':
+                        $query->whereHas('cake', function($query) use ($request){
+                            $query->where('name', 'like', "%$request->searchText%");
+                        });
+                        break;
+                    default:
+                        $query->where('name', 'like', '%'.$request->search.'%');
+                        break;
+                }
             }
 
             if($request->has('cakeId')){
                 $query->where('cakeId', $request->cakeId);
             }
-        });
 
-        $query->whereHas('cake', function($query){
-            $query->where('stock', '>', 0);
+            if($request->has('fromPrice') && $request->has('toPrice')){
+                $query->whereBetween('price', [$request->fromPrice, $request->toPrice]);
+            }
+
+            if($request->has('fromCakePrice') && $request->has('toCakePrice')){
+                $query->whereHas('cake', function($query) use ($request){
+                    $query->whereBetween('sellingPrice', [$request->fromCakePrice, $request->toCakePrice]);
+                });
+            }
+
+            if($request->has('hasDiscount')){
+                $query->whereHas('cake', function($query){
+                    $query->whereHas('discounts');
+                });
+            }
         });
 
         if($request->has('orderBy') && $request->has('orderType')){
