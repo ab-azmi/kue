@@ -57,6 +57,8 @@ class CakeVariant extends BaseModel
         $searchByText = $this->hasSearch($request);
 
         $query->where(function($query) use ($request, $searchByText){
+            $query->ofDate('createdAt', $request->fromDate, $request->toDate);
+
             if($searchByText){
                 switch($request->searchIn){
                     case 'cake':
