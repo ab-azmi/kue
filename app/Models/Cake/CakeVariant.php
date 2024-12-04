@@ -7,7 +7,6 @@ use App\Models\Cake\Traits\HasActivityCakeVariantProperty;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionOrder;
 use App\Parser\Cake\CakeVariantParser;
-use http\Env\Response;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
