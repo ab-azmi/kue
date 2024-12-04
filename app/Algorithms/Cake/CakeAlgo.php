@@ -122,13 +122,17 @@ class CakeAlgo
         try {
             $margin = $this->getMarginDecimal($request);
 
-            $salarySum = EmployeeSalary::getTotalSalary();
+            $percentageForSalary = Setting::where('key', SettingConstant::SALARY_TO_CAKE_PERCENTAGE_KEY)
+                    ->first()->value / 100;
+            $salaryPercentage = EmployeeSalary::getTotalSalary() * $percentageForSalary;
 
-            $overheadCost = SettingFixedCost::getFixedCostMonthly() / now()->daysInMonth;
+            $percentageForOverhead = Setting::where('key', SettingConstant::FIXED_COST_TO_CAKE_PERCENTAGE_KEY)
+                    ->first()->value / 100;
+            $overheadCost = SettingFixedCost::getFixedCostMonthly() * $percentageForOverhead;
 
             $totalIngredientCost = $this->calculateIngredientsCost($request);
 
-            $cogs = $salarySum + $overheadCost + $totalIngredientCost;
+            $cogs = $salaryPercentage + $overheadCost + $totalIngredientCost;
             if ($cogs <= 0) {
                 errCakeCOGS();
             }
