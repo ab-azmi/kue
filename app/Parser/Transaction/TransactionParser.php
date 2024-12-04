@@ -4,6 +4,7 @@ namespace App\Parser\Transaction;
 
 use App\Parser\Employee\EmployeeParser;
 use App\Parser\Employee\EmployeeUserParser;
+use App\Services\Constant\Transaction\TransactionStatusConstant;
 use GlobalXtreme\Parser\BaseParser;
 
 class TransactionParser extends BaseParser
@@ -19,6 +20,7 @@ class TransactionParser extends BaseParser
 
         return [
             'id' => $data->id,
+            'status' => TransactionStatusConstant::idName($data->statusId),
             'quantity' => $data->quantity,
             'number' => $data->number,
             'tax' => $data->tax,
@@ -42,6 +44,7 @@ class TransactionParser extends BaseParser
 
         return [
             'id' => $data->id,
+            'status' => TransactionStatusConstant::idName($data->statusId),
             'quantity' => $data->quantity,
             'number' => $data->number,
             'tax' => $data->tax,
