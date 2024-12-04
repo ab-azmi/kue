@@ -87,4 +87,10 @@ class CakeController extends Controller
         $algo = new CakeAlgo;
         return $algo->COGS($request);
     }
+
+    public function restock($id, Request $request)
+    {
+        $algo = new CakeAlgo((int) $id);
+        return $algo->Restock($request);
+    }
 }

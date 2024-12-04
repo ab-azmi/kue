@@ -17,7 +17,9 @@ return new class extends Migration
         Schema::create('cakes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('stock')->default(0);
+            $table->integer('stockNonSell')->default(0);
+            $table->integer('stockSell')->default(0);
+            $table->boolean('isSell')->default(true);
             $table->float('profitMargin')->nullable();
             $table->float('COGS')->nullable();
             $table->float('sellingPrice')->nullable();

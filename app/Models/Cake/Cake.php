@@ -61,6 +61,10 @@ class Cake extends BaseModel
             if($searchByText) {
                 $query->where('name', 'like', '%'.$request->search.'%');
             }
+
+            if($request->has('isSell')) {
+                $query->isSell($request->isSell);
+            }
         });
 
         if($request->has('orderBy') && $request->has('orderType')){
@@ -68,6 +72,11 @@ class Cake extends BaseModel
         }
 
         return $query;
+    }
+
+    public function scopeIsSell($query, $isSell)
+    {
+        return $query->where('isSell', $isSell);
     }
 
 
@@ -78,6 +87,18 @@ class Cake extends BaseModel
         return array_map(function($image) {
             return storage_link($image);
         }, $this->images);
+    }
+
+    public function adjustStockSell(int $quantity)
+    {
+        $this->stockSell += $quantity;
+        $this->save();
+    }
+
+    public function adjustStockNonSell(int $quantity)
+    {
+        $this->stockNonSell += abs($quantity);
+        $this->save();
     }
 
     public function getComponentIngredients()
