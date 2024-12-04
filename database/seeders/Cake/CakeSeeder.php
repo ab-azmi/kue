@@ -25,7 +25,6 @@ class CakeSeeder extends Seeder
                 'stockNonSell' => $item['stockNonSell'],
                 'stockSell' => $item['stockSell'],
                 'sellingPrice' => $item['sellingPrice'],
-                'images' => $item['images'],
             ]);
 
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
@@ -70,10 +69,6 @@ class CakeSeeder extends Seeder
                 'stockNonSell' => 4,
                 'stockSell' => 10,
                 'sellingPrice' => 50000,
-                'images' => [
-                    "cakes/one.jpg",
-                    "cakes/two.jpg",
-                ],
                 'variants' => [
                     [
                         'name' => 'Polar Bear Cake - Medium',
@@ -93,20 +88,16 @@ class CakeSeeder extends Seeder
                 'COGS' => 400000,
                 'stockNonSell' => 8,
                 'stockSell' => 12,
-                'sellingPrice' => 600000,
-                'images' => [
-                    "cakes/three.jpg",
-                    "cakes/four.jpg",
-                ],
+                'sellingPrice' => 60000,
                 'variants' => [
                     [
                         'name' => 'Panda Cake - Chocolate',
-                        'price' => 200000,
+                        'price' => 10000,
                         'description' => 'Panda Cake - Variant 1 Description',
                     ],
                     [
                         'name' => 'Panda Cake - Vanilla',
-                        'price' => 400000,
+                        'price' => 15000,
                         'description' => 'Panda Cake - Variant 2 Description',
                     ],
                 ],

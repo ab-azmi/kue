@@ -21,11 +21,12 @@ class AuthAlgo
             Validator::make($request->all(), [
                 'email' => 'required|email|exists:employee_users,email',
                 'password' => 'required',
+                'remember' => 'boolean',
             ]);
 
             $credentials = $request->only('email', 'password');
 
-            $token = Auth::attempt($credentials);
+            $token = Auth::attempt($credentials, $request->remember);
 
             if ($token) {
                 $user = Auth::user();
