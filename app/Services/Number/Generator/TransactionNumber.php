@@ -20,7 +20,7 @@ class TransactionNumber extends BaseNumber
         $date = $date->format('dmy');
 
         $increment = static::getIncrementNumber();
-        $number .= str_pad($increment, 5, '0', STR_PAD_LEFT);
+        $number .= str_pad($increment, 3, '0', STR_PAD_LEFT);
 
         $letters = static::getLetters();
 
@@ -31,7 +31,7 @@ class TransactionNumber extends BaseNumber
     }
 
     /** --- PRIVATE FUNCTION --- **/
-    private static function getLetters($length = 10): string
+    private static function getLetters($length = 4): string
     {
         $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

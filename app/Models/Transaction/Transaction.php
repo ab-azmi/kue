@@ -72,16 +72,21 @@ class Transaction extends BaseModel
                 }
             }
 
-            if($request->has('totalPriceFrom') && $request->has('totalPriceTo')){
-                $query->whereBetween('totalPrice', [$request->totalPriceFrom, $request->totalPriceTo]);
+            if($request->has('fromTotalPrice') && $request->has('toTotalPrice')){
+                $query->whereBetween('totalPrice', [$request->fromTotalPrice, $request->toTotalPrice]);
             }
 
-            if($request->has('orderPriceFrom') && $request->has('orderPriceTo')){
-                $query->whereBetween('orderPrice', [$request->orderPriceFrom, $request->orderPriceTo]);
+            if($request->has('fromOrderPrice') && $request->has('toOrderPrice')){
+                $query->whereBetween('orderPrice', [$request->fromOrderPrice, $request->toOrderPrice]);
             }
 
-            if($request->has('quantityFrom') && $request->has('quantityTo')){
-                $query->whereBetween('quantity', [$request->quantityFrom, $request->quantityTo]);
+            if($request->has('fromQuantity') && $request->has('toQuantity')){
+                $query->whereBetween('quantity', [$request->fromQuantity, $request->toQuantity]);
+            }
+
+            if($request->has('statusId'))
+            {
+                $query->where('statusId', $request->statusId);
             }
 
             if($request->has('employeeId')){
@@ -94,5 +99,35 @@ class Transaction extends BaseModel
         }
 
         return $query;
+    }
+
+    public function scopeCountToday($query)
+    {
+        return $query->whereDate('createdAt', now())->count();
+    }
+
+    public function scopeCountThisMonth($query)
+    {
+        return $query->whereMonth('createdAt', now())->count();
+    }
+
+    public function scopeCountCakeSoldToday($query)
+    {
+        return $query->whereDate('createdAt', now())
+                ->with('orders')
+                ->get()
+                ->sum(function($transaction){
+                    return $transaction->orders->sum('quantity');
+                });
+    }
+
+    public function scopeCountCakeSoldThisMonth($query)
+    {
+        return $query->whereMonth('createdAt', now())
+                ->with('orders')
+                ->get()
+                ->sum(function($transaction){
+                    return $transaction->orders->sum('quantity');
+                });
     }
 }
