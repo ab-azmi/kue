@@ -113,12 +113,16 @@ class Cake extends BaseModel
             }
 
             if($request->has('isSell')) {
-                $query->isSell($request->isSell);
+                $query->where('isSell', $request->isSell)->where('stockSell', '>', 0);
             }
         });
 
         if($request->has('orderBy') && $request->has('orderType')){
             return $query->orderBy($request->orderBy, $request->orderType);
+        }
+
+        if($request->has('archived')){
+            $query->onlyTrashed();
         }
 
         return $query;
@@ -151,7 +155,7 @@ class Cake extends BaseModel
 
     public function adjustStockNonSell(int $quantity)
     {
-        $this->stockNonSell += abs($quantity);
+        $this->stockNonSell += $quantity;
         $this->save();
     }
 

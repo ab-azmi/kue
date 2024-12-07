@@ -25,6 +25,7 @@ class CakeSeeder extends Seeder
                 'stockNonSell' => $item['stockNonSell'],
                 'stockSell' => $item['stockSell'],
                 'sellingPrice' => $item['sellingPrice'],
+                'isSell' => $item['isSell'] ?? 1,
             ]);
 
             foreach (CakeComponentIngredient::all()->random(3) as $ingredient) {
@@ -99,6 +100,27 @@ class CakeSeeder extends Seeder
                         'name' => 'Panda Cake - Vanilla',
                         'price' => 15000,
                         'description' => 'Panda Cake - Variant 2 Description',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Rat Cake',
+                'profitMargin' => null,
+                'COGS' => 320000,
+                'isSell' => 0,
+                'stockNonSell' => 8,
+                'stockSell' => 12,
+                'sellingPrice' => 40000,
+                'variants' => [
+                    [
+                        'name' => 'Rat Cake - Avocado',
+                        'price' => 10000,
+                        'description' => 'Rat Cake - Variant 1 Description',
+                    ],
+                    [
+                        'name' => 'Rat Cake - Durian',
+                        'price' => 15000,
+                        'description' => 'Rat Cake - Variant 2 Description',
                     ],
                 ],
             ],
