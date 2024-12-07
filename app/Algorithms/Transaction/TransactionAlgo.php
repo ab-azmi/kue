@@ -72,6 +72,27 @@ class TransactionAlgo
         }
     }
 
+    public function monthlySummary(){
+        try {
+            $transactionToday = Transaction::countToday();
+
+            $transactionThisMonth = Transaction::countThisMonth();
+
+            $cakeSoldToday = Transaction::countCakeSoldToday();
+
+            $cakeSoldThisMonth = Transaction::countCakeSoldThisMonth();
+
+            return success([
+                'transactionToday' => $transactionToday,
+                'transactionThisMonth' => $transactionThisMonth,
+                'cakeSoldToday' => $cakeSoldToday,
+                'cakeSoldThisMonth' => $cakeSoldThisMonth,
+            ]);
+        }catch (\Exception $e) {
+            exception($e);
+        }
+    }
+
 
     /** --- PRIVATE FUNCTIONS --- */
 
@@ -163,11 +184,11 @@ class TransactionAlgo
     {
         foreach ($this->transaction->orders as $order) {
             $cake = $this->cakeVariants[$order['cakeVariantId']]->cake;
-            if ($cake->stock < $order['quantity']) {
+            if ($cake->stockSell - $order['quantity'] < 0) {
                 errOutOfStockOrder($cake->name);
             }
 
-            $cake->decrement('stock', $order['quantity']);
+            $cake->decrement('stockSell', $order['quantity']);
         }
     }
 

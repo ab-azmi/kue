@@ -4,6 +4,7 @@ namespace Database\Seeders\Transaction;
 
 use App\Models\Transaction\Transaction;
 use App\Services\Constant\Transaction\TransactionStatusConstant;
+use App\Services\Number\Generator\TransactionNumber;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -13,21 +14,23 @@ class TransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = $this->getData();
-        Transaction::create($data[0])->orders()->createMany([
-            [
-                'price' => 10000,
-                'quantity' => 1,
-                'discount' => null,
-                'cakeVariantId' => 1,
-            ],
-            [
-                'price' => 4000,
-                'quantity' => 1,
-                'discount' => null,
-                'cakeVariantId' => 3,
-            ],
-        ]);
+        $data = Transaction::factory(100)->create();
+        $data->each(function ($item) {
+            $item->orders()->createMany([
+                [
+                    'price' => 10000,
+                    'quantity' => 1,
+                    'discount' => null,
+                    'cakeVariantId' => 1,
+                ],
+                [
+                    'price' => 4000,
+                    'quantity' => 1,
+                    'discount' => null,
+                    'cakeVariantId' => 3,
+                ],
+            ]);
+        });
     }
 
     /** --- FUNCTIONS --- */
@@ -36,7 +39,7 @@ class TransactionSeeder extends Seeder
         return [
             [
                 'quantity' => 1,
-                'number' => 'TSX34634534',
+                'number' => TransactionNumber::generate(),
                 'statusId' => TransactionStatusConstant::SUCCESS_ID,
                 'tax' => 6000,
                 'orderPrice' => 14000,

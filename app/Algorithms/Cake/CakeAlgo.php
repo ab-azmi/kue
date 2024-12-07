@@ -97,7 +97,7 @@ class CakeAlgo
 
                 $this->cake->cakeIngredients()->delete();
 
-                $this->deletedImages = $this->cake->images;
+                $this->deletedImages = $this->cake->images ?: [];
 
                 $deleted = $this->cake->delete();
                 if (! $deleted) {
@@ -160,18 +160,25 @@ class CakeAlgo
         try{
             Validator::make($request->all(), [
                 'addStockSell' => 'required|numeric',
-                'addStockNonSell' => 'required|numeric|min:0',
+                'addStockNonSell' => 'required|numeric',
             ]);
 
-            if($request->addStockSell < 0 && abs($request->addStockSell) > $this->cake->stockSell){
-                errCakeReStock();
+            if(
+                ($this->cake->stockSell - abs($request->addStockSell)) < 0 ||
+                ($this->cake->stockNonSell - abs($request->addStockNonSell)) < 0
+            ){
+                errCakeReStock('stock out of range');
             }
 
             DB::transaction(function() use ($request){
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 if($request->addStockSell < 0){
-                    $this->cake->adjustStockNonSell($request->addStockSell);
+                    $this->cake->adjustStockNonSell((-1) * $request->addStockSell);
+                }
+
+                if($request->addStockNonSell < 0){
+                    $this->cake->adjustStockSell((-1) * $request->addStockNonSell);
                 }
 
                 $this->cake->adjustStockSell($request->addStockSell);
@@ -180,13 +187,15 @@ class CakeAlgo
 
                 $this->cake->save();
 
-                $cakeIngredients = $this->cake->cakeIngredients()->get();
-                foreach($cakeIngredients as $pivot){
-                    $ingredient = CakeComponentIngredient::find($pivot->ingredientId);
+                if($request->addStockSell > 0 && $request->addStockNonSell > 0){
+                    $cakeIngredients = $this->cake->cakeIngredients()->get();
+                    foreach($cakeIngredients as $pivot){
+                        $ingredient = CakeComponentIngredient::find($pivot->ingredientId);
 
-                    $ingredient->adjustStock((-1) * $request->addStockSell * $pivot->quantity);
+                        $ingredient->adjustStock((-1) * $request->addStockSell * $pivot->quantity);
 
-                    $ingredient->adjustStock((-1) * $request->addStockNonSell * $pivot->quantity);
+                        $ingredient->adjustStock((-1) * $request->addStockNonSell * $pivot->quantity);
+                    }
                 }
 
                 $this->cake->setActivityPropertyAttributes(ActivityAction::UPDATE)

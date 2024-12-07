@@ -26,7 +26,11 @@ class AuthAlgo
 
             $credentials = $request->only('email', 'password');
 
-            $token = Auth::attempt($credentials, $request->remember);
+            if($request->has('remember') && $request->remember == "1") {
+                Auth::factory()->rememberTokenLifetime = 60 * 24 * 30;
+            }
+
+            $token = Auth::attempt($credentials);
 
             if ($token) {
                 $user = Auth::user();

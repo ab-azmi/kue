@@ -68,4 +68,10 @@ class TransactionController extends Controller
         $algo = new TransactionAlgo((int) $id);
         return $algo->delete();
     }
+
+    public function monthlySummary()
+    {
+        $algo = new TransactionAlgo;
+        return $algo->monthlySummary();
+    }
 }
