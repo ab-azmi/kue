@@ -27,19 +27,19 @@ class SettingFixedCostSeeder extends Seeder
                 'name' => 'Rent',
                 'description' => 'Monthly rent',
                 'amount' => '5000000',
-                'frequency' => FrequencyConstant::MONTHLY_ID,
+                'frequencyId' => FrequencyConstant::MONTHLY_ID,
             ],
             [
                 'name' => 'Electricity',
                 'description' => 'Monthly electricity bill',
                 'amount' => '300000',
-                'frequency' => FrequencyConstant::MONTHLY_ID,
+                'frequencyId' => FrequencyConstant::MONTHLY_ID,
             ],
             [
                 'name' => 'Water',
                 'description' => 'Monthly water bill',
                 'amount' => '100000',
-                'frequency' => FrequencyConstant::MONTHLY_ID,
+                'frequencyId' => FrequencyConstant::MONTHLY_ID,
             ],
         ];
     }

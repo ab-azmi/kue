@@ -45,6 +45,8 @@ class CakeAlgo
             DB::transaction(function () use ($request) {
                 $this->saveCake($request);
 
+                $this->syncVariantsRelationship($request);
+
                 $this->syncIngredientsRelationship($request);
 
                 $this->saveCakeImages($request);
@@ -71,6 +73,8 @@ class CakeAlgo
                 $this->cake->setOldActivityPropertyAttributes(ActivityAction::UPDATE);
 
                 $this->saveCake($request);
+
+                $this->syncVariantsRelationship($request);
 
                 $this->syncIngredientsRelationship($request);
 
@@ -236,6 +240,24 @@ class CakeAlgo
         if (! $this->cake) {
             errCakeCreate();
         }
+    }
+
+    private function syncVariantsRelationship($request)
+    {
+        $variantIds = [];
+        foreach($request->variants ?: [] as $variant) {
+            $this->cake->variants()->updateOrCreate([
+                'id' => $variant['id']
+            ], [
+                'price' => $variant['price'],
+            ]);
+
+            $variantIds[] = $variant['id'];
+        }
+
+        $this->cake->variants()
+            ->whereNotIn('id', $variantIds)
+            ->delete();
     }
 
     private function syncIngredientsRelationship($request)
