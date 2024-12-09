@@ -23,7 +23,9 @@ class CakeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'stock' => 'nullable|numeric',
+            'isSell' => 'required|boolean',
+            'stockSell' => 'nullable|numeric',
+            'stockNonSell' => 'nullable|numeric',
             'profitMargin' => 'nullable|numeric',
             'COGS' => 'nullable|numeric',
             'sellingPrice' => 'nullable|numeric',
