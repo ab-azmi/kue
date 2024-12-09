@@ -246,6 +246,15 @@ class CakeAlgo
     {
         $variantIds = [];
         foreach($request->variants ?: [] as $variant) {
+            if(!isset($variant['id'])){
+                $new = $this->cake->variants()->create([
+                    'price' => $variant['price'],
+                    'name' => $variant['name'],
+                ]);
+                $variantIds[] = $new->id;
+                continue;
+            }
+
             $this->cake->variants()->updateOrCreate([
                 'id' => $variant['id']
             ], [
