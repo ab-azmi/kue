@@ -21,6 +21,7 @@ class SettingParser extends BaseParser
             'id' => $data->id,
             'key' => $data->key,
             'value' => $data->value,
+            'description' => $data->description,
         ];
     }
 

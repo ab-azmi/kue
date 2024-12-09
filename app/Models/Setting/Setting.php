@@ -27,6 +27,14 @@ class Setting extends BaseModel
 
     public function scopeFilter($query, $request)
     {
+        $searchBytext = $this->hasSearch($request);
+
+        if($searchBytext){
+            $query->where('description', 'like', '%'.$request->search.'%')
+                ->orWhere('key', 'like', '%'.$request->search.'%')
+                ->orWhere('value', 'like', '%'.$request->search.'%');
+        }
+
         if($request->has('key') && $request->key) {
             $query->where('key', $request->key);
         }

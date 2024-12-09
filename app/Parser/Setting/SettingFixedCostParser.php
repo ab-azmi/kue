@@ -21,7 +21,7 @@ class SettingFixedCostParser extends BaseParser
             'name' => $data->name,
             'description' => $data->description,
             'amount' => $data->amount,
-            'frequency' => FrequencyConstant::idName($data->frequency),
+            'frequency' => FrequencyConstant::idName($data->frequencyId),
             'createdAt' => $data->createdAt->format('d/m/Y H:i'),
             'updatedAt' => $data->updatedAt->format('d/m/Y H:i'),
         ];
