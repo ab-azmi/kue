@@ -168,8 +168,8 @@ class CakeAlgo
             ]);
 
             if(
-                ($this->cake->stockSell - abs($request->addStockSell)) < 0 ||
-                ($this->cake->stockNonSell - abs($request->addStockNonSell)) < 0
+                ($this->cake->stockSell + $request->addStockSell) < 0 ||
+                ($this->cake->stockNonSell + $request->addStockNonSell) < 0
             ){
                 errCakeReStock('stock out of range');
             }
@@ -218,7 +218,9 @@ class CakeAlgo
     {
         $form = $request->safe()->only([
             'name',
-            'stock',
+            'stockSell',
+            'stockNonSell',
+            'isSell',
             'cakeVariantId',
             'profitMargin',
             'COGS',
@@ -226,8 +228,6 @@ class CakeAlgo
         ]);
 
         if ($this->cake) {
-            $form['stock'] = $this->cake->stock + $request->stock;
-
             $updated = $this->cake->update($form);
             if (! $updated) {
                 errCakeUpdate();
